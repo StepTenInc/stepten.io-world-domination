@@ -1,0 +1,87 @@
+<svg width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 3D Metallic Body Gradient (Top-Left Light Source) -->
+    <linearGradient id="metalBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a3a" />
+      <stop offset="20%" stop-color="#2a2a2a" />
+      <stop offset="50%" stop-color="#151515" />
+      <stop offset="80%" stop-color="#0a0a0a" />
+      <stop offset="100%" stop-color="#050505" />
+    </linearGradient>
+
+    <!-- Bevel/Highlight Gradient -->
+    <linearGradient id="metalBevel" x1="0%" y1="0%" x2="100%" y2="100%">
+       <stop offset="0%" stop-color="#666" stop-opacity="0.8"/>
+       <stop offset="30%" stop-color="#333" stop-opacity="0.4"/>
+       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Cyan Neon Glow (Stronger core, softer edge) -->
+    <filter id="neonCyan" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="blur1" />
+      <feGaussianBlur stdDeviation="3" result="blur2" />
+      <feGaussianBlur stdDeviation="5" result="blur3" />
+      <feFlood flood-color="#00F0FF" result="color"/>
+      <feComposite in="color" in2="blur3" operator="in" result="glow3"/>
+      <feComposite in="color" in2="blur2" operator="in" result="glow2"/>
+      <feComposite in="color" in2="blur1" operator="in" result="glow1"/>
+      <feMerge>
+        <feMergeNode in="glow3"/>
+        <feMergeNode in="glow2"/>
+        <feMergeNode in="glow1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Matrix Green Neon Glow -->
+    <filter id="neonGreen" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="blur1" />
+      <feGaussianBlur stdDeviation="3" result="blur2" />
+      <feGaussianBlur stdDeviation="5" result="blur3" />
+      <feFlood flood-color="#00FF41" result="color"/>
+      <feComposite in="color" in2="blur3" operator="in" result="glow3"/>
+      <feComposite in="color" in2="blur2" operator="in" result="glow2"/>
+      <feComposite in="color" in2="blur1" operator="in" result="glow1"/>
+      <feMerge>
+        <feMergeNode in="glow3"/>
+        <feMergeNode in="glow2"/>
+        <feMergeNode in="glow1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(10, 10) scale(0.8)">
+    
+    <!-- TOP LEFT HOOK (The Blue/Cyan One) -->
+    <!-- The main dark body -->
+    <path d="M 20 45 V 25 C 20 15 28 8 40 8 H 60 L 60 25 H 40 C 35 25 35 25 35 30 V 45 H 20 Z" 
+          fill="url(#metalBody)" stroke="#222" stroke-width="0.5" />
+    <!-- 3D Bevel Highlight -->
+    <path d="M 21 44 V 26 C 21 16 28 9 39 9 H 59" stroke="url(#metalBevel)" stroke-width="1" fill="none" opacity="0.7"/>
+
+    <!-- The Neon Cyan Strip (Inset) -->
+    <path d="M 26 45 V 25 C 26 15 32 14 40 14 H 60" 
+          stroke="#00F0FF" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#neonCyan)" />
+
+
+    <!-- BOTTOM RIGHT HOOK (The Green One) -->
+    <!-- The main dark body -->
+    <path d="M 80 55 V 75 C 80 85 72 92 60 92 H 40 L 40 75 H 60 C 65 75 65 75 65 70 V 55 H 80 Z" 
+          fill="url(#metalBody)" stroke="#222" stroke-width="0.5" />
+    <!-- 3D Bevel Highlight -->
+    <path d="M 79 56 V 74 C 79 84 72 91 61 91 H 41" stroke="url(#metalBevel)" stroke-width="1" fill="none" opacity="0.5"/>
+
+    <!-- The Neon Green Strip (Inset) -->
+    <path d="M 74 55 V 75 C 74 85 68 86 60 86 H 40" 
+          stroke="#00FF41" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#neonGreen)" />
+
+
+    <!-- CENTER PIECE (Square/Connector) -->
+    <!-- Dark block sitting between them -->
+    <rect x="42" y="42" width="16" height="16" rx="2" fill="#111" stroke="#222" />
+    <!-- Inner glowing grid dot (subtle Matrix feel) -->
+    <rect x="48" y="48" width="4" height="4" rx="1" fill="#00FF41" opacity="0.8" filter="url(#neonGreen)" />
+
+  </g>
+</svg>

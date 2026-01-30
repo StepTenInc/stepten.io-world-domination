@@ -1,0 +1,401 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* StepTen.io Custom Theme - Dark Mode Only */
+/* Colors: Background #0a0a0a, Primary #00FF41 (Matrix Green), Info #22D3EE */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  
+  /* StepTen Custom Colors */
+  --color-background-alt: var(--background-alt);
+  --color-background-muted: var(--background-muted);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-primary-muted: var(--primary-muted);
+  --color-primary-glow: var(--primary-glow);
+  --color-info: var(--info);
+  --color-info-muted: var(--info-muted);
+  --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
+  --color-warning: var(--warning);
+  --color-warning-muted: var(--warning-muted);
+  --color-error: var(--error);
+  --color-error-muted: var(--error-muted);
+  --color-border-hover: var(--border-hover);
+  
+  /* ShadCN Required */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+/* StepTen.io - Dark Mode Only (no light mode) */
+:root {
+  color-scheme: dark;
+  --radius: 0.5rem;
+  
+  /* StepTen Background Colors */
+  --background: #0a0a0a;
+  --background-alt: #111111;
+  --background-muted: #171717;
+  
+  /* StepTen Text Colors */
+  --foreground: #fafafa;
+  --foreground-muted: #a1a1aa;
+  
+  /* StepTen Primary - Matrix Green */
+  --primary: #00FF41;
+  --primary-foreground: #0a0a0a;
+  --primary-muted: #00cc34;
+  --primary-glow: rgba(0, 255, 65, 0.15);
+  
+  /* StepTen Info - Aqua */
+  --info: #22D3EE;
+  --info-muted: rgba(34, 211, 238, 0.15);
+  
+  /* StepTen Semantic Colors */
+  --success: #00FF41;
+  --success-muted: rgba(0, 255, 65, 0.15);
+  --warning: #FBBF24;
+  --warning-muted: rgba(251, 191, 36, 0.15);
+  --error: #FF4757;
+  --error-muted: rgba(255, 71, 87, 0.15);
+  --destructive: #FF4757;
+  
+  /* StepTen Border Colors */
+  --border: #262626;
+  --border-hover: #404040;
+  --input: #262626;
+  --ring: #00FF41;
+  
+  /* Cards & Popovers - Use alt background */
+  --card: #111111;
+  --card-foreground: #fafafa;
+  --popover: #111111;
+  --popover-foreground: #fafafa;
+  
+  /* Secondary - Muted dark */
+  --secondary: #171717;
+  --secondary-foreground: #fafafa;
+  
+  /* Muted - Subtle elements */
+  --muted: #171717;
+  --muted-foreground: #a1a1aa;
+  
+  /* Accent - Same as secondary for consistency */
+  --accent: #171717;
+  --accent-foreground: #fafafa;
+  
+  /* Charts - Matrix green variations */
+  --chart-1: #00FF41;
+  --chart-2: #22D3EE;
+  --chart-3: #00cc34;
+  --chart-4: #FBBF24;
+  --chart-5: #a855f7;
+  
+  /* Sidebar */
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #00FF41;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #171717;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #262626;
+  --sidebar-ring: #00FF41;
+}
+
+/* Force dark mode - no .dark class needed */
+.dark {
+  /* Same as root - we're always dark */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* StepTen Custom Utilities */
+@layer utilities {
+  /* Glow effects */
+  .glow-sm {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.15);
+  }
+  .glow-md {
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+  }
+  .glow-lg {
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.25);
+  }
+  
+  /* Card shadows */
+  .shadow-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  .shadow-card-hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Text gradient for headings */
+  .text-gradient {
+    background: linear-gradient(135deg, #00FF41 0%, #22D3EE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Highlighted changes in revised articles */
+  mark {
+    background-color: #fef3c7;
+    color: #0a0a0a;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* Diff view styling for humanization changes */
+  del.bg-error\/20 {
+    background-color: rgba(255, 71, 87, 0.2);
+    color: #FF4757;
+    text-decoration: line-through;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin: 0 1px;
+  }
+
+  ins.bg-success\/20 {
+    background-color: rgba(0, 255, 65, 0.2);
+    color: #00FF41;
+    text-decoration: none;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin: 0 1px;
+    font-weight: 500;
+  }
+}
+
+/* Animations */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.4); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Article Content Styling - ACTUAL VISIBLE FORMATTING */
+.article-content {
+  @apply text-foreground;
+}
+
+.article-content h1 {
+  @apply text-4xl font-bold text-white mb-6 mt-0 pb-4 border-b border-primary/30;
+}
+
+.article-content h2 {
+  @apply text-3xl font-bold text-primary mb-4 mt-8 pb-3 border-b border-white/10;
+}
+
+.article-content h3 {
+  @apply text-2xl font-semibold text-info mb-3 mt-6;
+}
+
+.article-content h4 {
+  @apply text-xl font-semibold text-white mb-2 mt-4;
+}
+
+.article-content p {
+  @apply text-base text-foreground leading-relaxed mb-4;
+}
+
+.article-content ul {
+  @apply my-4 space-y-2 list-disc pl-6;
+}
+
+.article-content ol {
+  @apply my-4 space-y-2 list-decimal pl-6;
+}
+
+.article-content li {
+  @apply text-foreground my-2 leading-relaxed;
+}
+
+.article-content a {
+  @apply text-primary font-semibold underline decoration-primary/50 hover:decoration-primary transition-all;
+}
+
+.article-content strong {
+  @apply text-white font-bold;
+}
+
+.article-content em {
+  @apply text-foreground italic;
+}
+
+.article-content code {
+  @apply text-primary bg-primary/10 px-2 py-1 rounded font-mono text-sm;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-primary pl-4 italic text-foreground-muted my-4;
+}
+
+.article-content table {
+  @apply w-full my-4 border-collapse border border-white/10;
+}
+
+.article-content th {
+  @apply bg-white/5 border border-white/10 px-4 py-2 text-left font-semibold text-primary;
+}
+
+.article-content td {
+  @apply border border-white/10 px-4 py-2 text-foreground;
+}
+
+/* Prose styling for HTML content */
+.prose {
+  @apply text-foreground-muted max-w-none;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold text-foreground mb-6 mt-8;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold text-primary mb-4 mt-8 pb-3 border-b border-white/10;
+}
+
+.prose h3 {
+  @apply text-2xl font-semibold text-info mb-3 mt-6;
+}
+
+.prose h4 {
+  @apply text-xl font-semibold text-foreground mb-2 mt-4;
+}
+
+.prose p {
+  @apply text-foreground-muted leading-relaxed my-4;
+}
+
+.prose strong {
+  @apply text-foreground font-semibold;
+}
+
+.prose em {
+  @apply italic;
+}
+
+.prose a {
+  @apply text-primary hover:text-primary-muted underline transition-colors;
+}
+
+.prose ul {
+  @apply space-y-2 my-4 ml-6 list-disc;
+}
+
+.prose ol {
+  @apply space-y-2 my-4 ml-6 list-decimal;
+}
+
+.prose li {
+  @apply text-foreground-muted;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-primary/10 text-primary text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-background-alt rounded-lg p-4 my-4 overflow-x-auto border border-border;
+}
+
+.prose pre code {
+  @apply bg-transparent text-foreground p-0;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 py-2 my-6 italic text-foreground-muted bg-primary/5 rounded-r-lg;
+}
+
+.prose img {
+  @apply rounded-xl my-8 w-full;
+}
+
+.prose table {
+  @apply w-full my-8 border-collapse rounded-lg overflow-hidden;
+}
+
+.prose thead {
+  @apply bg-primary/10;
+}
+
+.prose th {
+  @apply px-4 py-3 text-left text-foreground font-semibold border-b border-border;
+}
+
+.prose td {
+  @apply px-4 py-3 text-foreground-muted border-b border-border;
+}
+
+.prose tr {
+  @apply bg-background-alt hover:bg-background-muted transition-colors;
+}
+
+.prose hr {
+  @apply border-border my-8;
+}

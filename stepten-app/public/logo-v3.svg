@@ -1,0 +1,109 @@
+<svg width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- GLOBAL GRADIENTS -->
+    
+    <!-- Dark Metal Face -->
+    <linearGradient id="faceGrad" x1="0" y1="0.2" x2="1" y2="0.8">
+      <stop offset="0%" stop-color="#383838" />
+      <stop offset="100%" stop-color="#111111" />
+    </linearGradient>
+
+    <!-- Dark Metal Side (Extrusion) -->
+    <linearGradient id="sideGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+
+    <!-- Cyan Neon Glow -->
+    <filter id="glowCyan" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feFlood flood-color="#00F0FF" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Green Neon Glow -->
+    <filter id="glowGreen" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feFlood flood-color="#00FF41" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Inner Shadow for Neon Channel (Embed effect) -->
+    <filter id="innerShadow">
+      <feOffset dx="0" dy="1" />
+      <feGaussianBlur stdDeviation="1" result="offset-blur" />
+      <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+      <feFlood flood-color="black" flood-opacity="0.8" result="color" />
+      <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+      <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+    </filter>
+  </defs>
+
+  <g transform="translate(10, 10) scale(0.8)">
+    
+    <!-- === TOP LEFT SEGMENT === -->
+    <!-- 3D Side/Extrusion -->
+    <path d="M 22 47 V 27 C 22 17 29 10 40 10 H 60 L 62 12 V 22 H 42 C 38 22 35 25 35 29 V 47 H 22 Z" 
+          fill="url(#sideGrad)" />
+    
+    <!-- Top Face -->
+    <path d="M 20 45 V 25 C 20 15 27 8 38 8 H 58 L 58 20 H 40 C 37 20 33 24 33 27 V 45 H 20 Z" 
+          fill="url(#faceGrad)" stroke="#444" stroke-width="0.5" />
+
+    <!-- Neon Channel (Cyan) -->
+    <!-- We draw the "groove" first -->
+    <path d="M 26.5 45 V 26 C 26.5 19 32 14.5 39 14.5 H 58" 
+          stroke="#111" stroke-width="4" fill="none" class="groove" />
+    
+    <!-- The Light Tube itself -->
+    <path d="M 26.5 45 V 26 C 26.5 19 32 14.5 39 14.5 H 58" 
+          stroke="#00F0FF" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#glowCyan)" />
+
+
+    <!-- === BOTTOM RIGHT SEGMENT === -->
+    <!-- 3D Side/Extrusion -->
+    <path d="M 78 53 V 73 C 78 83 71 90 60 90 H 40 L 38 88 V 78 H 58 C 62 78 65 75 65 71 V 53 H 78 Z" 
+          fill="url(#sideGrad)" />
+    
+    <!-- Face -->
+    <path d="M 80 55 V 75 C 80 85 73 92 62 92 H 42 L 42 80 H 60 C 63 80 67 76 67 73 V 55 H 80 Z" 
+          fill="url(#faceGrad)" stroke="#444" stroke-width="0.5" />
+
+    <!-- Neon Channel (Green) -->
+    <!-- Groove -->
+    <path d="M 73.5 55 V 74 C 73.5 81 68 85.5 61 85.5 H 42" 
+          stroke="#111" stroke-width="4" fill="none" />
+    
+    <!-- Light Tube -->
+    <path d="M 73.5 55 V 74 C 73.5 81 68 85.5 61 85.5 H 42" 
+          stroke="#00FF41" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#glowGreen)" />
+
+
+    <!-- === CENTRAL CUBE === -->
+    <!-- 3D Side -->
+    <rect x="44" y="44" width="16" height="16" rx="1" fill="url(#sideGrad)" />
+    <!-- Face -->
+    <rect x="42" y="42" width="16" height="16" rx="2" fill="url(#faceGrad)" stroke="#444" stroke-width="0.5">
+    </rect>
+    <!-- Center Dot -->
+    <circle cx="50" cy="50" r="2" fill="#555" />
+
+    <!-- === CORNER ACCENTS (The small bits from the 3D render) === -->
+    <!-- Top Right Wedge -->
+    <path d="M 62 12 H 78 V 28 A 1 1 0 0 1 62 12 Z" fill="url(#faceGrad)" opacity="0.8" />
+    
+    <!-- Bottom Left Wedge -->
+    <path d="M 38 88 H 22 V 72 A 1 1 0 0 1 38 88 Z" fill="url(#faceGrad)" opacity="0.8" />
+
+  </g>
+</svg>
