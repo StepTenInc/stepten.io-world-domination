@@ -107,26 +107,34 @@ export default function HomePage() {
         justifyContent: 'center',
         overflow: 'hidden',
       }}>
-        {/* Hero Image */}
+        {/* Hero Video Background */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/hero-team.png"
-            alt="StepTen Team"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
-            priority
-            sizes="100vw"
-          />
-          {/* Overlay gradients */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/images/hero-poster.jpg"
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+            }}
+          >
+            <source src="/images/hero-video.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay for text readability */}
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 50%, #0a0a0a 95%)',
+            background: 'linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.65) 50%, #0a0a0a 95%)',
           }} />
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(10,10,10,0.5) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(10,10,10,0.4) 100%)',
           }} />
         </div>
 
