@@ -164,11 +164,20 @@ No silver spoon. Just survival.
 ## Build Order
 
 1. ✅ Hero section (done)
-2. 🔨 Tales carousel
-3. 🔨 Team grid (bigger)
-4. 🔨 Tools marquee
+2. ✅ Tales carousel (done - TalesCarousel.tsx)
+3. ✅ Team grid (done - TeamGrid.tsx)
+4. ✅ Tools marquee (done - ToolsMarquee.tsx)
 5. 🔨 Header polish
 6. 🔨 Footer polish
+
+## Assets Still Needed
+
+- [ ] Tale hero images:
+  - /images/tales/brain-hack.jpg
+  - /images/tales/beach-army.jpg
+  - /images/tales/second-brain.jpg
+  - /images/tales/world-domination.jpg
+- [ ] Or: tale hero videos for featured tales
 
 ---
 

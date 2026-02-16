@@ -9,6 +9,31 @@
 
 ## Complete Travel History (Visible in Stamps)
 
+### 2016
+| Date | Country | Type | Notes |
+|------|---------|------|-------|
+| 15 Nov 2016 | Philippines | First Arrival | Started the journey |
+| 12 Dec 2016 | Philippines | Visa Issued | Valid until 13 Jan 2017 |
+| 22 Dec 2016 | Philippines | Departure | To Thailand for Christmas |
+| 22 Dec 2016 | Thailand (Bangkok) | Entry | Suvarnabhumi, admitted until 02 Jan 2017 |
+
+### 2017
+| Date | Country | Type | Notes |
+|------|---------|------|-------|
+| 02 Jan 2017 | Thailand (Bangkok) | Departure | |
+| 02 Jan 2017 | Philippines | Arrival | Back from Thailand trip |
+| 02 Mar 2017 | Philippines | Visa Extension | Valid until 02 Mar 2017 |
+| 02 May 2017 | Philippines | Visa Extension | Valid until 02 May 2017 |
+| 02 Jul 2017 | Philippines | Visa Extension | |
+| 14 Jul 2017 | Philippines | Departure | To India |
+| 14 Jul 2017 | India (Chennai) | Entry | Anna Int'l Airport, e-Visa |
+| 18 Jul 2017 | India (Chennai) | Departure | |
+| 19 Jul 2017 | Philippines | Arrival | Stay until 18 Aug 2017 |
+| 02 Aug 2017 | Philippines | Visa Extension | Valid until 02 Aug 2017 |
+| 03 Sep 2017 | Philippines | Departure | |
+| 16 Sep 2017 | Philippines | Visa Extension | Valid until 16 Sep 2017 |
+| 22 Sep 2017 | Philippines | Arrival | Stay until 02 Oct 2017 |
+
 ### 2018
 | Date | Country | Type | Notes |
 |------|---------|------|-------|
