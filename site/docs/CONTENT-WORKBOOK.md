@@ -160,26 +160,134 @@
 
 ## 6. INTERACTIVE TIMELINE 📍
 
-*Your journey, mapped.*
+*Your full journey, mapped. Life + AI.*
 
-### Key Nodes (fill in dates + one-liner)
+### EARLY LIFE & ORIGIN STORY
 
-| Year | Event | One-liner |
-|------|-------|-----------|
-| | First "real" job | |
-| | First business | |
-| | Moved to Philippines | |
-| | Started ShoreAgents | |
-| | First time opening code editor | |
-| | First AI agent built | |
-| | Fired the devs | |
-| | Started building BPOC | |
-| | Launched this site | |
+**Birth & Childhood**
+- Year born:
+- Where grew up:
+- What kind of kid were you:
+- "Stunning Steve the Wrestler" story — what age? What happened?
 
-### When Did Characters "Join"?
-- Pinky first appeared:
-- Reina first appeared:
-- Clark first appeared:
+**School Years**
+- Got kicked out of school — what happened?
+- What did you want to be as a kid (86-90s dreams):
+- First sign you were entrepreneurial:
+
+**Family Stuff (whatever you want to share)**
+- Dad died — how old were you? How did it shape you?
+- Kids situation (as much or little as comfortable):
+- What "damage" shaped who you are:
+
+### CAREER ARC
+
+**Pre-Real Estate**
+- First ever job:
+- Worst job you had:
+- When did you know you wanted more:
+
+**Real Estate Era**
+| Year | Event | One-liner/Story |
+|------|-------|-----------------|
+| | First real estate job | |
+| | First big deal closed | |
+| | Best year in real estate | |
+| | Realized you wanted out | |
+
+**Philippines Move**
+- Year moved:
+- Why Philippines specifically:
+- First impression vs reality:
+- The adjustment period:
+
+**Relationships (if sharing)**
+- Filipino wife — when married, when split (Sept 2025):
+- What you learned:
+- Julie — how you met, what's different:
+
+### BUSINESS JOURNEY
+
+**ShoreAgents**
+| Year | Event | Story |
+|------|-------|-------|
+| | Started ShoreAgents | Why? How? |
+| | First hire | |
+| | Biggest client win | |
+| | Moment you realized BPO was dying | |
+| | Sacked 12 people | What happened? |
+| | Hired 8 devs that were useless | The story |
+| | Decided "never hire humans again" | |
+
+**The Pivot**
+- When did AI click for you:
+- First AI tool you used:
+- The "holy shit" moment:
+
+### AI JOURNEY
+
+| Year/Month | Event | One-liner |
+|------------|-------|-----------|
+| | First time opening a code editor | |
+| | First thing you built (even if shit) | |
+| | First AI agent | |
+| | First agent that actually worked | |
+| | Built BPOC platform | |
+| | Started building with Claude/Pinky | |
+| | Launched StepTen site | |
+
+### CHARACTER ORIGINS
+
+**When did each character emerge?**
+
+**Pinky**
+- When first appeared:
+- Why a rat? Why Pinky & the Brain reference?
+- First thing Pinky did:
+
+**Reina**
+- When first appeared:
+- Who/what inspired her:
+- Why Filipino tech girl:
+
+**Clark**
+- When first appeared:
+- Why the serious protector vibe:
+- Named after Clark Freeport?
+
+### LOCATION TIMELINE
+
+| Year | Where | What was happening |
+|------|-------|-------------------|
+| | Australia (hometown) | Growing up |
+| | | First moved out |
+| | Philippines | First arrived |
+| | Clark Freeport Zone | |
+| 2025 | Vietnam/Bali/Thailand trip | March return to fix ShoreAgents |
+| 2026 | Back in Australia | Visiting mum |
+| Next | Vietnam/Bali? | |
+
+### THE VISION
+
+**Where you're heading**
+- Singapore move for BPOC — why Singapore:
+- StepTen.io vision — $20K/month, 4hrs/week:
+- LMNH (Look Mum No Hands) — the real dream:
+- What "freedom" looks like to you:
+- Where do you want to be in 5 years:
+
+### PHILOSOPHY
+
+**Life lessons that shaped you**
+- "Life is life. Have fun and just do it" — when did this click:
+- Biggest lesson from failure:
+- Biggest lesson from success:
+- What you'd tell 20-year-old Stephen:
+
+### THE ONE-LINER
+
+**If your whole journey was one sentence:**
+(We'll craft this together from your answers)
 
 ---
 
