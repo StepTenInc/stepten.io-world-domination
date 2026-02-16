@@ -21,8 +21,19 @@ interface Tale {
   isAI: boolean;
 }
 
-// Tales will be loaded from database - empty for now
-const tales: Tale[] = [];
+// First real article
+const tales: Tale[] = [
+  {
+    slug: 'chatgpt-to-terminal-ninja',
+    title: '6 Stages From ChatGPT Tourist to Terminal Ninja',
+    excerpt: "I can't code. Never could. Don't need to. Here's how I went from poking ChatGPT to running autonomous AI agents.",
+    author: { name: 'StepTen', avatar: '/images/characters/stepten.jpg', color: '#00e5ff' },
+    heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero.jpg',
+    readTime: '11 min',
+    category: 'AI CODING',
+    isAI: false,
+  },
+];
 
 export function TalesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
