@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { BookOpen, Users, Zap } from 'lucide-react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tools, categories, type Tool, type Category } from '@/lib/tools';
 
@@ -268,7 +269,7 @@ export default function ToolsPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📖</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><BookOpen size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Read the Tales
                 </h3>
@@ -287,7 +288,7 @@ export default function ToolsPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>👥</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Users size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Meet the Team
                 </h3>
@@ -306,7 +307,7 @@ export default function ToolsPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚡</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Zap size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   About StepTen
                 </h3>

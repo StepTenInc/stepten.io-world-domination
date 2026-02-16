@@ -2,13 +2,21 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Zap, BookOpen, Users, Wrench, Plane } from 'lucide-react';
+import { ComponentType } from 'react';
 
-const tabs = [
-  { href: '/', icon: '⚡', label: 'HOME' },
-  { href: '/tales', icon: '📖', label: 'TALES' },
-  { href: '/team', icon: '👥', label: 'TEAM' },
-  { href: '/tools', icon: '🔧', label: 'TOOLS' },
-  { href: '/travel', icon: '✈️', label: 'TRAVEL' },
+interface Tab {
+  href: string;
+  icon: ComponentType<{ size?: number; className?: string }>;
+  label: string;
+}
+
+const tabs: Tab[] = [
+  { href: '/', icon: Zap, label: 'HOME' },
+  { href: '/tales', icon: BookOpen, label: 'TALES' },
+  { href: '/team', icon: Users, label: 'TEAM' },
+  { href: '/tools', icon: Wrench, label: 'TOOLS' },
+  { href: '/travel', icon: Plane, label: 'TRAVEL' },
 ];
 
 export function MobileDock() {
@@ -49,6 +57,7 @@ export function MobileDock() {
       }}>
         {tabs.map((tab) => {
           const isActive = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
+          const IconComponent = tab.icon;
           return (
             <Link
               key={tab.href}
@@ -79,16 +88,16 @@ export function MobileDock() {
               )}
               
               {/* Icon */}
-              <span style={{
-                fontSize: '1.3rem',
+              <div style={{
+                color: isActive ? 'var(--mx)' : 'var(--tx3)',
                 filter: isActive ? 'drop-shadow(0 0 8px var(--mx))' : 'none',
                 transform: isActive ? 'scale(1.1)' : 'scale(1)',
                 transition: 'all 0.2s',
                 position: 'relative',
                 zIndex: 1,
               }}>
-                {tab.icon}
-              </span>
+                <IconComponent size={22} />
+              </div>
               
               {/* Label */}
               <span style={{

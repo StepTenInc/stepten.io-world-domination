@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { BookOpen, Wrench, Zap, User, Bot, Sparkles } from 'lucide-react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { characters } from '@/lib/design-tokens';
 
@@ -79,9 +80,13 @@ export default function TeamPage() {
             <h2 style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, marginBottom: '8px' }}>
               The Characters
             </h2>
-            <p style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--tx3)', letterSpacing: '0.1em' }}>
-              🧑 HUMAN · 🤖 AI AGENTS · ⚡ LEGENDS
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--tx3)', letterSpacing: '0.1em' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><User size={14} /> HUMAN</span>
+              <span>·</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Bot size={14} /> AI AGENTS</span>
+              <span>·</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Sparkles size={14} /> LEGENDS</span>
+            </div>
           </div>
 
           <div className="grid-4" style={{ gap: '20px' }}>
@@ -150,7 +155,7 @@ export default function TeamPage() {
                   padding: '4px 8px', borderRadius: '4px',
                   background: 'rgba(255,215,0,0.1)', color: 'var(--ac-clark)', border: '1px solid rgba(255,215,0,0.2)',
                 }}>
-                  ⚡ LEGEND
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Sparkles size={10} /> LEGEND</span>
                 </div>
               </div>
               <div style={{ padding: '16px' }}>
@@ -207,7 +212,7 @@ export default function TeamPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📖</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><BookOpen size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Read the Tales
                 </h3>
@@ -226,7 +231,7 @@ export default function TeamPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🔧</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Wrench size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Their Tools
                 </h3>
@@ -245,7 +250,7 @@ export default function TeamPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚡</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Zap size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   The Vision
                 </h3>

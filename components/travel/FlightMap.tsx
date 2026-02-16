@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { Plane } from 'lucide-react';
 
 // City coordinates (normalized for Asia-Pacific focus)
 const cities: Record<string, { x: number; y: number; name: string; flag: string }> = {
@@ -476,10 +477,10 @@ export function FlightMap() {
                 <div style={{
                   position: 'absolute',
                   left: `${progress}%`,
-                  top: '-4px',
-                  fontSize: '0.6rem',
+                  top: '-6px',
+                  color: 'var(--mx)',
                 }}>
-                  ✈️
+                  <Plane size={14} style={{ transform: 'rotate(45deg)' }} />
                 </div>
               </div>
               <span style={{ fontSize: '1.5rem' }}>{to.flag}</span>

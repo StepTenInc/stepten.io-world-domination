@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Globe, Plane, Calendar, FileText, BookOpen, Users, Wrench } from 'lucide-react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { FlightMap } from '@/components/travel';
 
@@ -82,39 +83,42 @@ export default function TravelPage() {
             margin: '0 auto 32px',
           }}>
             {[
-              { label: 'COUNTRIES', value: stats.countries, icon: '🌏' },
-              { label: 'FLIGHTS', value: `${stats.flights}+`, icon: '✈️' },
-              { label: 'YEARS', value: stats.years, icon: '📅' },
-              { label: 'WORK VISAS', value: stats.visas, icon: '📋' },
-            ].map((stat) => (
-              <div key={stat.label} style={{
-                background: 'var(--sf)',
-                borderRadius: '12px',
-                padding: '16px 12px',
-                textAlign: 'center',
-                border: '1px solid var(--bd)',
-              }}>
-                <div style={{ fontSize: '1.2rem', marginBottom: '4px' }}>
-                  {stat.icon}
-                </div>
-                <div style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: '1.5rem',
-                  fontWeight: 800,
-                  color: 'var(--mx)',
+              { label: 'COUNTRIES', value: stats.countries, icon: Globe },
+              { label: 'FLIGHTS', value: `${stats.flights}+`, icon: Plane },
+              { label: 'YEARS', value: stats.years, icon: Calendar },
+              { label: 'WORK VISAS', value: stats.visas, icon: FileText },
+            ].map((stat) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={stat.label} style={{
+                  background: 'var(--sf)',
+                  borderRadius: '12px',
+                  padding: '16px 12px',
+                  textAlign: 'center',
+                  border: '1px solid var(--bd)',
                 }}>
-                  {stat.value}
+                  <div style={{ color: 'var(--mx)', marginBottom: '4px', display: 'flex', justifyContent: 'center' }}>
+                    <IconComponent size={24} />
+                  </div>
+                  <div style={{
+                    fontFamily: 'var(--fd)',
+                    fontSize: '1.5rem',
+                    fontWeight: 800,
+                    color: 'var(--mx)',
+                  }}>
+                    {stat.value}
+                  </div>
+                  <div style={{
+                    fontFamily: 'var(--fm)',
+                    fontSize: '0.45rem',
+                    color: 'var(--tx3)',
+                    letterSpacing: '0.1em',
+                  }}>
+                    {stat.label}
+                  </div>
                 </div>
-                <div style={{
-                  fontFamily: 'var(--fm)',
-                  fontSize: '0.45rem',
-                  color: 'var(--tx3)',
-                  letterSpacing: '0.1em',
-                }}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Animated Flight Map */}
@@ -360,7 +364,7 @@ export default function TravelPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📖</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><BookOpen size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Read the Tales
                 </h3>
@@ -379,7 +383,7 @@ export default function TravelPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>👥</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Users size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Meet the Team
                 </h3>
@@ -398,7 +402,7 @@ export default function TravelPage() {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🔧</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '12px' }}><Wrench size={32} /></div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
                   Free Tools
                 </h3>

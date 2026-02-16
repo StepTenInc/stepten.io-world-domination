@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BookOpen, ArrowRight } from 'lucide-react';
 
 interface Tale {
   slug: string;
@@ -348,7 +349,7 @@ export function TalesCarousel() {
                     alignItems: 'center',
                     gap: '6px',
                   }}>
-                    <span>📖</span>
+                    <BookOpen size={12} />
                     <span>{tale.readTime} read</span>
                   </div>
                 </div>

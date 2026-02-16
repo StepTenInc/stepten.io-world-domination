@@ -1,15 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ComponentType } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { Home, BookOpen, Users, Wrench, MessageCircle, Zap } from 'lucide-react';
 
-const pages = [
-  { id: 'home', href: '/', icon: '🏠', name: 'HOME', hint: 'THE HUB' },
-  { id: 'tales', href: '/tales', icon: '📖', name: 'TALES', hint: 'STORIES' },
-  { id: 'team', href: '/team', icon: '👥', name: 'TEAM', hint: 'THE ARMY' },
-  { id: 'tools', href: '/tools', icon: '🔧', name: 'TOOLS', hint: 'FREE SHIT' },
-  { id: 'chat', href: '/chat', icon: '💬', name: 'CHAT', hint: 'AGENTS' },
-  { id: 'about', href: '/about', icon: '⚡', name: 'ABOUT', hint: 'THE STORY' },
+interface Page {
+  id: string;
+  href: string;
+  icon: ComponentType<{ size?: number }>;
+  name: string;
+  hint: string;
+}
+
+const pages: Page[] = [
+  { id: 'home', href: '/', icon: Home, name: 'HOME', hint: 'THE HUB' },
+  { id: 'tales', href: '/tales', icon: BookOpen, name: 'TALES', hint: 'STORIES' },
+  { id: 'team', href: '/team', icon: Users, name: 'TEAM', hint: 'THE ARMY' },
+  { id: 'tools', href: '/tools', icon: Wrench, name: 'TOOLS', hint: 'FREE SHIT' },
+  { id: 'chat', href: '/chat', icon: MessageCircle, name: 'CHAT', hint: 'AGENTS' },
+  { id: 'about', href: '/about', icon: Zap, name: 'ABOUT', hint: 'THE STORY' },
 ];
 
 export function CommandOrb() {
@@ -231,7 +240,7 @@ export function CommandOrb() {
                       background: 'var(--mx)',
                     }} />
                   )}
-                  <span style={{ fontSize: '1.4rem' }}>{page.icon}</span>
+                  <page.icon size={24} />
                   <span style={{
                     fontFamily: 'var(--fd)',
                     fontSize: '0.55rem',

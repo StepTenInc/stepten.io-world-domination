@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BookOpen, Users, Wrench } from 'lucide-react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 
 export default function AboutPage() {
@@ -81,7 +82,7 @@ export default function AboutPage() {
                 textAlign: 'center',
                 transition: 'all 0.3s',
               }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>📖</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '8px', display: 'flex', justifyContent: 'center' }}><BookOpen size={28} /></div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
                   Read Tales
                 </div>
@@ -96,7 +97,7 @@ export default function AboutPage() {
                 textAlign: 'center',
                 transition: 'all 0.3s',
               }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>👥</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '8px', display: 'flex', justifyContent: 'center' }}><Users size={28} /></div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
                   Meet Team
                 </div>
@@ -111,7 +112,7 @@ export default function AboutPage() {
                 textAlign: 'center',
                 transition: 'all 0.3s',
               }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>🔧</div>
+                <div style={{ color: 'var(--mx)', marginBottom: '8px', display: 'flex', justifyContent: 'center' }}><Wrench size={28} /></div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
                   Free Tools
                 </div>
