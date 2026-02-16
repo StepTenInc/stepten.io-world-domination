@@ -40,9 +40,9 @@ export const tales: Tale[] = [
     silo: 'ai-coding',
     heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero.jpg',
     images: [
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-1.jpg', alt: 'No-code builder interface', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-2.jpg', alt: 'Terminal with AI agents', afterSection: 'Stage 4: Unleash the Terminal Agents' },
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-3.jpg', alt: 'Final no-hands setup', afterSection: 'Stage 6: Final Form — No Hands' },
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-1.jpg', alt: 'Christmas 2024 - Nearly drowned surfing, then discovered AI coding', afterSection: 'Get Off ChatGPT. Seriously.' },
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-2.jpg', alt: 'No-code builders: Replit, Bolt, Lovable, v0 - drag and drop your way to understanding', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-3.jpg', alt: 'The final form - two Mac Minis, portable screens, no hands, just talk', afterSection: 'Stage 6: Final Form — No Hands' },
     ],
     tags: ['ai-coding', 'terminal', 'claude-code', 'cursor', 'non-coder', 'autonomous-agents', 'vibe-coding', 'no-code', 'mac-mini', 'warp'],
     tools: [
