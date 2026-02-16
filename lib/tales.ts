@@ -38,7 +38,8 @@ export const tales: Tale[] = [
     featured: true,
     isPillar: true,
     silo: 'ai-coding',
-    heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero.jpg',
+    heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero-still.jpg',
+    heroVideo: '/videos/tales/chatgpt-to-terminal-ninja/hero.mp4',
     images: [
       { url: '/images/tales/chatgpt-to-terminal-ninja/section-1.jpg', alt: 'Christmas 2024 - Nearly drowned surfing, then discovered AI coding', afterSection: 'Get Off ChatGPT. Seriously.' },
       { url: '/images/tales/chatgpt-to-terminal-ninja/section-2.jpg', alt: 'No-code builders: Replit, Bolt, Lovable, v0 - drag and drop your way to understanding', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
