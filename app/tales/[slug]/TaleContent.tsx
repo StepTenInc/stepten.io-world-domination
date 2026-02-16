@@ -559,7 +559,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                 </span>
               )}
               {tale.steptenScore && (
-                <span style={{
+                <Link href="/tools/stepten-score" style={{
                   padding: '5px 12px', 
                   background: 'linear-gradient(135deg, var(--mx)20, var(--cy)20)',
                   border: '1px solid var(--mx)40', 
@@ -568,9 +568,13 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   fontSize: '0.65rem', 
                   letterSpacing: '0.08em',
                   fontWeight: 600,
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                 }}>
-                  🎯 STEPTEN SCORE: {tale.steptenScore}
-                </span>
+                  🎯 STEPTEN SCORE: {tale.steptenScore}/100
+                </Link>
               )}
             </div>
           </div>
@@ -684,6 +688,72 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   </a>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* StepTen Score Breakdown */}
+          {tale.steptenScoreBreakdown && (
+            <div style={{
+              background: 'linear-gradient(135deg, var(--dk), var(--mx)08)',
+              border: '1px solid var(--mx)40', borderRadius: '20px', padding: '28px',
+            }}>
+              <div style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                marginBottom: '20px',
+              }}>
+                <div style={{
+                  fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.2em',
+                  color: 'var(--mx)',
+                }}>
+                  // STEPTEN SCORE
+                </div>
+                <div style={{
+                  fontFamily: 'var(--fd)', fontSize: '1.5rem', fontWeight: 800,
+                  color: 'var(--mx)', textShadow: '0 0 20px var(--mx)',
+                }}>
+                  {tale.steptenScoreBreakdown.total}
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[
+                  { label: 'Content Intelligence', ...tale.steptenScoreBreakdown.contentIntelligence },
+                  { label: 'Technical SEO', ...tale.steptenScoreBreakdown.technicalSEO },
+                  { label: 'LLM Readiness', ...tale.steptenScoreBreakdown.llmReadiness },
+                  { label: 'Authority & Links', ...tale.steptenScoreBreakdown.authorityLinks },
+                  { label: 'Distribution', ...tale.steptenScoreBreakdown.distributionSocial },
+                  { label: 'Competitive Position', ...tale.steptenScoreBreakdown.competitivePosition },
+                ].map((pillar, i) => (
+                  <div key={i}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)' }}>
+                        {pillar.label}
+                      </span>
+                      <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--mx)' }}>
+                        {pillar.score}/{pillar.max}
+                      </span>
+                    </div>
+                    <div style={{
+                      height: '4px', background: 'var(--bd)', borderRadius: '2px', overflow: 'hidden',
+                    }}>
+                      <div style={{
+                        height: '100%', width: `${(pillar.score / pillar.max) * 100}%`,
+                        background: 'linear-gradient(90deg, var(--mx), var(--cy))',
+                        borderRadius: '2px',
+                        boxShadow: '0 0 8px var(--mx)',
+                      }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link href="/tools/stepten-score" style={{
+                display: 'block', marginTop: '20px', padding: '10px 16px',
+                background: 'var(--mx)15', border: '1px solid var(--mx)40',
+                borderRadius: '8px', textAlign: 'center', textDecoration: 'none',
+                fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--mx)',
+                letterSpacing: '0.1em',
+              }}>
+                LEARN HOW WE SCORE →
+              </Link>
             </div>
           )}
 
