@@ -634,6 +634,99 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           paddingRight: '8px',
         }}>
           
+          {/* StepTen Score - FIRST in sidebar */}
+          {tale.steptenScoreBreakdown && (
+            <div className="stepten-score-card" style={{
+              background: 'linear-gradient(135deg, var(--dk), var(--mx)12)',
+              border: '2px solid var(--mx)50', borderRadius: '20px', padding: '24px',
+              position: 'relative', overflow: 'hidden',
+            }}>
+              <div style={{
+                position: 'absolute', top: '-50%', right: '-50%',
+                width: '100%', height: '100%',
+                background: 'radial-gradient(circle, var(--mx)20, transparent 60%)',
+                animation: 'pulse 3s ease-in-out infinite',
+                pointerEvents: 'none',
+              }} />
+              <div style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                marginBottom: '20px', position: 'relative',
+              }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--fm)', fontSize: '0.55rem', letterSpacing: '0.2em', color: 'var(--mx)', marginBottom: '2px' }}>
+                    // STEPTEN SCORE™
+                  </div>
+                  <div style={{ fontFamily: 'var(--fm)', fontSize: '0.55rem', color: 'var(--tx3)' }}>
+                    AI-Powered Analysis
+                  </div>
+                </div>
+                <div style={{
+                  fontFamily: 'var(--fd)', fontSize: '2.5rem', fontWeight: 800,
+                  background: 'linear-gradient(135deg, var(--mx), var(--cy))',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                  filter: 'drop-shadow(0 0 20px var(--mx))',
+                }}>
+                  {tale.steptenScoreBreakdown.total}
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', position: 'relative' }}>
+                {[
+                  { label: 'Content', icon: '📝', ...tale.steptenScoreBreakdown.contentIntelligence },
+                  { label: 'Technical', icon: '⚙️', ...tale.steptenScoreBreakdown.technicalSEO },
+                  { label: 'LLM Ready', icon: '🤖', ...tale.steptenScoreBreakdown.llmReadiness },
+                  { label: 'Authority', icon: '🔗', ...tale.steptenScoreBreakdown.authorityLinks },
+                  { label: 'Distribution', icon: '📢', ...tale.steptenScoreBreakdown.distributionSocial },
+                  { label: 'Competitive', icon: '🎯', ...tale.steptenScoreBreakdown.competitivePosition },
+                ].map((pillar, i) => (
+                  <div key={i} className="score-pillar-tab" style={{
+                    background: 'var(--sf)', border: '1px solid var(--bd)',
+                    borderRadius: '8px', padding: '10px 12px',
+                    cursor: 'pointer', transition: 'all 0.2s ease',
+                    position: 'relative',
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '0.8rem' }}>{pillar.icon}</span>
+                        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx2)' }}>{pillar.label}</span>
+                      </div>
+                      <span style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 700, color: 'var(--mx)' }}>
+                        {pillar.score}<span style={{ color: 'var(--tx3)', fontWeight: 400, fontSize: '0.7rem' }}>/{pillar.max}</span>
+                      </span>
+                    </div>
+                    <div style={{ height: '3px', background: 'var(--bd)', borderRadius: '2px', marginTop: '6px', overflow: 'hidden' }}>
+                      <div className="score-bar-fill" style={{
+                        height: '100%', width: `${(pillar.score / pillar.max) * 100}%`,
+                        background: 'linear-gradient(90deg, var(--mx), var(--cy))',
+                        borderRadius: '2px',
+                        animation: `barFill 1s ease-out ${i * 0.1}s both`,
+                      }} />
+                    </div>
+                    <div className="pillar-tooltip" style={{
+                      position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(10px)',
+                      background: 'var(--dk)', border: '1px solid var(--mx)40', borderRadius: '8px', padding: '8px 12px',
+                      fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--tx2)', whiteSpace: 'nowrap',
+                      opacity: 0, visibility: 'hidden', transition: 'all 0.2s ease', zIndex: 10,
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    }}>
+                      {pillar.details}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link href="/tools/stepten-score" className="score-learn-more" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                marginTop: '16px', padding: '10px 14px',
+                background: 'var(--mx)10', border: '1px solid var(--mx)40',
+                borderRadius: '8px', textDecoration: 'none',
+                fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--mx)',
+                letterSpacing: '0.1em', transition: 'all 0.2s ease',
+              }}>
+                <span>LEARN HOW WE SCORE</span>
+                <ExternalLink size={10} />
+              </Link>
+            </div>
+          )}
+
           {/* TOC */}
           <div style={{
             background: `linear-gradient(135deg, var(--sf), ${author.color}05)`,
@@ -688,128 +781,6 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   </a>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* StepTen Score Breakdown - Animated Card */}
-          {tale.steptenScoreBreakdown && (
-            <div className="stepten-score-card" style={{
-              background: 'linear-gradient(135deg, var(--dk), var(--mx)08)',
-              border: '1px solid var(--mx)40', borderRadius: '20px', padding: '28px',
-              position: 'relative', overflow: 'hidden',
-            }}>
-              {/* Animated glow effect */}
-              <div style={{
-                position: 'absolute', top: '-50%', right: '-50%',
-                width: '100%', height: '100%',
-                background: 'radial-gradient(circle, var(--mx)15, transparent 60%)',
-                animation: 'pulse 3s ease-in-out infinite',
-                pointerEvents: 'none',
-              }} />
-              
-              {/* Score Header */}
-              <div style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                marginBottom: '24px', position: 'relative',
-              }}>
-                <div>
-                  <div style={{
-                    fontFamily: 'var(--fm)', fontSize: '0.55rem', letterSpacing: '0.2em',
-                    color: 'var(--mx)', marginBottom: '4px',
-                  }}>
-                    // STEPTEN SCORE™
-                  </div>
-                  <div style={{
-                    fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--tx3)',
-                  }}>
-                    AI-Powered SEO Analysis
-                  </div>
-                </div>
-                <div style={{
-                  fontFamily: 'var(--fd)', fontSize: '2.2rem', fontWeight: 800,
-                  background: 'linear-gradient(135deg, var(--mx), var(--cy))',
-                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                  textShadow: 'none',
-                  filter: 'drop-shadow(0 0 20px var(--mx))',
-                }}>
-                  {tale.steptenScoreBreakdown.total}
-                </div>
-              </div>
-              
-              {/* Pillar Tabs */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', position: 'relative' }}>
-                {[
-                  { label: 'Content', icon: '📝', ...tale.steptenScoreBreakdown.contentIntelligence },
-                  { label: 'Technical', icon: '⚙️', ...tale.steptenScoreBreakdown.technicalSEO },
-                  { label: 'LLM Ready', icon: '🤖', ...tale.steptenScoreBreakdown.llmReadiness },
-                  { label: 'Authority', icon: '🔗', ...tale.steptenScoreBreakdown.authorityLinks },
-                  { label: 'Distribution', icon: '📢', ...tale.steptenScoreBreakdown.distributionSocial },
-                  { label: 'Competitive', icon: '🎯', ...tale.steptenScoreBreakdown.competitivePosition },
-                ].map((pillar, i) => (
-                  <div 
-                    key={i} 
-                    className="score-pillar-tab"
-                    style={{
-                      background: 'var(--sf)', border: '1px solid var(--bd)',
-                      borderRadius: '10px', padding: '12px 14px',
-                      cursor: 'pointer', transition: 'all 0.2s ease',
-                      position: 'relative', overflow: 'hidden',
-                    }}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.9rem' }}>{pillar.icon}</span>
-                        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx2)' }}>
-                          {pillar.label}
-                        </span>
-                      </div>
-                      <span style={{ 
-                        fontFamily: 'var(--fd)', fontSize: '0.85rem', fontWeight: 700,
-                        color: 'var(--mx)',
-                      }}>
-                        {pillar.score}<span style={{ color: 'var(--tx3)', fontWeight: 400 }}>/{pillar.max}</span>
-                      </span>
-                    </div>
-                    {/* Progress bar */}
-                    <div style={{
-                      height: '3px', background: 'var(--bd)', borderRadius: '2px', 
-                      marginTop: '8px', overflow: 'hidden',
-                    }}>
-                      <div className="score-bar-fill" style={{
-                        height: '100%', width: `${(pillar.score / pillar.max) * 100}%`,
-                        background: 'linear-gradient(90deg, var(--mx), var(--cy))',
-                        borderRadius: '2px',
-                        animation: `barFill 1s ease-out ${i * 0.1}s both`,
-                      }} />
-                    </div>
-                    {/* Hover tooltip */}
-                    <div className="pillar-tooltip" style={{
-                      position: 'absolute', bottom: '100%', left: '50%',
-                      transform: 'translateX(-50%) translateY(10px)',
-                      background: 'var(--dk)', border: '1px solid var(--mx)40',
-                      borderRadius: '8px', padding: '10px 14px',
-                      fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx2)',
-                      whiteSpace: 'nowrap', opacity: 0, visibility: 'hidden',
-                      transition: 'all 0.2s ease', zIndex: 10,
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                    }}>
-                      {pillar.details}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <Link href="/tools/stepten-score" className="score-learn-more" style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                marginTop: '20px', padding: '12px 16px',
-                background: 'transparent', border: '1px solid var(--mx)40',
-                borderRadius: '10px', textDecoration: 'none',
-                fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--mx)',
-                letterSpacing: '0.1em', transition: 'all 0.2s ease',
-              }}>
-                <span>LEARN HOW WE SCORE</span>
-                <ExternalLink size={12} />
-              </Link>
             </div>
           )}
 
