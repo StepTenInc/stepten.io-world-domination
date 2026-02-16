@@ -302,49 +302,90 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
       href={tool.url}
       target="_blank"
       rel="noopener noreferrer"
+      className="tool-card-link"
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
       <div
         className="tool-card"
         style={{
-          background: 'var(--sf)',
-          borderRadius: '16px',
-          padding: '20px',
+          background: 'linear-gradient(135deg, var(--sf) 0%, rgba(20,20,30,1) 100%)',
+          borderRadius: '20px',
+          padding: '24px',
           border: '1px solid var(--bd)',
           position: 'relative',
           overflow: 'hidden',
-          transition: 'all 0.3s ease',
+          transition: 'all 0.4s cubic-bezier(.34,1.56,.64,1)',
           cursor: 'pointer',
           height: '100%',
         }}
       >
-        {/* Top accent */}
+        {/* Glow effect */}
+        <div className="tool-glow" style={{
+          position: 'absolute',
+          top: '-50%',
+          left: '-50%',
+          width: '200%',
+          height: '200%',
+          background: `radial-gradient(circle at center, ${color}15 0%, transparent 50%)`,
+          opacity: 0,
+          transition: 'opacity 0.4s',
+          pointerEvents: 'none',
+        }} />
+
+        {/* Top accent bar */}
         <div style={{
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
-          height: '3px',
-          background: color,
+          height: '4px',
+          background: `linear-gradient(90deg, ${color}, ${color}60)`,
         }} />
 
-        {/* Header */}
+        {/* Header with Logo */}
         <div style={{
           display: 'flex',
-          alignItems: 'flex-start',
-          gap: '12px',
-          marginBottom: '12px',
+          alignItems: 'center',
+          gap: '16px',
+          marginBottom: '16px',
         }}>
-          <div style={{ flex: 1 }}>
+          {/* Logo */}
+          <div style={{
+            width: '48px',
+            height: '48px',
+            borderRadius: '12px',
+            background: 'var(--dk)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            border: `1px solid ${color}30`,
+            flexShrink: 0,
+          }}>
+            <img
+              src={tool.logo}
+              alt={tool.name}
+              style={{
+                width: '32px',
+                height: '32px',
+                objectFit: 'contain',
+              }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${tool.name[0]}&background=${color.replace('#', '')}&color=fff&size=64`;
+              }}
+            />
+          </div>
+
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              marginBottom: '4px',
+              flexWrap: 'wrap',
             }}>
               <h3 style={{
                 fontFamily: 'var(--fd)',
-                fontSize: '1.1rem',
+                fontSize: '1.2rem',
                 fontWeight: 700,
                 color: 'var(--tx1)',
                 margin: 0,
@@ -353,12 +394,14 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
               </h3>
               {tool.used && (
                 <span style={{
-                  padding: '2px 8px',
-                  background: 'rgba(0,255,65,0.15)',
+                  padding: '3px 10px',
+                  background: 'rgba(0,255,65,0.2)',
                   color: 'var(--mx)',
-                  borderRadius: '4px',
+                  borderRadius: '20px',
                   fontFamily: 'var(--fm)',
                   fontSize: '0.5rem',
+                  fontWeight: 600,
+                  boxShadow: '0 0 10px rgba(0,255,65,0.2)',
                 }}>
                   ✓ USED
                 </span>
@@ -370,14 +413,15 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
               <div style={{
                 display: 'flex',
                 gap: '2px',
-                marginBottom: '8px',
+                marginTop: '4px',
               }}>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
                     key={star}
                     style={{
                       color: star <= tool.rating! ? '#ffd93d' : 'var(--bd)',
-                      fontSize: '0.8rem',
+                      fontSize: '0.9rem',
+                      textShadow: star <= tool.rating! ? '0 0 10px #ffd93d' : 'none',
                     }}
                   >
                     ★
@@ -389,19 +433,21 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
 
           {/* Pricing badge */}
           <span style={{
-            padding: '4px 10px',
-            background: tool.pricing === 'free' ? 'rgba(0,255,65,0.15)' :
-                       tool.pricing === 'freemium' ? 'rgba(0,229,255,0.15)' :
-                       tool.pricing === 'paid' ? 'rgba(255,159,67,0.15)' :
-                       'rgba(155,89,182,0.15)',
+            padding: '6px 12px',
+            background: tool.pricing === 'free' ? 'rgba(0,255,65,0.2)' :
+                       tool.pricing === 'freemium' ? 'rgba(0,229,255,0.2)' :
+                       tool.pricing === 'paid' ? 'rgba(255,159,67,0.2)' :
+                       'rgba(155,89,182,0.2)',
             color: tool.pricing === 'free' ? '#00ff41' :
                    tool.pricing === 'freemium' ? '#00e5ff' :
                    tool.pricing === 'paid' ? '#ff9f43' :
                    '#9b59b6',
-            borderRadius: '4px',
+            borderRadius: '8px',
             fontFamily: 'var(--fm)',
-            fontSize: '0.5rem',
+            fontSize: '0.55rem',
+            fontWeight: 600,
             textTransform: 'uppercase',
+            letterSpacing: '0.05em',
           }}>
             {tool.pricing}
           </span>
@@ -410,10 +456,10 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
         {/* Description */}
         <p style={{
           fontFamily: 'var(--fb)',
-          fontSize: '0.85rem',
+          fontSize: '0.9rem',
           color: 'var(--tx2)',
-          lineHeight: 1.5,
-          marginBottom: '12px',
+          lineHeight: 1.6,
+          marginBottom: '16px',
         }}>
           {tool.description}
         </p>
@@ -421,18 +467,19 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
         {/* Review quote */}
         {tool.review && (
           <div style={{
-            padding: '12px',
-            background: `${color}10`,
-            borderRadius: '8px',
-            borderLeft: `3px solid ${color}`,
-            marginBottom: '12px',
+            padding: '14px 16px',
+            background: `linear-gradient(135deg, ${color}15 0%, ${color}05 100%)`,
+            borderRadius: '12px',
+            borderLeft: `4px solid ${color}`,
+            marginBottom: '16px',
           }}>
             <p style={{
               fontFamily: 'var(--fb)',
-              fontSize: '0.8rem',
+              fontSize: '0.85rem',
               color: 'var(--tx1)',
               fontStyle: 'italic',
               margin: 0,
+              lineHeight: 1.5,
             }}>
               "{tool.review}"
             </p>
@@ -442,31 +489,32 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
         {/* Tags */}
         <div style={{
           display: 'flex',
-          gap: '6px',
+          gap: '8px',
           flexWrap: 'wrap',
         }}>
           {tool.hasAPI && (
             <span style={{
-              padding: '3px 8px',
-              background: 'rgba(26,188,156,0.15)',
+              padding: '4px 10px',
+              background: 'rgba(26,188,156,0.2)',
               color: '#1abc9c',
-              borderRadius: '4px',
+              borderRadius: '6px',
               fontFamily: 'var(--fm)',
-              fontSize: '0.5rem',
+              fontSize: '0.55rem',
+              fontWeight: 600,
             }}>
-              HAS API
+              🔌 API
             </span>
           )}
           {tool.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
               style={{
-                padding: '3px 8px',
-                background: 'var(--dk)',
+                padding: '4px 10px',
+                background: 'rgba(255,255,255,0.05)',
                 color: 'var(--tx3)',
-                borderRadius: '4px',
+                borderRadius: '6px',
                 fontFamily: 'var(--fm)',
-                fontSize: '0.5rem',
+                fontSize: '0.55rem',
               }}
             >
               {tag}
@@ -474,27 +522,32 @@ function ToolCard({ tool, color }: { tool: Tool; color: string }) {
           ))}
         </div>
 
-        {/* Hover arrow */}
+        {/* External link icon */}
         <div style={{
           position: 'absolute',
-          bottom: '16px',
-          right: '16px',
-          opacity: 0.5,
+          bottom: '20px',
+          right: '20px',
+          color: color,
+          opacity: 0.4,
+          fontSize: '1.2rem',
           transition: 'all 0.3s',
         }} className="tool-arrow">
-          →
+          ↗
         </div>
       </div>
 
       <style jsx global>{`
         .tool-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-8px) scale(1.02);
           border-color: ${color};
-          box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px ${color}20;
+        }
+        .tool-card:hover .tool-glow {
+          opacity: 1;
         }
         .tool-card:hover .tool-arrow {
           opacity: 1;
-          transform: translateX(4px);
+          transform: translate(4px, -4px);
         }
       `}</style>
     </a>
