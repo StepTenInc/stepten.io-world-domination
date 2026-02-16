@@ -59,23 +59,23 @@ export function Footer() {
             </h4>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <FooterLink href="/about">The Story</FooterLink>
+              <FooterLink href="/travel">The Journey</FooterLink>
               <FooterLink href="https://shoreagents.com" external>ShoreAgents</FooterLink>
-              <FooterLink href="/about">The Tech Stack</FooterLink>
             </nav>
           </div>
 
-          {/* Build */}
+          {/* Connect */}
           <div>
             <h4 style={{
               fontFamily: 'var(--fd)', fontSize: '0.6rem', fontWeight: 700,
               letterSpacing: '0.12em', color: 'var(--tx3)', marginBottom: '16px',
             }}>
-              BUILD
+              CONNECT
             </h4>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <FooterLink href="/team">Agent Guide</FooterLink>
-              <FooterLink href="/team">Soul Files</FooterLink>
-              <FooterLink href="/tools">MCP Servers</FooterLink>
+              <FooterLink href="https://twitter.com/StephenAtcheler" external>X / Twitter</FooterLink>
+              <FooterLink href="https://github.com/StepTen2024" external>GitHub</FooterLink>
+              <FooterLink href="https://linkedin.com/in/stephen-atcheler-b6004662" external>LinkedIn</FooterLink>
             </nav>
           </div>
         </div>

@@ -101,7 +101,7 @@ export function TeamGrid() {
           {characters.map((char) => (
             <Link
               key={char.id}
-              href={`/team#${char.id}`}
+              href="/team"
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <div
