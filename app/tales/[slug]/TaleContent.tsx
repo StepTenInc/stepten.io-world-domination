@@ -802,10 +802,10 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             display: none !important;
           }
           .mobile-toc-toggle {
-            display: flex !important;
+            display: none !important;
           }
           .mobile-toc-panel {
-            display: block !important;
+            display: none !important;
           }
           .tale-image {
             margin-left: -24px !important;
