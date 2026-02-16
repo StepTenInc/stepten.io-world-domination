@@ -558,6 +558,20 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   ⭐ PILLAR
                 </span>
               )}
+              {tale.steptenScore && (
+                <span style={{
+                  padding: '5px 12px', 
+                  background: 'linear-gradient(135deg, var(--mx)20, var(--cy)20)',
+                  border: '1px solid var(--mx)40', 
+                  borderRadius: '4px',
+                  color: 'var(--mx)', 
+                  fontSize: '0.65rem', 
+                  letterSpacing: '0.08em',
+                  fontWeight: 600,
+                }}>
+                  🎯 STEPTEN SCORE: {tale.steptenScore}
+                </span>
+              )}
             </div>
           </div>
 
