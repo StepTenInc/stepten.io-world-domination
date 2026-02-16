@@ -68,12 +68,12 @@ export const tales: Tale[] = [
     steptenScore: 82.5,
     steptenScoreBreakdown: {
       total: 82.5,
-      contentIntelligence: { score: 22, max: 25, details: 'Strong first-person narrative, unique journey, clear progression' },
-      technicalSEO: { score: 17, max: 20, details: 'Good structure, H2s, FAQ section, needs schema markup' },
-      llmReadiness: { score: 18, max: 20, details: 'Quotable answers, clear tool recommendations, citeable stats' },
-      authorityLinks: { score: 10, max: 15, details: 'External tool links, needs more backlinks over time' },
-      distributionSocial: { score: 8, max: 10, details: 'Shareable format, personal story angle' },
-      competitivePosition: { score: 7.5, max: 10, details: 'First-mover on non-coder AI coding angle' },
+      contentIntelligence: { score: 22, max: 25, details: 'Keyword placement, semantic coverage, readability, uniqueness, structure' },
+      technicalSEO: { score: 17, max: 20, details: 'Page speed, mobile optimization, schema markup, crawlability, Core Web Vitals' },
+      llmReadiness: { score: 18, max: 20, details: 'Structured answers, source worthiness, entity clarity, AI crawl access' },
+      authorityLinks: { score: 10, max: 15, details: 'Internal links, outbound quality, topical authority, backlink signals' },
+      distributionSocial: { score: 8, max: 10, details: 'Social meta tags, shareability, rich snippet eligibility' },
+      competitivePosition: { score: 7.5, max: 10, details: 'Content gaps filled, freshness, SERP position vs competitors' },
     },
     content: `I nearly drowned over Christmas 2024. Got sucked into a river mouth while surfing, proper scary stuff. So instead of getting back in the water, I spent the next few weeks drinking beers and wine late at night, watching YouTube like a degenerate. That's how I accidentally stumbled into AI coding.
 
