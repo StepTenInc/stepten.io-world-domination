@@ -24,7 +24,7 @@ Now running ShoreAgents from Clark Freeport Zone, Philippines. Sacked 12 humans.
 
 The BPO industry is dying. Everyone knows it. Instead of fighting the wave, StepTen rides it.`,
     skills: ['Business Strategy', 'AI Architecture', 'Team Building', 'Remote Operations'],
-    github: 'https://github.com/StepTenInc',
+    github: 'https://github.com/StepTen2024',
   },
   pinky: {
     id: 'pinky',
