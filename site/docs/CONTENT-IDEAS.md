@@ -150,4 +150,121 @@ Interactive content presenting a real business problem. Each character gives the
 
 ---
 
+## 9. Agent vs Agent Debates 🥊
+
+Pinky and Reina argue about whether you should use React or Vue. Clark and Step debate whether BPO is dying or evolving.
+
+**Format:** Actual dialogue — back and forth, with personality, disagreements, and resolution (or not).
+
+**Why it works:** People love watching characters they know argue about real topics.
+
+**Example debates:**
+- React vs Vue (Pinky vs Reina)
+- BPO dying or evolving (Clark vs Step)
+- Automation vs human touch
+- Move fast vs build solid
+
+---
+
+## 10. Real Estate to AI Translation Guide 🏠→🤖
+
+You have a unique bridge — 15 years in real estate + AI expertise. Write content that translates between the two worlds.
+
+**Article ideas:**
+- "What a rental appraisal taught me about prompt engineering"
+- "Why open homes are the same as A/B testing"
+- "Commission structures and token pricing have the same psychology"
+- "Tenant screening is just training data curation"
+
+**Why it works:** Nobody else has this perspective. It's uniquely yours.
+
+---
+
+## 11. Build Logs as Content 🛠️
+
+This conversation — what we've been doing for hours — is content.
+
+**Format:** Document building sessions as tales.
+
+> "I sat down with Claude at 10PM and by 3AM we had a 3,000-line project bible, a gesture engine, and a full mobile site shell."
+
+Show people what's actually possible in a single session. Time-stamped. Raw.
+
+---
+
+## 12. The Filipino Tech Scene 🇵🇭
+
+Reina's perspective on:
+- Being a Filipina in tech
+- The BPO industry from the inside
+- Clark Freeport Zone culture
+- What it's like when international clients think you're "cheap labor" but you're actually building AI agents
+
+**Why it works:** Filipino developers are everywhere but their voice is missing from the tech content world. This is a story almost nobody is telling.
+
+---
+
+## 13. Crypto Confessions 📈
+
+Your actual crypto moves. The wins, the losses, the "I held through a 60% drop and didn't sell" moments.
+
+**Format:** Written by Step in raw voice. Charts as background art in character style.
+
+**Tie-in:** This connects to the candlestick bars already in the visual system — suddenly those background elements have context and meaning.
+
+---
+
+## 14. Easter Eggs 🥚
+
+Hidden content scattered throughout the site:
+
+| Trigger | Reward |
+|---------|--------|
+| Konami code on home page | Unlocks secret character |
+| Type "NARF" anywhere | Pinky appears with special message |
+| Visit at exactly midnight | Different hero version |
+| Find all easter eggs | "Legend" badge in character creator |
+
+**Why it works:** People will share these discoveries, driving traffic.
+
+---
+
+## 15. Voice Memos as Content 🎤
+
+You record raw voice notes on your phone about ideas, frustrations, breakthroughs.
+
+**Process:**
+1. Raw audio recorded
+2. Transcribed by AI
+3. Cleaned up into tale
+4. Original audio embedded at top
+
+**Why it works:** The authenticity of hearing your actual Australian accent talking shit while walking through Clark Freeport is content gold. Nobody else is doing raw audio + polished article hybrid format.
+
+---
+
+## 16. The 180K Contacts Story (Interactive Demo) 📊
+
+Don't just write about dumping 180K contacts into a script — build an interactive visualization.
+
+**Features:**
+- Show data flowing: duplicates found, enrichment happening, connections emerging
+- Let people paste their own small CSV and run a mini version
+- It's a Tale AND a Tool combined
+
+---
+
+## Top Tier (Can't Be Copied) 🏆
+
+These only work because YOU have actual AI agents running:
+
+1. **Failure Log** — Real-time mistakes, can't fake it
+2. **Live Agent Feed** — Actual telemetry from real agents
+3. **Prompt Vault** — Your working prompts, battle-tested
+4. **Agent vs Agent Debates** — Requires real character voices
+
+These give people genuine value while showing off what's possible. Impossible to copy without having the same setup.
+
+---
+
 *These ideas make the site feel ALIVE — not a portfolio, but a living operation.*
