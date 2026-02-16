@@ -55,17 +55,11 @@ export default function AboutPage() {
               Follow the journey as we build the future of AI-powered content.
             </p>
             <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="https://twitter.com/StephenAtcheler" target="_blank" rel="noopener noreferrer" style={{
+              <a href="https://github.com/StepTenInc" target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: 'var(--fd)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em',
                 padding: '12px 24px', background: 'var(--mx)', color: 'var(--bk)', textDecoration: 'none', borderRadius: '6px',
               }}>
-                FOLLOW ON X
-              </a>
-              <a href="https://linkedin.com/in/stephen-atcheler-b6004662" target="_blank" rel="noopener noreferrer" style={{
-                fontFamily: 'var(--fd)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em',
-                padding: '12px 24px', border: '2px solid var(--bd)', color: 'var(--tx)', textDecoration: 'none', borderRadius: '6px',
-              }}>
-                LINKEDIN
+                VIEW ON GITHUB
               </a>
             </div>
           </div>
