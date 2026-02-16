@@ -3,493 +3,327 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { FlightGlobe, flights, cities } from '@/components/travel';
 
-// Your actual passport data
-const journeys = [
-  {
-    id: 1,
-    date: '2016-06',
-    from: { city: 'Brisbane', country: 'Australia', code: 'AU', lat: -27.47, lng: 153.02 },
-    to: { city: 'Manila', country: 'Philippines', code: 'PH', lat: 14.60, lng: 120.98 },
-    type: 'flight',
-    title: 'The Big Move',
-    description: 'Left Australia. Started the 10-year journey.',
-    color: '#00ff88',
-  },
-  {
-    id: 2,
-    date: '2016-11',
-    from: { city: 'Manila', country: 'Philippines', code: 'PH', lat: 14.60, lng: 120.98 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'move',
-    title: 'Clark Freeport Zone',
-    description: 'Set up base. ShoreAgents HQ.',
-    color: '#00ff88',
-  },
-  {
-    id: 25,
-    date: '2016-12',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Bangkok', country: 'Thailand', code: 'TH', lat: 13.76, lng: 100.50 },
-    type: 'flight',
-    title: 'Christmas in Thailand',
-    description: 'Took a girl to Thailand for New Year. First international trip from PH.',
-    color: '#ff9f43',
-  },
-  {
-    id: 26,
-    date: '2017-01',
-    from: { city: 'Bangkok', country: 'Thailand', code: 'TH', lat: 13.76, lng: 100.50 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Back to Base',
-    description: 'New Year done. Back to work.',
-    color: '#00ff88',
-  },
-  {
-    id: 3,
-    date: '2017-07',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Chennai', country: 'India', code: 'IN', lat: 13.08, lng: 80.27 },
-    type: 'flight',
-    title: 'India Trip',
-    description: 'Business exploration. Dev team hunting.',
-    color: '#ff6b6b',
-  },
-  {
-    id: 4,
-    date: '2017-07',
-    from: { city: 'Chennai', country: 'India', code: 'IN', lat: 13.08, lng: 80.27 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Back to Base',
-    description: '',
-    color: '#00ff88',
-  },
-  {
-    id: 5,
-    date: '2019-08',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Kota Kinabalu', country: 'Malaysia', code: 'MY', lat: 5.98, lng: 116.07 },
-    type: 'flight',
-    title: 'Sabah Adventure',
-    description: 'Quick trip to Malaysian Borneo.',
-    color: '#ffd93d',
-  },
-  {
-    id: 6,
-    date: '2019-08',
-    from: { city: 'Kota Kinabalu', country: 'Malaysia', code: 'MY', lat: 5.98, lng: 116.07 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Back to Base',
-    description: '',
-    color: '#00ff88',
-  },
-  {
-    id: 7,
-    date: '2022-11',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Bali', country: 'Indonesia', code: 'ID', lat: -8.34, lng: 115.09 },
-    type: 'flight',
-    title: 'Bali Break',
-    description: 'End of year escape. Surfing disasters.',
-    color: '#6bcb77',
-  },
-  {
-    id: 8,
-    date: '2023-01',
-    from: { city: 'Bali', country: 'Indonesia', code: 'ID', lat: -8.34, lng: 115.09 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Back to Grind',
-    description: '',
-    color: '#00ff88',
-  },
-  {
-    id: 9,
-    date: '2024-01',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Bali', country: 'Indonesia', code: 'ID', lat: -8.34, lng: 115.09 },
-    type: 'flight',
-    title: 'The Big Travel Year Begins',
-    description: 'Extended Indonesia stay.',
-    color: '#6bcb77',
-  },
-  {
-    id: 10,
-    date: '2024-02',
-    from: { city: 'Bali', country: 'Indonesia', code: 'ID', lat: -8.34, lng: 115.09 },
-    to: { city: 'Bangkok', country: 'Thailand', code: 'TH', lat: 13.76, lng: 100.50 },
-    type: 'flight',
-    title: 'Thailand',
-    description: 'Bangkok vibes.',
-    color: '#ff9f43',
-  },
-  {
-    id: 11,
-    date: '2024-03',
-    from: { city: 'Bangkok', country: 'Thailand', code: 'TH', lat: 13.76, lng: 100.50 },
-    to: { city: 'Hanoi', country: 'Vietnam', code: 'VN', lat: 21.03, lng: 105.85 },
-    type: 'flight',
-    title: 'Vietnam Exploration',
-    description: 'Noi Bai arrival.',
-    color: '#ee5a24',
-  },
-  {
-    id: 12,
-    date: '2024-06',
-    from: { city: 'Vietnam', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    to: { city: 'Da Nang', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    type: 'move',
-    title: 'Da Nang Base',
-    description: 'Had a surfboard shaped here.',
-    color: '#ee5a24',
-  },
-  {
-    id: 13,
-    date: '2024-09',
-    from: { city: 'Da Nang', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Back to Fix ShoreAgents',
-    description: 'Time to sort out business.',
-    color: '#00ff88',
-  },
-  {
-    id: 14,
-    date: '2024-10',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Da Nang', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    type: 'flight',
-    title: 'More Vietnam',
-    description: '',
-    color: '#ee5a24',
-  },
-  {
-    id: 15,
-    date: '2024-12',
-    from: { city: 'Vietnam', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    to: { city: 'Bali', country: 'Indonesia', code: 'ID', lat: -8.34, lng: 115.09 },
-    type: 'flight',
-    title: 'Christmas in Bali',
-    description: 'Discovered Replit. Changed everything.',
-    color: '#6bcb77',
-  },
-  {
-    id: 16,
-    date: '2025-03',
-    from: { city: 'Vietnam', country: 'Vietnam', code: 'VN', lat: 16.05, lng: 108.22 },
-    to: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    type: 'flight',
-    title: 'Return to Fix Everything',
-    description: 'ShoreAgents needed work.',
-    color: '#00ff88',
-  },
-  {
-    id: 17,
-    date: '2026-02',
-    from: { city: 'Clark', country: 'Philippines', code: 'PH', lat: 15.19, lng: 120.54 },
-    to: { city: 'Brisbane', country: 'Australia', code: 'AU', lat: -27.47, lng: 153.02 },
-    type: 'flight',
-    title: 'Home to See Mum',
-    description: 'Passport renewal. Family time.',
-    color: '#00d4ff',
-  },
-];
-
-const countries = [
-  { code: 'AU', name: 'Australia', emoji: '🇦🇺', color: '#00d4ff' },
-  { code: 'PH', name: 'Philippines', emoji: '🇵🇭', color: '#00ff88' },
-  { code: 'IN', name: 'India', emoji: '🇮🇳', color: '#ff6b6b' },
-  { code: 'MY', name: 'Malaysia', emoji: '🇲🇾', color: '#ffd93d' },
-  { code: 'ID', name: 'Indonesia', emoji: '🇮🇩', color: '#6bcb77' },
-  { code: 'TH', name: 'Thailand', emoji: '🇹🇭', color: '#ff9f43' },
-  { code: 'VN', name: 'Vietnam', emoji: '🇻🇳', color: '#ee5a24' },
-];
+const years = [2016, 2017, 2019, 2022, 2023, 2024, 2025, 2026];
 
 const stats = {
-  yearsAbroad: 10,
   countries: 7,
-  flights: 30,
-  homeBase: 'Clark, Philippines',
+  flights: 40,
+  years: 10,
+  visas: 5,
 };
 
+const countryStats = [
+  { country: '🇵🇭 Philippines', visits: '50+', note: 'Home base since 2016' },
+  { country: '🇹🇭 Thailand', visits: '4', note: 'Bangkok, Chiang Mai' },
+  { country: '🇻🇳 Vietnam', visits: '6+', note: 'Hanoi, Da Nang, Saigon' },
+  { country: '🇮🇩 Indonesia', visits: '6', note: 'Bali every time' },
+  { country: '🇮🇳 India', visits: '4', note: 'Mumbai, Chennai' },
+  { country: '🇲🇾 Malaysia', visits: '1', note: 'Kota Kinabalu, Sabah' },
+  { country: '🇦🇺 Australia', visits: '5', note: 'Home visits' },
+];
+
 export default function TravelPage() {
-  const [selectedJourney, setSelectedJourney] = useState<number | null>(null);
-  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+
+  const filteredFlights = selectedYear
+    ? flights.filter(f => f.year === selectedYear)
+    : flights;
 
   return (
-    <main style={{ background: '#0a0a0a', minHeight: '100vh' }}>
+    <main>
       <Header />
-      
+
       {/* Hero */}
       <section style={{
-        padding: '120px 16px 60px',
-        textAlign: 'center',
-        background: 'linear-gradient(to bottom, rgba(0,255,136,0.05) 0%, transparent 100%)',
+        minHeight: '100dvh',
+        paddingTop: '100px',
+        position: 'relative',
+        overflow: 'hidden',
       }}>
+        {/* Background */}
         <div style={{
-          fontFamily: 'var(--fm)',
-          fontSize: '0.65rem',
-          color: 'var(--mx)',
-          letterSpacing: '0.3em',
-          marginBottom: '16px',
-        }}>
-          // JUST RENEWED MY PASSPORT. REALIZED SOMETHING.
-        </div>
-        <h1 style={{
-          fontFamily: 'var(--fd)',
-          fontSize: 'clamp(2rem, 8vw, 4rem)',
-          fontWeight: 900,
-          marginBottom: '16px',
-        }}>
-          <span style={{ color: 'var(--mx)' }}>10 YEARS</span> GONE.
-        </h1>
-        <p style={{
-          fontFamily: 'var(--fm)',
-          fontSize: '1.1rem',
-          color: 'var(--tx2)',
-          maxWidth: '650px',
-          margin: '0 auto 16px',
-          lineHeight: 1.6,
-        }}>
-          Left Australia in 2016. Just came back for the first real visit — to see mum and renew this passport.
-        </p>
-        <p style={{
-          fontFamily: 'var(--fm)',
-          fontSize: '0.95rem',
-          color: 'var(--tx3)',
-          maxWidth: '600px',
-          margin: '0 auto',
-        }}>
-          Maybe 5 weeks total on Australian soil in a decade. Every stamp in here is a chapter.
-        </p>
-      </section>
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(circle at 50% 50%, rgba(0,255,65,0.05) 0%, transparent 50%)',
+          pointerEvents: 'none',
+        }} />
 
-      {/* Stats Bar */}
-      <section style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '40px',
-        flexWrap: 'wrap',
-        padding: '20px 16px 40px',
-        borderBottom: '1px solid var(--br)',
-      }}>
-        {[
-          { label: 'Years Abroad', value: stats.yearsAbroad, suffix: '+' },
-          { label: 'Countries', value: stats.countries, suffix: '' },
-          { label: 'Flights', value: stats.flights, suffix: '+' },
-        ].map((stat) => (
-          <div key={stat.label} style={{ textAlign: 'center' }}>
-            <div style={{
-              fontFamily: 'var(--fd)',
-              fontSize: '2.5rem',
-              fontWeight: 900,
-              color: 'var(--mx)',
-            }}>
-              {stat.value}{stat.suffix}
-            </div>
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div style={{
               fontFamily: 'var(--fm)',
-              fontSize: '0.7rem',
-              color: 'var(--tx3)',
-              letterSpacing: '0.1em',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
             }}>
-              {stat.label.toUpperCase()}
+              // 10 YEARS OF PASSPORT STAMPS
             </div>
+            <h1 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(2rem, 8vw, 4rem)',
+              fontWeight: 900,
+              marginBottom: '16px',
+            }}>
+              The <span style={{ color: 'var(--mx)' }}>Journey</span>
+            </h1>
+            <p style={{
+              fontFamily: 'var(--fb)',
+              fontSize: '1.1rem',
+              color: 'var(--tx2)',
+              maxWidth: '600px',
+              margin: '0 auto',
+            }}>
+              From Brisbane to Clark. Every flight. Every stamp. Every country.
+            </p>
           </div>
-        ))}
-      </section>
 
-      {/* Countries Grid */}
-      <section style={{ padding: '40px 16px' }}>
-        <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'var(--fm)',
-            fontSize: '0.7rem',
-            color: 'var(--tx3)',
-            letterSpacing: '0.2em',
-            marginBottom: '20px',
-            textAlign: 'center',
-          }}>
-            COUNTRIES STAMPED
-          </h2>
+          {/* Stats Row */}
           <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '12px',
-            flexWrap: 'wrap',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '16px',
+            maxWidth: '600px',
+            margin: '0 auto 40px',
           }}>
-            {countries.map((country) => (
-              <div
-                key={country.code}
-                onMouseEnter={() => setHoveredCountry(country.code)}
-                onMouseLeave={() => setHoveredCountry(null)}
-                style={{
-                  padding: '12px 20px',
-                  background: hoveredCountry === country.code ? country.color + '20' : 'var(--bg2)',
-                  border: `1px solid ${hoveredCountry === country.code ? country.color : 'var(--br)'}`,
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <span style={{ fontSize: '1.5rem' }}>{country.emoji}</span>
-                <span style={{
-                  fontFamily: 'var(--fm)',
-                  fontSize: '0.8rem',
-                  color: hoveredCountry === country.code ? country.color : 'var(--tx2)',
+            {[
+              { label: 'COUNTRIES', value: stats.countries },
+              { label: 'FLIGHTS', value: `${stats.flights}+` },
+              { label: 'YEARS', value: stats.years },
+              { label: 'WORK VISAS', value: stats.visas },
+            ].map((stat) => (
+              <div key={stat.label} style={{
+                background: 'var(--sf)',
+                borderRadius: '12px',
+                padding: '16px',
+                textAlign: 'center',
+                border: '1px solid var(--bd)',
+              }}>
+                <div style={{
+                  fontFamily: 'var(--fd)',
+                  fontSize: '1.8rem',
+                  fontWeight: 800,
+                  color: 'var(--mx)',
                 }}>
-                  {country.name}
-                </span>
+                  {stat.value}
+                </div>
+                <div style={{
+                  fontFamily: 'var(--fm)',
+                  fontSize: '0.5rem',
+                  color: 'var(--tx3)',
+                  letterSpacing: '0.1em',
+                }}>
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
+
+          {/* Year Filter */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '8px',
+            flexWrap: 'wrap',
+            marginBottom: '24px',
+          }}>
+            <button
+              onClick={() => setSelectedYear(null)}
+              style={{
+                padding: '8px 16px',
+                background: selectedYear === null ? 'var(--mx)' : 'var(--sf)',
+                color: selectedYear === null ? 'var(--dk)' : 'var(--tx2)',
+                border: '1px solid var(--bd)',
+                borderRadius: '8px',
+                fontFamily: 'var(--fm)',
+                fontSize: '0.65rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+            >
+              ALL
+            </button>
+            {years.map((year) => (
+              <button
+                key={year}
+                onClick={() => setSelectedYear(year)}
+                style={{
+                  padding: '8px 16px',
+                  background: selectedYear === year ? 'var(--mx)' : 'var(--sf)',
+                  color: selectedYear === year ? 'var(--dk)' : 'var(--tx2)',
+                  border: '1px solid var(--bd)',
+                  borderRadius: '8px',
+                  fontFamily: 'var(--fm)',
+                  fontSize: '0.65rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
+
+          {/* Globe */}
+          <div style={{
+            position: 'relative',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            border: '1px solid var(--bd)',
+            boxShadow: '0 0 60px rgba(0,255,65,0.1)',
+          }}>
+            <FlightGlobe selectedYear={selectedYear} />
+            
+            {/* Legend */}
+            <div style={{
+              position: 'absolute',
+              bottom: '20px',
+              left: '20px',
+              background: 'rgba(0,0,0,0.8)',
+              padding: '12px 16px',
+              borderRadius: '10px',
+              border: '1px solid var(--bd)',
+            }}>
+              <div style={{
+                fontFamily: 'var(--fm)',
+                fontSize: '0.5rem',
+                color: 'var(--tx3)',
+                marginBottom: '8px',
+              }}>
+                FLIGHT PATHS BY YEAR
+              </div>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                {[
+                  { year: '2016', color: '#ff6b6b' },
+                  { year: '2017', color: '#ffd93d' },
+                  { year: '2019', color: '#4d96ff' },
+                  { year: '2022-23', color: '#00d4ff' },
+                  { year: '2024', color: '#00ff41' },
+                  { year: '2025-26', color: '#ffffff' },
+                ].map((item) => (
+                  <div key={item.year} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <div style={{
+                      width: '12px',
+                      height: '3px',
+                      background: item.color,
+                      borderRadius: '2px',
+                    }} />
+                    <span style={{
+                      fontFamily: 'var(--fm)',
+                      fontSize: '0.55rem',
+                      color: 'var(--tx2)',
+                    }}>
+                      {item.year}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Flight count */}
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              background: 'rgba(0,0,0,0.8)',
+              padding: '12px 16px',
+              borderRadius: '10px',
+              border: '1px solid var(--bd)',
+              textAlign: 'center',
+            }}>
+              <div style={{
+                fontFamily: 'var(--fd)',
+                fontSize: '1.5rem',
+                fontWeight: 800,
+                color: 'var(--mx)',
+              }}>
+                {filteredFlights.length}
+              </div>
+              <div style={{
+                fontFamily: 'var(--fm)',
+                fontSize: '0.5rem',
+                color: 'var(--tx3)',
+              }}>
+                {selectedYear ? `FLIGHTS IN ${selectedYear}` : 'TOTAL FLIGHTS'}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section style={{ padding: '40px 16px 80px' }}>
-        <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'var(--fm)',
-            fontSize: '0.7rem',
-            color: 'var(--tx3)',
-            letterSpacing: '0.2em',
-            marginBottom: '40px',
-            textAlign: 'center',
-          }}>
-            FLIGHT PATH
-          </h2>
-          
-          {/* Timeline Line */}
-          <div style={{ position: 'relative' }}>
-            {/* Vertical line */}
+      {/* Countries Section */}
+      <section style={{ padding: '80px 0', background: 'var(--dk)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
             <div style={{
-              position: 'absolute',
-              left: '20px',
-              top: 0,
-              bottom: 0,
-              width: '2px',
-              background: 'linear-gradient(to bottom, var(--mx), var(--ac1), var(--ac2))',
-              opacity: 0.3,
-            }} />
-            
-            {/* Journey Cards */}
-            {journeys.filter(j => j.title && j.description).map((journey, index) => (
+              fontFamily: 'var(--fm)',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
+            }}>
+              // COUNTRIES VISITED
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
+              fontWeight: 800,
+            }}>
+              7 Countries, <span style={{ color: 'var(--mx)' }}>1 Passport</span>
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+            maxWidth: '900px',
+            margin: '0 auto',
+          }}>
+            {countryStats.map((c) => (
               <div
-                key={journey.id}
-                onClick={() => setSelectedJourney(selectedJourney === journey.id ? null : journey.id)}
+                key={c.country}
                 style={{
-                  position: 'relative',
-                  marginBottom: '24px',
-                  paddingLeft: '50px',
-                  cursor: 'pointer',
-                }}
-              >
-                {/* Node */}
-                <div style={{
-                  position: 'absolute',
-                  left: '12px',
-                  top: '8px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  background: journey.color,
-                  boxShadow: `0 0 20px ${journey.color}50`,
+                  background: 'var(--sf)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid var(--bd)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  {journey.type === 'flight' ? (
-                    <span style={{ fontSize: '10px' }}>✈️</span>
-                  ) : (
-                    <span style={{ fontSize: '8px' }}>📍</span>
-                  )}
-                </div>
-                
-                {/* Card */}
+                  gap: '16px',
+                }}
+              >
                 <div style={{
-                  background: selectedJourney === journey.id ? 'var(--bg2)' : 'var(--bg1)',
-                  border: `1px solid ${selectedJourney === journey.id ? journey.color : 'var(--br)'}`,
-                  borderRadius: '12px',
-                  padding: '16px 20px',
-                  transition: 'all 0.2s ease',
+                  fontSize: '2rem',
                 }}>
-                  {/* Date */}
-                  <div style={{
-                    fontFamily: 'var(--fm)',
-                    fontSize: '0.65rem',
-                    color: journey.color,
-                    letterSpacing: '0.1em',
-                    marginBottom: '4px',
-                  }}>
-                    {journey.date}
-                  </div>
-                  
-                  {/* Route */}
+                  {c.country.split(' ')[0]}
+                </div>
+                <div style={{ flex: 1 }}>
                   <div style={{
                     fontFamily: 'var(--fd)',
                     fontSize: '1rem',
                     fontWeight: 700,
-                    marginBottom: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
                   }}>
-                    <span>{countries.find(c => c.code === journey.from.code)?.emoji}</span>
-                    <span style={{ color: 'var(--tx2)' }}>{journey.from.city}</span>
-                    <span style={{ color: journey.color }}>→</span>
-                    <span>{countries.find(c => c.code === journey.to.code)?.emoji}</span>
-                    <span style={{ color: 'var(--tx2)' }}>{journey.to.city}</span>
+                    {c.country.split(' ').slice(1).join(' ')}
                   </div>
-                  
-                  {/* Title */}
                   <div style={{
-                    fontFamily: 'var(--fd)',
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    color: 'var(--tx1)',
-                    marginBottom: '8px',
+                    fontFamily: 'var(--fm)',
+                    fontSize: '0.6rem',
+                    color: 'var(--tx3)',
                   }}>
-                    {journey.title}
+                    {c.note}
                   </div>
-                  
-                  {/* Description */}
-                  {journey.description && (
-                    <div style={{
-                      fontFamily: 'var(--fm)',
-                      fontSize: '0.85rem',
-                      color: 'var(--tx3)',
-                      lineHeight: 1.5,
-                    }}>
-                      {journey.description}
-                    </div>
-                  )}
-                  
-                  {/* Expanded content placeholder */}
-                  {selectedJourney === journey.id && (
-                    <div style={{
-                      marginTop: '16px',
-                      padding: '16px',
-                      background: 'var(--bg1)',
-                      borderRadius: '8px',
-                      border: '1px dashed var(--br)',
-                    }}>
-                      <div style={{
-                        fontFamily: 'var(--fm)',
-                        fontSize: '0.75rem',
-                        color: 'var(--tx3)',
-                        fontStyle: 'italic',
-                      }}>
-                        📝 Story content coming soon...
-                      </div>
-                    </div>
-                  )}
+                </div>
+                <div style={{
+                  fontFamily: 'var(--fd)',
+                  fontSize: '1.2rem',
+                  fontWeight: 800,
+                  color: 'var(--mx)',
+                }}>
+                  {c.visits}
                 </div>
               </div>
             ))}
@@ -497,45 +331,105 @@ export default function TravelPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{
-        padding: '60px 16px',
-        textAlign: 'center',
-        borderTop: '1px solid var(--br)',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--fd)',
-          fontSize: '1.5rem',
-          fontWeight: 700,
-          marginBottom: '16px',
-        }}>
-          Want to visualize <span style={{ color: 'var(--mx)' }}>your</span> passport journey?
-        </h2>
-        <p style={{
-          fontFamily: 'var(--fm)',
-          fontSize: '0.9rem',
-          color: 'var(--tx3)',
-          marginBottom: '24px',
-        }}>
-          Upload your passport stamps and we'll build your timeline.
-        </p>
-        <button style={{
-          padding: '14px 32px',
-          background: 'transparent',
-          border: '2px solid var(--mx)',
-          color: 'var(--mx)',
-          fontFamily: 'var(--fd)',
-          fontSize: '0.85rem',
-          fontWeight: 700,
-          borderRadius: '8px',
-          cursor: 'pointer',
-          letterSpacing: '0.05em',
-        }}>
-          COMING SOON
-        </button>
+      {/* Timeline Section */}
+      <section style={{ padding: '80px 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <div style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
+            }}>
+              // FLIGHT LOG
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
+              fontWeight: 800,
+            }}>
+              The <span style={{ color: 'var(--mx)' }}>Timeline</span>
+            </h2>
+          </div>
+
+          <div style={{
+            maxWidth: '700px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}>
+            {filteredFlights.map((flight, i) => (
+              <div
+                key={i}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  padding: '12px 16px',
+                  background: 'var(--sf)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}
+              >
+                <div style={{
+                  fontFamily: 'var(--fm)',
+                  fontSize: '0.65rem',
+                  color: 'var(--tx3)',
+                  minWidth: '40px',
+                }}>
+                  {flight.year}
+                </div>
+                <div style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: getYearColor(flight.year),
+                  boxShadow: `0 0 10px ${getYearColor(flight.year)}`,
+                }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontFamily: 'var(--fd)',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                  }}>
+                    {cities[flight.from]?.country} {cities[flight.from]?.name} → {cities[flight.to]?.country} {cities[flight.to]?.name}
+                  </div>
+                  {flight.label && (
+                    <div style={{
+                      fontFamily: 'var(--fm)',
+                      fontSize: '0.55rem',
+                      color: 'var(--tx3)',
+                    }}>
+                      {flight.label}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <Footer />
     </main>
   );
+}
+
+function getYearColor(year: number): string {
+  const colors: Record<number, string> = {
+    2016: '#ff6b6b',
+    2017: '#ffd93d',
+    2018: '#6bcb77',
+    2019: '#4d96ff',
+    2020: '#845ec2',
+    2021: '#ff9671',
+    2022: '#00d4ff',
+    2023: '#ff00ff',
+    2024: '#00ff41',
+    2025: '#00e5ff',
+    2026: '#ffffff',
+  };
+  return colors[year] || '#00ff41';
 }
