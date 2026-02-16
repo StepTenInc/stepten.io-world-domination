@@ -271,3 +271,11 @@ a:focus-visible, button:focus-visible {
 @media (prefers-color-scheme: dark) {
   html { background: var(--bk); }
 }
+
+/* Profile page responsive */
+@media (max-width: 768px) {
+  .profile-hero {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+}

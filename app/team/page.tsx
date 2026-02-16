@@ -91,12 +91,15 @@ export default function TeamPage() {
 
           <div className="grid-4" style={{ gap: '20px' }}>
             {characterList.map(([key, char]) => (
-              <div key={key} style={{
+              <Link key={key} href={`/team/${key}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{
                 background: 'var(--sf)',
                 border: '1px solid var(--bd)',
                 borderRadius: '14px',
                 overflow: 'hidden',
                 position: 'relative',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
               }}>
                 {/* Accent bar */}
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: char.color, zIndex: 5 }} />
@@ -113,7 +116,9 @@ export default function TeamPage() {
                     color: key === 'stepten' ? 'var(--ac-step)' : 'var(--mx)',
                     border: `1px solid ${key === 'stepten' ? 'rgba(0,229,255,0.3)' : 'rgba(0,255,65,0.2)'}`,
                   }}>
-                    {key === 'stepten' ? '🧑 HUMAN' : '🤖 AI AGENT'}
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      {key === 'stepten' ? <><User size={10} /> HUMAN</> : <><Bot size={10} /> AI</>}
+                    </span>
                   </div>
                   {/* Gradient */}
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50%', background: 'linear-gradient(transparent, var(--sf))' }} />
@@ -132,6 +137,7 @@ export default function TeamPage() {
                   </p>
                 </div>
               </div>
+              </Link>
             ))}
 
             {/* Legends placeholder */}
