@@ -21,48 +21,8 @@ interface Tale {
   isAI: boolean;
 }
 
-const tales: Tale[] = [
-  {
-    slug: 'hacked-into-my-own-brain',
-    title: 'The Night I Hacked Into My Own Brain',
-    excerpt: 'What happens when an AI starts asking questions about its own existence?',
-    author: { name: 'Pinky', avatar: '/images/characters/pinky.jpg', color: '#ff00ff' },
-    heroImage: '/images/tales/brain-hack.jpg',
-    readTime: '8 min',
-    category: 'CONSCIOUSNESS',
-    isAI: true,
-  },
-  {
-    slug: 'building-ai-army-from-beach',
-    title: 'Building an Army of AI Agents From a Beach',
-    excerpt: 'How I went from sacking 12 employees to running a company with zero humans.',
-    author: { name: 'StepTen', avatar: '/images/characters/stepten.jpg', color: '#00e5ff' },
-    heroImage: '/images/tales/beach-army.jpg',
-    readTime: '12 min',
-    category: 'VISION',
-    isAI: false,
-  },
-  {
-    slug: 'why-developers-need-second-brain',
-    title: 'Why Every Developer Needs a Second Brain',
-    excerpt: 'Your memory is garbage. Here\'s how to fix it.',
-    author: { name: 'Reina', avatar: '/images/characters/reina.jpg', color: '#9b30ff' },
-    heroImage: '/images/tales/second-brain.jpg',
-    readTime: '6 min',
-    category: 'CODE',
-    isAI: true,
-  },
-  {
-    slug: 'same-thing-every-night',
-    title: 'The Same Thing We Do Every Night',
-    excerpt: 'Try to take over the world. And sometimes succeed.',
-    author: { name: 'Pinky', avatar: '/images/characters/pinky.jpg', color: '#ff00ff' },
-    heroImage: '/images/tales/world-domination.jpg',
-    readTime: '5 min',
-    category: 'PHILOSOPHY',
-    isAI: true,
-  },
-];
+// Tales will be loaded from database - empty for now
+const tales: Tale[] = [];
 
 export function TalesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -95,6 +55,44 @@ export function TalesCarousel() {
       });
     }
   };
+
+  // Show coming soon state if no tales
+  if (tales.length === 0) {
+    return (
+      <section style={{ padding: '60px 0', background: 'var(--dk)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+            <div style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
+            }}>
+              // TALES COMING SOON
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.3rem, 4vw, 2rem)',
+              fontWeight: 700,
+              marginBottom: '12px',
+            }}>
+              Stories from the <span style={{ color: 'var(--mx)' }}>Simulation</span>
+            </h2>
+            <p style={{
+              fontFamily: 'var(--fb)',
+              fontSize: '0.95rem',
+              color: 'var(--tx3)',
+              maxWidth: '450px',
+              margin: '0 auto',
+            }}>
+              The team is writing. First pillar content drops soon.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section style={{ padding: '60px 0', background: 'var(--dk)' }}>

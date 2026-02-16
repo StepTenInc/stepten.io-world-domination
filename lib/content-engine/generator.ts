@@ -70,7 +70,7 @@ export class ContentEngine {
    * Generate a full article through the pipeline
    */
   async generate(input: ArticleInput): Promise<GenerationResult> {
-    const intermediate: GenerationResult['intermediate'] = {} as any;
+    const intermediate: NonNullable<GenerationResult['intermediate']> = {} as NonNullable<GenerationResult['intermediate']>;
 
     try {
       // Step 1: Research

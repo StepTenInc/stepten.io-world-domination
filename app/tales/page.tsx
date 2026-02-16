@@ -32,6 +32,25 @@ export default function TalesPage() {
 
           {/* Tales list */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '750px', margin: '0 auto' }}>
+            {tales.length === 0 && (
+              <div style={{
+                textAlign: 'center',
+                padding: '60px 20px',
+                background: 'var(--sf)',
+                border: '1px solid var(--bd)',
+                borderRadius: '16px',
+              }}>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--mx)', letterSpacing: '0.2em', marginBottom: '16px' }}>
+                  // COMING SOON
+                </div>
+                <h2 style={{ fontFamily: 'var(--fd)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--tx)', marginBottom: '12px' }}>
+                  Tales are being written...
+                </h2>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.95rem', color: 'var(--tx3)', maxWidth: '400px', margin: '0 auto' }}>
+                  The army is crafting stories. First pillar content drops soon.
+                </p>
+              </div>
+            )}
             {tales.map((tale) => {
               const author = characters[tale.author];
               return (
