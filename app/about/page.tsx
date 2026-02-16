@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 
 export default function AboutPage() {
@@ -67,6 +68,61 @@ export default function AboutPage() {
                 LINKEDIN
               </a>
             </div>
+          </div>
+
+          {/* Internal Navigation CTAs */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '16px',
+            maxWidth: '700px',
+            margin: '48px auto 0',
+          }}>
+            <Link href="/tales" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--sf)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid var(--bd)',
+                textAlign: 'center',
+                transition: 'all 0.3s',
+              }}>
+                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>📖</div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
+                  Read Tales
+                </div>
+              </div>
+            </Link>
+            <Link href="/team" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--sf)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid var(--bd)',
+                textAlign: 'center',
+                transition: 'all 0.3s',
+              }}>
+                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>👥</div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
+                  Meet Team
+                </div>
+              </div>
+            </Link>
+            <Link href="/tools" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--sf)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid var(--bd)',
+                textAlign: 'center',
+                transition: 'all 0.3s',
+              }}>
+                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>🔧</div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)' }}>
+                  Free Tools
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

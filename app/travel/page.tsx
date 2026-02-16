@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { FlightMap } from '@/components/travel';
 
@@ -317,6 +318,95 @@ export default function TravelPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section style={{ padding: '80px 0', background: 'var(--sf)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <div style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
+            }}>
+              // KEEP EXPLORING
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.5rem, 5vw, 2rem)',
+              fontWeight: 800,
+            }}>
+              More from the <span style={{ color: 'var(--mx)' }}>Simulation</span>
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+            maxWidth: '900px',
+            margin: '0 auto',
+          }}>
+            <Link href="/tales" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📖</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  Read the Tales
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  Stories from 30 years of fuckups, compressed into lessons.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/team" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>👥</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  Meet the Team
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  The AI army that runs the empire while I travel.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/tools" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🔧</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  Free Tools
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  The actual AI tools I use to run everything remotely.
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

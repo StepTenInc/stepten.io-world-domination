@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { characters } from '@/lib/design-tokens';
 
@@ -164,6 +165,95 @@ export default function TeamPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section style={{ padding: '80px 0', background: 'var(--sf)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <div style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.6rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.3em',
+              marginBottom: '12px',
+            }}>
+              // HEAR FROM THE TEAM
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.5rem, 5vw, 2rem)',
+              fontWeight: 800,
+            }}>
+              Read Their <span style={{ color: 'var(--mx)' }}>Tales</span>
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+            maxWidth: '900px',
+            margin: '0 auto',
+          }}>
+            <Link href="/tales" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📖</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  Read the Tales
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  Stories written by each character in the StepTen universe.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/tools" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🔧</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  Their Tools
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  The AI arsenal that powers the team.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/about" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'var(--dk)',
+                borderRadius: '16px',
+                padding: '28px',
+                border: '1px solid var(--bd)',
+                transition: 'all 0.3s',
+                cursor: 'pointer',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚡</div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '8px', color: 'var(--tx)' }}>
+                  The Vision
+                </h3>
+                <p style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)', lineHeight: 1.5 }}>
+                  Why AI agents instead of humans.
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
