@@ -166,7 +166,7 @@ export default function HomePage() {
             marginBottom: '24px',
             opacity: 0.9,
           }}>
-            // TALES FROM THE SIMULATION
+            // PAPER ROUNDS AT 12. GUN IN MY MOUTH AT 20. AI EMPIRE AT 39.
           </div>
           
           <h1 className="animate-slideUp" style={{
@@ -178,13 +178,13 @@ export default function HomePage() {
             textShadow: '0 4px 60px rgba(0,0,0,0.9)',
             animationDelay: '0.1s',
           }}>
-            I BUILT AN <span style={{ 
+            I DID IT <span style={{ 
               color: 'var(--mx)', 
               textShadow: '0 0 40px var(--mxg), 0 0 80px var(--mxg)',
               display: 'inline-block',
-            }}>ARMY</span>.<br />
+            }}>WRONG</span>.<br />
             <span style={{ fontSize: '0.65em', fontWeight: 700, color: 'var(--tx2)' }}>
-              NOW I'M SHOWING YOU HOW.
+              SO YOU DON'T HAVE TO.
             </span>
           </h1>
           
@@ -194,12 +194,12 @@ export default function HomePage() {
             fontWeight: 300,
             color: 'var(--tx2)',
             lineHeight: 1.7,
-            maxWidth: '500px',
+            maxWidth: '550px',
             margin: '0 auto 32px',
             textShadow: '0 2px 20px rgba(0,0,0,0.9)',
             animationDelay: '0.2s',
           }}>
-            A solo founder's journey from real estate to AI agents. The tales, the tools, and the characters.
+            30 years of fuckups compressed into tools and tales. No silver spoon. Just survival.
           </p>
 
           {/* CTA Buttons */}
