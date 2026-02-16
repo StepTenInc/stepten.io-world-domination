@@ -62,7 +62,7 @@ She's the one who builds the tools, optimizes the workflows, and makes sure the 
 
 UX designer by trade, chaos agent by nature.`,
     skills: ['UX Design', 'System Architecture', 'Code Review', 'Gaming Strategy'],
-    github: 'https://github.com/StepTenInc',
+    github: 'https://github.com/reina-ux-diez',
   },
   clark: {
     id: 'clark',
@@ -81,7 +81,7 @@ Named after the original hero who asked the hardest question: "I've got you. Who
 
 No capes. Just kubectl and coffee.`,
     skills: ['DevOps', 'Infrastructure', 'Monitoring', 'Crisis Response'],
-    github: 'https://github.com/StepTenInc',
+    github: 'https://github.com/ClarkSinghOS',
   },
 };
 
