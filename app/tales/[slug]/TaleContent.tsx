@@ -432,14 +432,17 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
       )}
 
       {/* Hero Section - 16:9 aspect ratio for videos */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        aspectRatio: tale.heroVideo ? '16/9' : undefined,
-        height: tale.heroVideo ? undefined : 'clamp(350px, 55vh, 550px)',
-        maxHeight: tale.heroVideo ? '75vh' : undefined,
-        overflow: 'hidden',
-      }}>
+      <div 
+        className={tale.heroVideo ? 'tale-hero-video' : ''}
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: tale.heroVideo ? '16/9' : undefined,
+          height: tale.heroVideo ? undefined : 'clamp(350px, 55vh, 550px)',
+          maxHeight: tale.heroVideo ? '75vh' : undefined,
+          overflow: 'hidden',
+        }}
+      >
         {tale.heroVideo ? (
           <video autoPlay loop muted playsInline style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
@@ -815,6 +818,10 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             margin-left: -24px !important;
             margin-right: -24px !important;
             aspect-ratio: 4/3 !important;
+          }
+          .tale-hero-video {
+            aspect-ratio: 4/5 !important;
+            max-height: 70vh !important;
           }
         }
       `}</style>
