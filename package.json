@@ -1,0 +1,10 @@
+{
+  "name": "stepten-io-world-domination",
+  "private": true,
+  "scripts": {
+    "dev": "cd site && npm run dev",
+    "build": "cd site && npm run build",
+    "start": "cd site && npm run start",
+    "postinstall": "cd site && npm install"
+  }
+}
