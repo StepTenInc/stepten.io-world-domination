@@ -86,15 +86,18 @@ export function TeamGrid() {
           </p>
         </div>
 
-        {/* Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '24px',
-          maxWidth: '1100px',
-          margin: '0 auto',
-          padding: '0 16px',
-        }}>
+        {/* Grid - 4 columns on desktop */}
+        <div
+          className="team-grid-container"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '16px',
+            maxWidth: '1000px',
+            margin: '0 auto',
+            padding: '0 16px',
+          }}
+        >
           {characters.map((char) => (
             <Link
               key={char.id}
@@ -259,6 +262,16 @@ export function TeamGrid() {
         }
         .team-card:hover .arrow {
           transform: translateX(4px);
+        }
+        @media (max-width: 900px) {
+          .team-grid-container {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 500px) {
+          .team-grid-container {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </section>
