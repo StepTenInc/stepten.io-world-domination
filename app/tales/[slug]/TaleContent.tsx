@@ -6,34 +6,78 @@ import Link from 'next/link';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { Tale } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
-import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag } from 'lucide-react';
+import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag, Menu, X } from 'lucide-react';
 
 interface TaleContentProps {
   tale: Tale;
   allTales: Tale[];
 }
 
+// Matrix rain component
+function MatrixRain({ color }: { color: string }) {
+  return (
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 0,
+      opacity: 0.06,
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: `repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,255,65,0.03) 2px,
+          rgba(0,255,65,0.03) 4px
+        )`,
+        animation: 'scanline 8s linear infinite',
+      }} />
+      {[...Array(20)].map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            left: `${i * 5 + Math.random() * 2}%`,
+            top: '-100%',
+            fontFamily: 'var(--fm)',
+            fontSize: '12px',
+            color: i % 3 === 0 ? color : 'var(--mx)',
+            opacity: 0.4 + Math.random() * 0.4,
+            writingMode: 'vertical-rl',
+            animation: `fall ${10 + Math.random() * 10}s linear infinite`,
+            animationDelay: `${Math.random() * 5}s`,
+          }}
+        >
+          {Array(30).fill(0).map(() => String.fromCharCode(0x30A0 + Math.random() * 96)).join('')}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function TaleContent({ tale, allTales }: TaleContentProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const author = characters[tale.author];
   const isHuman = tale.authorType === 'HUMAN';
   
-  // Related tales
   const relatedTales = allTales.filter(t => 
     t.slug !== tale.slug && (t.silo === tale.silo || t.category === tale.category)
   ).slice(0, 3);
 
-  // Table of contents
   const headings = tale.content.split('\n\n').filter(b => b.startsWith('## ')).map(h => ({
     text: h.slice(3),
     id: h.slice(3).toLowerCase().replace(/[^a-z0-9]+/g, '-'),
   }));
 
-  // Create image map for insertion after sections
   const imageMap = new Map<string, { url: string; alt: string }>();
   tale.images?.forEach(img => {
     if (img.afterSection) {
@@ -48,7 +92,6 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
       setScrollProgress((scrollTop / docHeight) * 100);
       setShowBackToTop(scrollTop > 500);
       
-      // Update active section
       const sections = document.querySelectorAll('h2[id]');
       sections.forEach(section => {
         const rect = section.getBoundingClientRect();
@@ -61,52 +104,68 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Render content with images
   const renderContent = () => {
     const blocks = tale.content.split('\n\n');
     const elements: React.ReactNode[] = [];
     let currentSectionTitle = '';
     
     blocks.forEach((block, i) => {
-      // Horizontal rule
       if (block.trim() === '---') {
         elements.push(
-          <div key={`hr-${i}`} style={{
+          <div key={`hr-${i}`} className="tale-divider" style={{
             height: '1px',
-            background: `linear-gradient(90deg, transparent, ${author.color}40, transparent)`,
+            background: `linear-gradient(90deg, transparent, ${author.color}, var(--mx), ${author.color}, transparent)`,
             margin: '48px 0',
-          }} />
+            position: 'relative',
+          }}>
+            <div style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '8px',
+              height: '8px',
+              background: author.color,
+              borderRadius: '50%',
+              boxShadow: `0 0 10px ${author.color}`,
+            }} />
+          </div>
         );
         return;
       }
       
-      // H2 headers
       if (block.startsWith('## ')) {
-        // Check if previous section had an image
         if (currentSectionTitle && imageMap.has(currentSectionTitle)) {
           const img = imageMap.get(currentSectionTitle)!;
           elements.push(
-            <div key={`img-${currentSectionTitle}`} style={{
-              margin: '40px 0',
-              borderRadius: '16px',
+            <div key={`img-${currentSectionTitle}`} className="tale-image" style={{
+              margin: '48px -40px',
+              borderRadius: '0',
               overflow: 'hidden',
-              border: '1px solid var(--bd)',
               position: 'relative',
               aspectRatio: '16/9',
-            }} className="tale-image">
+              border: `1px solid ${author.color}30`,
+            }}>
               <Image src={img.url} alt={img.alt} fill style={{ objectFit: 'cover' }} />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: `linear-gradient(to right, ${author.color}20, transparent, ${author.color}20)`,
+                pointerEvents: 'none',
+              }} />
               <div style={{
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
                 right: 0,
-                padding: '12px 16px',
-                background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
+                padding: '16px 24px',
+                background: `linear-gradient(transparent, rgba(0,0,0,0.9))`,
                 fontFamily: 'var(--fm)',
-                fontSize: '0.7rem',
-                color: 'var(--tx3)',
+                fontSize: '0.75rem',
+                color: author.color,
+                letterSpacing: '0.05em',
               }}>
-                {img.alt}
+                // {img.alt.toUpperCase()}
               </div>
             </div>
           );
@@ -116,35 +175,52 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         currentSectionTitle = text;
         const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         elements.push(
-          <h2 key={`h2-${i}`} id={id} style={{
+          <h2 key={`h2-${i}`} id={id} className="tale-heading" style={{
             fontFamily: 'var(--fd)',
-            fontSize: 'clamp(1.4rem, 4vw, 1.8rem)',
+            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             fontWeight: 700,
             color: 'var(--tx)',
-            marginTop: '56px',
+            marginTop: '64px',
             marginBottom: '24px',
-            lineHeight: 1.3,
+            lineHeight: 1.2,
             position: 'relative',
-            paddingLeft: '20px',
+            paddingLeft: '24px',
             scrollMarginTop: '100px',
-          }} className="tale-heading">
+          }}>
             <span style={{
               position: 'absolute',
               left: 0,
-              top: '50%',
-              transform: 'translateY(-50%)',
+              top: 0,
+              bottom: 0,
               width: '4px',
-              height: '70%',
-              background: author.color,
+              background: `linear-gradient(to bottom, ${author.color}, var(--mx))`,
               borderRadius: '2px',
+              boxShadow: `0 0 15px ${author.color}60`,
             }} />
+            <span style={{
+              position: 'absolute',
+              left: '-8px',
+              top: '-8px',
+              width: '20px',
+              height: '20px',
+              border: `2px solid ${author.color}`,
+              borderRadius: '50%',
+              background: 'var(--bk)',
+            }}>
+              <span style={{
+                position: 'absolute',
+                inset: '4px',
+                background: author.color,
+                borderRadius: '50%',
+                boxShadow: `0 0 10px ${author.color}`,
+              }} />
+            </span>
             {text}
           </h2>
         );
         return;
       }
       
-      // H3 headers
       if (block.startsWith('### ')) {
         elements.push(
           <h3 key={`h3-${i}`} style={{
@@ -154,6 +230,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             color: author.color,
             marginTop: '40px',
             marginBottom: '16px',
+            textShadow: `0 0 20px ${author.color}40`,
           }}>
             {block.slice(4)}
           </h3>
@@ -161,24 +238,32 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         return;
       }
       
-      // Q&A blocks
       if (block.startsWith('**Q:')) {
         elements.push(
           <div key={`qa-${i}`} style={{
-            background: 'var(--sf)',
+            background: `linear-gradient(135deg, var(--sf), ${author.color}08)`,
             border: '1px solid var(--bd)',
-            borderLeft: `3px solid ${author.color}`,
-            borderRadius: '0 12px 12px 0',
-            padding: '20px 24px',
-            marginBottom: '20px',
+            borderLeft: `4px solid ${author.color}`,
+            borderRadius: '0 16px 16px 0',
+            padding: '24px 28px',
+            marginBottom: '24px',
+            position: 'relative',
+            overflow: 'hidden',
           }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '100px',
+              height: '100px',
+              background: `radial-gradient(circle, ${author.color}10, transparent)`,
+            }} />
             <div 
               style={{
                 fontFamily: 'var(--fd)',
-                fontSize: '1rem',
+                fontSize: '1.05rem',
                 fontWeight: 600,
                 color: author.color,
-                marginBottom: '12px',
               }}
               dangerouslySetInnerHTML={{ __html: block.replace(/\*\*/g, '') }}
             />
@@ -187,35 +272,33 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         return;
       }
       
-      // Regular paragraph with inline formatting
       const formatted = block
-        .replace(/\*\*(.+?)\*\*/g, '<strong style="color: var(--tx); font-weight: 600;">$1</strong>')
+        .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color}; font-weight: 600;">$1</strong>`)
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.1); color: var(--mx); padding: 2px 8px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em;">$1</code>`);
+        .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em; border: 1px solid rgba(0,255,65,0.2);">$1</code>`);
       
-      // First paragraph gets drop cap
       if (i === 0) {
         const firstChar = block.charAt(0);
         const rest = block.slice(1)
-          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-          .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.1); color: var(--mx); padding: 2px 8px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em;">$1</code>`);
+          .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
+          .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em;">$1</code>`);
         elements.push(
           <p key={`p-${i}`} style={{
             fontFamily: 'var(--fb)',
-            fontSize: '1.15rem',
-            lineHeight: 1.9,
+            fontSize: '1.2rem',
+            lineHeight: 2,
             color: 'var(--tx2)',
-            marginBottom: '28px',
+            marginBottom: '32px',
           }}>
             <span style={{
               fontFamily: 'var(--fd)',
-              fontSize: '4rem',
+              fontSize: '5rem',
               float: 'left',
-              lineHeight: 0.8,
-              marginRight: '16px',
-              marginTop: '10px',
+              lineHeight: 0.75,
+              marginRight: '20px',
+              marginTop: '12px',
               color: author.color,
-              textShadow: `0 0 30px ${author.color}40`,
+              textShadow: `0 0 40px ${author.color}60`,
             }}>
               {firstChar}
             </span>
@@ -229,38 +312,36 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         <p key={`p-${i}`} style={{
           fontFamily: 'var(--fb)',
           fontSize: '1.1rem',
-          lineHeight: 1.85,
+          lineHeight: 1.9,
           color: 'var(--tx2)',
-          marginBottom: '24px',
+          marginBottom: '28px',
         }} dangerouslySetInnerHTML={{ __html: formatted }} />
       );
     });
     
-    // Check for image after last section
     if (currentSectionTitle && imageMap.has(currentSectionTitle)) {
       const img = imageMap.get(currentSectionTitle)!;
       elements.push(
-        <div key={`img-final`} style={{
-          margin: '40px 0',
-          borderRadius: '16px',
+        <div key={`img-final`} className="tale-image" style={{
+          margin: '48px -40px',
           overflow: 'hidden',
-          border: '1px solid var(--bd)',
           position: 'relative',
           aspectRatio: '16/9',
-        }} className="tale-image">
+          border: `1px solid ${author.color}30`,
+        }}>
           <Image src={img.url} alt={img.alt} fill style={{ objectFit: 'cover' }} />
           <div style={{
             position: 'absolute',
             bottom: 0,
             left: 0,
             right: 0,
-            padding: '12px 16px',
-            background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
+            padding: '16px 24px',
+            background: `linear-gradient(transparent, rgba(0,0,0,0.9))`,
             fontFamily: 'var(--fm)',
-            fontSize: '0.7rem',
-            color: 'var(--tx3)',
+            fontSize: '0.75rem',
+            color: author.color,
           }}>
-            {img.alt}
+            // {img.alt.toUpperCase()}
           </div>
         </div>
       );
@@ -271,6 +352,9 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
 
   return (
     <PublicLayout>
+      {/* Matrix Rain Background */}
+      <MatrixRain color={author.color} />
+      
       {/* Progress bar */}
       <div style={{
         position: 'fixed',
@@ -278,16 +362,80 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         left: 0,
         height: '3px',
         width: `${scrollProgress}%`,
-        background: `linear-gradient(90deg, ${author.color}, var(--mx))`,
-        zIndex: 1000,
-        transition: 'width 50ms linear',
+        background: `linear-gradient(90deg, ${author.color}, var(--mx), ${author.color})`,
+        zIndex: 1001,
+        boxShadow: `0 0 20px ${author.color}`,
       }} />
+
+      {/* Mobile TOC Toggle */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="mobile-toc-toggle"
+        style={{
+          position: 'fixed',
+          bottom: '90px',
+          right: '20px',
+          width: '48px',
+          height: '48px',
+          borderRadius: '12px',
+          background: 'var(--sf)',
+          border: `1px solid ${author.color}50`,
+          cursor: 'pointer',
+          display: 'none',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 100,
+          boxShadow: `0 0 20px ${author.color}30`,
+        }}
+      >
+        {mobileMenuOpen ? <X size={20} color={author.color} /> : <Menu size={20} color={author.color} />}
+      </button>
+
+      {/* Mobile TOC Panel */}
+      {mobileMenuOpen && (
+        <div className="mobile-toc-panel" style={{
+          position: 'fixed',
+          bottom: '150px',
+          right: '20px',
+          width: '280px',
+          maxHeight: '60vh',
+          background: 'var(--sf)',
+          border: `1px solid ${author.color}40`,
+          borderRadius: '16px',
+          padding: '20px',
+          zIndex: 99,
+          overflowY: 'auto',
+          display: 'none',
+        }}>
+          <div style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: author.color, marginBottom: '16px' }}>
+            // SECTIONS
+          </div>
+          {headings.map((h, i) => (
+            <a
+              key={i}
+              href={`#${h.id}`}
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                display: 'block',
+                fontFamily: 'var(--fb)',
+                fontSize: '0.85rem',
+                color: activeSection === h.id ? author.color : 'var(--tx3)',
+                textDecoration: 'none',
+                padding: '10px 0',
+                borderBottom: '1px solid var(--bd)',
+              }}
+            >
+              {h.text}
+            </a>
+          ))}
+        </div>
+      )}
 
       {/* Hero Section */}
       <div style={{
         position: 'relative',
         width: '100%',
-        height: 'clamp(300px, 50vh, 500px)',
+        height: 'clamp(350px, 55vh, 550px)',
         overflow: 'hidden',
       }}>
         {tale.heroVideo ? (
@@ -301,32 +449,45 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         ) : (
           <div style={{
             position: 'absolute', inset: 0,
-            background: `linear-gradient(135deg, var(--dk), ${author.color}20)`,
+            background: `linear-gradient(135deg, var(--dk), ${author.color}15)`,
           }} />
         )}
         
+        {/* Overlay effects */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: `linear-gradient(to bottom, transparent 30%, var(--bk) 100%)`,
+          background: `linear-gradient(to bottom, ${author.color}10 0%, transparent 30%, var(--bk) 100%)`,
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `linear-gradient(to right, ${author.color}15, transparent 50%, ${author.color}15)`,
         }} />
         
+        {/* Hero content */}
         <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px',
+          position: 'absolute', bottom: 0, left: 0, right: 0, padding: '48px',
           maxWidth: '1400px', margin: '0 auto',
         }}>
           <div style={{
-            display: 'inline-block', fontFamily: 'var(--fm)', fontSize: '0.6rem',
-            letterSpacing: '0.15em', padding: '6px 14px',
-            background: `${author.color}20`, border: `1px solid ${author.color}40`,
-            borderRadius: '4px', color: author.color, marginBottom: '16px',
+            display: 'inline-flex', alignItems: 'center', gap: '12px',
+            fontFamily: 'var(--fm)', fontSize: '0.65rem',
+            letterSpacing: '0.15em', padding: '8px 16px',
+            background: `${author.color}20`, border: `1px solid ${author.color}50`,
+            borderRadius: '4px', color: author.color, marginBottom: '20px',
           }}>
+            <span style={{
+              width: '8px', height: '8px', borderRadius: '50%',
+              background: author.color, boxShadow: `0 0 10px ${author.color}`,
+              animation: 'pulse 2s infinite',
+            }} />
             {tale.category.replace('_', ' ')}
           </div>
           
           <h1 style={{
-            fontFamily: 'var(--fd)', fontSize: 'clamp(1.8rem, 5vw, 3rem)',
-            fontWeight: 800, lineHeight: 1.15, color: 'var(--tx)',
-            textShadow: '0 2px 20px rgba(0,0,0,0.5)', maxWidth: '900px',
+            fontFamily: 'var(--fd)', fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+            fontWeight: 800, lineHeight: 1.1, color: 'var(--tx)',
+            textShadow: `0 2px 40px rgba(0,0,0,0.8), 0 0 60px ${author.color}30`,
+            maxWidth: '900px',
           }}>
             {tale.title}
           </h1>
@@ -336,34 +497,38 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
       {/* Main Content */}
       <div style={{
         maxWidth: '1400px', margin: '0 auto', padding: '0 24px',
-        display: 'grid', gridTemplateColumns: '1fr 320px', gap: '60px',
+        display: 'grid', gridTemplateColumns: '1fr 340px', gap: '80px',
+        position: 'relative', zIndex: 1,
       }} className="tale-layout">
         
         {/* Article */}
-        <article ref={contentRef} style={{ minWidth: 0 }}>
+        <article ref={contentRef} style={{ minWidth: 0, padding: '0 20px' }}>
           
           {/* Author & Meta */}
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            flexWrap: 'wrap', gap: '20px', padding: '24px 0',
-            borderBottom: '1px solid var(--bd)', marginBottom: '40px',
+            flexWrap: 'wrap', gap: '20px', padding: '28px 0',
+            borderBottom: `1px solid ${author.color}30`, marginBottom: '48px',
           }}>
             <Link href={`/team/${tale.author}`} style={{
-              display: 'flex', alignItems: 'center', gap: '14px',
+              display: 'flex', alignItems: 'center', gap: '16px',
               textDecoration: 'none', color: 'inherit',
             }}>
               <div style={{
-                position: 'relative', width: '52px', height: '52px', borderRadius: '50%',
-                overflow: 'hidden', border: `2px solid ${author.color}`,
-                boxShadow: `0 0 20px ${author.glow}`,
+                position: 'relative', width: '56px', height: '56px', borderRadius: '50%',
+                overflow: 'hidden', border: `3px solid ${author.color}`,
+                boxShadow: `0 0 25px ${author.glow}, inset 0 0 20px ${author.color}30`,
               }}>
                 <Image src={author.image} alt={author.name} fill style={{ objectFit: 'cover' }} />
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 700, color: author.color }}>
+                <div style={{
+                  fontFamily: 'var(--fd)', fontSize: '1rem', fontWeight: 700,
+                  color: author.color, textShadow: `0 0 20px ${author.color}50`,
+                }}>
                   {author.name}
                 </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)' }}>
                   {isHuman ? '🧑 HUMAN' : '🤖 AI'} · {author.role}
                 </div>
               </div>
@@ -371,21 +536,21 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             
             <div style={{
               display: 'flex', alignItems: 'center', gap: '20px',
-              fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)',
+              fontFamily: 'var(--fm)', fontSize: '0.75rem', color: 'var(--tx3)',
             }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Calendar size={14} /> {tale.date}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Calendar size={14} style={{ color: author.color }} /> {tale.date}
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Clock size={14} /> {tale.readTime}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Clock size={14} style={{ color: author.color }} /> {tale.readTime}
               </span>
               {tale.isPillar && (
                 <span style={{
-                  padding: '4px 10px', background: 'rgba(255,215,0,0.15)',
-                  border: '1px solid rgba(255,215,0,0.3)', borderRadius: '4px',
-                  color: '#ffd700', fontSize: '0.6rem',
+                  padding: '5px 12px', background: `${author.color}20`,
+                  border: `1px solid ${author.color}40`, borderRadius: '4px',
+                  color: author.color, fontSize: '0.65rem', letterSpacing: '0.08em',
                 }}>
-                  PILLAR
+                  ⭐ PILLAR
                 </span>
               )}
             </div>
@@ -399,16 +564,17 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           {/* Tags */}
           {tale.tags && tale.tags.length > 0 && (
             <div style={{
-              padding: '24px 0', borderTop: '1px solid var(--bd)',
-              display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center',
+              padding: '28px 0', borderTop: `1px solid ${author.color}20`,
+              display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center',
             }}>
-              <Tag size={16} style={{ color: 'var(--tx3)', marginRight: '8px' }} />
+              <Tag size={16} style={{ color: author.color, marginRight: '8px' }} />
               {tale.tags.map(tag => (
                 <span key={tag} style={{
                   fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)',
-                  padding: '4px 12px', background: 'var(--sf)', border: '1px solid var(--bd)',
-                  borderRadius: '16px',
-                }}>
+                  padding: '6px 14px', background: 'var(--sf)',
+                  border: `1px solid ${author.color}30`, borderRadius: '20px',
+                  transition: 'all 0.2s ease',
+                }} className="tag-pill">
                   {tag}
                 </span>
               ))}
@@ -417,19 +583,19 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
 
           {/* Navigation */}
           <div style={{
-            padding: '32px 0', borderTop: '1px solid var(--bd)',
+            padding: '32px 0', borderTop: `1px solid ${author.color}20`,
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             flexWrap: 'wrap', gap: '16px',
           }}>
             <Link href="/tales" style={{
-              fontFamily: 'var(--fm)', fontSize: '0.75rem', color: 'var(--mx)',
-              textDecoration: 'none', letterSpacing: '0.05em',
+              fontFamily: 'var(--fm)', fontSize: '0.8rem', color: 'var(--mx)',
+              textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px',
             }}>
               ← ALL TALES
             </Link>
             <Link href={`/team/${tale.author}`} style={{
-              fontFamily: 'var(--fm)', fontSize: '0.75rem', color: author.color,
-              textDecoration: 'none', letterSpacing: '0.05em',
+              fontFamily: 'var(--fm)', fontSize: '0.8rem', color: author.color,
+              textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px',
             }}>
               MORE FROM {author.name.toUpperCase()} →
             </Link>
@@ -437,31 +603,32 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         </article>
 
         {/* Sidebar */}
-        <aside style={{
+        <aside className="tale-sidebar" style={{
           position: 'sticky', top: '100px', height: 'fit-content',
-          display: 'flex', flexDirection: 'column', gap: '24px',
-        }} className="tale-sidebar">
+          display: 'flex', flexDirection: 'column', gap: '28px',
+        }}>
           
           {/* TOC */}
           <div style={{
-            background: 'var(--sf)', border: '1px solid var(--bd)',
-            borderRadius: '16px', padding: '24px',
+            background: `linear-gradient(135deg, var(--sf), ${author.color}05)`,
+            border: `1px solid ${author.color}30`, borderRadius: '20px', padding: '28px',
           }}>
             <div style={{
-              fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.15em',
-              color: 'var(--mx)', marginBottom: '16px',
+              fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.2em',
+              color: author.color, marginBottom: '20px',
             }}>
               // ON THIS PAGE
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               {headings.map((h, i) => (
                 <a key={i} href={`#${h.id}`} style={{
                   fontFamily: 'var(--fb)', fontSize: '0.85rem',
                   color: activeSection === h.id ? author.color : 'var(--tx3)',
-                  textDecoration: 'none', padding: '8px 0 8px 12px',
+                  textDecoration: 'none', padding: '10px 14px',
                   borderLeft: `2px solid ${activeSection === h.id ? author.color : 'var(--bd)'}`,
+                  background: activeSection === h.id ? `${author.color}15` : 'transparent',
+                  borderRadius: '0 8px 8px 0',
                   transition: 'all 0.2s ease',
-                  background: activeSection === h.id ? `${author.color}10` : 'transparent',
                 }}>
                   {h.text}
                 </a>
@@ -469,15 +636,15 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             </div>
           </div>
 
-          {/* Tools Mentioned */}
+          {/* Tools */}
           {tale.tools && tale.tools.length > 0 && (
             <div style={{
               background: `linear-gradient(135deg, ${author.color}10, var(--sf))`,
-              border: `1px solid ${author.color}30`, borderRadius: '16px', padding: '24px',
+              border: `1px solid ${author.color}40`, borderRadius: '20px', padding: '28px',
             }}>
               <div style={{
-                fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.15em',
-                color: author.color, marginBottom: '16px',
+                fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.2em',
+                color: author.color, marginBottom: '20px',
               }}>
                 // TOOLS MENTIONED
               </div>
@@ -485,12 +652,13 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                 {tale.tools.map((tool, i) => (
                   <a key={i} href={tool.url} target="_blank" rel="noopener noreferrer" style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '10px 14px', background: 'var(--dk)', borderRadius: '8px',
+                    padding: '12px 16px', background: 'var(--dk)', borderRadius: '10px',
                     textDecoration: 'none', color: 'var(--tx)', fontFamily: 'var(--fd)',
-                    fontSize: '0.85rem', fontWeight: 600, transition: 'transform 0.2s ease',
+                    fontSize: '0.85rem', fontWeight: 600, border: `1px solid ${author.color}20`,
+                    transition: 'all 0.2s ease',
                   }} className="tool-link">
                     {tool.name}
-                    <ExternalLink size={14} style={{ color: 'var(--tx3)' }} />
+                    <ExternalLink size={14} style={{ color: author.color }} />
                   </a>
                 ))}
               </div>
@@ -500,81 +668,34 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           {/* Downloads */}
           <div style={{
             background: 'var(--sf)', border: '1px solid var(--bd)',
-            borderRadius: '16px', padding: '24px',
+            borderRadius: '20px', padding: '28px',
           }}>
             <div style={{
-              fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.15em',
-              color: 'var(--mx)', marginBottom: '16px',
+              fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.2em',
+              color: 'var(--mx)', marginBottom: '20px',
             }}>
               // RESOURCES
             </div>
             <div style={{
-              display: 'flex', alignItems: 'center', gap: '12px',
-              padding: '14px', background: 'var(--dk)', borderRadius: '10px',
-              cursor: 'pointer', opacity: 0.6,
+              display: 'flex', alignItems: 'center', gap: '14px',
+              padding: '16px', background: 'var(--dk)', borderRadius: '12px',
+              cursor: 'pointer', opacity: 0.6, border: '1px solid var(--bd)',
             }}>
-              <Download size={20} style={{ color: 'var(--mx)' }} />
+              <Download size={22} style={{ color: 'var(--mx)' }} />
               <div>
                 <div style={{
-                  fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--tx)',
+                  fontFamily: 'var(--fd)', fontSize: '0.85rem', fontWeight: 600, color: 'var(--tx)',
                 }}>
                   AI Coding Roadmap
                 </div>
                 <div style={{
-                  fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)',
+                  fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)',
                 }}>
-                  PDF Guide • Coming Soon
+                  PDF • Coming Soon
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Related */}
-          {relatedTales.length > 0 && (
-            <div style={{
-              background: 'var(--sf)', border: '1px solid var(--bd)',
-              borderRadius: '16px', padding: '24px',
-            }}>
-              <div style={{
-                fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.15em',
-                color: 'var(--mx)', marginBottom: '16px',
-              }}>
-                // RELATED
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {relatedTales.map(rt => {
-                  const rtAuthor = characters[rt.author];
-                  return (
-                    <Link key={rt.slug} href={`/tales/${rt.slug}`} style={{
-                      display: 'flex', gap: '12px', textDecoration: 'none', color: 'inherit',
-                    }}>
-                      <div style={{
-                        width: '48px', height: '48px', borderRadius: '8px', overflow: 'hidden',
-                        flexShrink: 0, border: `1px solid ${rtAuthor.color}40`, background: 'var(--dk)',
-                      }}>
-                        {rt.heroImage && (
-                          <Image src={rt.heroImage} alt={rt.title} width={48} height={48} style={{ objectFit: 'cover' }} />
-                        )}
-                      </div>
-                      <div>
-                        <div style={{
-                          fontFamily: 'var(--fd)', fontSize: '0.8rem', fontWeight: 600,
-                          color: 'var(--tx)', lineHeight: 1.3, marginBottom: '4px',
-                        }}>
-                          {rt.title.length > 50 ? rt.title.slice(0, 50) + '...' : rt.title}
-                        </div>
-                        <div style={{
-                          fontFamily: 'var(--fm)', fontSize: '0.6rem', color: rtAuthor.color,
-                        }}>
-                          {rtAuthor.name} · {rt.readTime}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </aside>
       </div>
 
@@ -583,18 +704,33 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{
-            position: 'fixed', bottom: '30px', right: '30px', width: '48px', height: '48px',
-            borderRadius: '50%', background: author.color, border: 'none', cursor: 'pointer',
+            position: 'fixed', bottom: '30px', right: '30px', width: '52px', height: '52px',
+            borderRadius: '14px', background: author.color, border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: `0 0 20px ${author.glow}`, zIndex: 100,
+            boxShadow: `0 0 30px ${author.glow}`, zIndex: 100,
             animation: 'fadeIn 0.3s ease',
           }}
         >
-          <ChevronUp size={24} color="var(--bk)" />
+          <ChevronUp size={26} color="var(--bk)" />
         </button>
       )}
 
       <style jsx global>{`
+        @keyframes fall {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100vh); }
+        }
+        
+        @keyframes scanline {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(100%); }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.9); }
+        }
+        
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
@@ -605,7 +741,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         }
         
         @keyframes slideIn {
-          from { opacity: 0; transform: translateX(-10px); }
+          from { opacity: 0; transform: translateX(-20px); }
           to { opacity: 1; transform: translateX(0); }
         }
         
@@ -615,14 +751,50 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         
         .tool-link:hover {
           transform: translateX(4px);
+          border-color: ${author.color}50 !important;
+          box-shadow: 0 0 15px ${author.color}30;
+        }
+        
+        .tag-pill:hover {
+          background: ${author.color}15 !important;
+          border-color: ${author.color}50 !important;
+          color: ${author.color} !important;
+        }
+        
+        .tale-divider {
+          animation: expandLine 1s ease;
+        }
+        
+        @keyframes expandLine {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
         }
         
         @media (max-width: 1024px) {
           .tale-layout {
             grid-template-columns: 1fr !important;
+            gap: 40px !important;
           }
           .tale-sidebar {
             display: none !important;
+          }
+          .mobile-toc-toggle {
+            display: flex !important;
+          }
+          .mobile-toc-panel {
+            display: block !important;
+          }
+          .tale-image {
+            margin-left: -24px !important;
+            margin-right: -24px !important;
+          }
+        }
+        
+        @media (max-width: 640px) {
+          .tale-image {
+            margin-left: -24px !important;
+            margin-right: -24px !important;
+            aspect-ratio: 4/3 !important;
           }
         }
       `}</style>
