@@ -18,7 +18,7 @@ const characters: Character[] = [
     id: 'stepten',
     name: 'StepTen™',
     title: 'THE ARCHITECT',
-    tagline: 'Enjoy life. Get loose.',
+    tagline: 'Enjoy life. Make money. Get loose.',
     avatar: '/images/characters/stepten.jpg',
     color: '#00e5ff',
     isAI: false,
