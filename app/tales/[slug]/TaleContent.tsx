@@ -691,68 +691,124 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             </div>
           )}
 
-          {/* StepTen Score Breakdown */}
+          {/* StepTen Score Breakdown - Animated Card */}
           {tale.steptenScoreBreakdown && (
-            <div style={{
+            <div className="stepten-score-card" style={{
               background: 'linear-gradient(135deg, var(--dk), var(--mx)08)',
               border: '1px solid var(--mx)40', borderRadius: '20px', padding: '28px',
+              position: 'relative', overflow: 'hidden',
             }}>
+              {/* Animated glow effect */}
+              <div style={{
+                position: 'absolute', top: '-50%', right: '-50%',
+                width: '100%', height: '100%',
+                background: 'radial-gradient(circle, var(--mx)15, transparent 60%)',
+                animation: 'pulse 3s ease-in-out infinite',
+                pointerEvents: 'none',
+              }} />
+              
+              {/* Score Header */}
               <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                marginBottom: '20px',
+                marginBottom: '24px', position: 'relative',
               }}>
-                <div style={{
-                  fontFamily: 'var(--fm)', fontSize: '0.6rem', letterSpacing: '0.2em',
-                  color: 'var(--mx)',
-                }}>
-                  // STEPTEN SCORE
+                <div>
+                  <div style={{
+                    fontFamily: 'var(--fm)', fontSize: '0.55rem', letterSpacing: '0.2em',
+                    color: 'var(--mx)', marginBottom: '4px',
+                  }}>
+                    // STEPTEN SCORE™
+                  </div>
+                  <div style={{
+                    fontFamily: 'var(--fm)', fontSize: '0.6rem', color: 'var(--tx3)',
+                  }}>
+                    AI-Powered SEO Analysis
+                  </div>
                 </div>
                 <div style={{
-                  fontFamily: 'var(--fd)', fontSize: '1.5rem', fontWeight: 800,
-                  color: 'var(--mx)', textShadow: '0 0 20px var(--mx)',
+                  fontFamily: 'var(--fd)', fontSize: '2.2rem', fontWeight: 800,
+                  background: 'linear-gradient(135deg, var(--mx), var(--cy))',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                  textShadow: 'none',
+                  filter: 'drop-shadow(0 0 20px var(--mx))',
                 }}>
                   {tale.steptenScoreBreakdown.total}
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              
+              {/* Pillar Tabs */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', position: 'relative' }}>
                 {[
-                  { label: 'Content Intelligence', ...tale.steptenScoreBreakdown.contentIntelligence },
-                  { label: 'Technical SEO', ...tale.steptenScoreBreakdown.technicalSEO },
-                  { label: 'LLM Readiness', ...tale.steptenScoreBreakdown.llmReadiness },
-                  { label: 'Authority & Links', ...tale.steptenScoreBreakdown.authorityLinks },
-                  { label: 'Distribution', ...tale.steptenScoreBreakdown.distributionSocial },
-                  { label: 'Competitive Position', ...tale.steptenScoreBreakdown.competitivePosition },
+                  { label: 'Content', icon: '📝', ...tale.steptenScoreBreakdown.contentIntelligence },
+                  { label: 'Technical', icon: '⚙️', ...tale.steptenScoreBreakdown.technicalSEO },
+                  { label: 'LLM Ready', icon: '🤖', ...tale.steptenScoreBreakdown.llmReadiness },
+                  { label: 'Authority', icon: '🔗', ...tale.steptenScoreBreakdown.authorityLinks },
+                  { label: 'Distribution', icon: '📢', ...tale.steptenScoreBreakdown.distributionSocial },
+                  { label: 'Competitive', icon: '🎯', ...tale.steptenScoreBreakdown.competitivePosition },
                 ].map((pillar, i) => (
-                  <div key={i}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                      <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx3)' }}>
-                        {pillar.label}
-                      </span>
-                      <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--mx)' }}>
-                        {pillar.score}/{pillar.max}
+                  <div 
+                    key={i} 
+                    className="score-pillar-tab"
+                    style={{
+                      background: 'var(--sf)', border: '1px solid var(--bd)',
+                      borderRadius: '10px', padding: '12px 14px',
+                      cursor: 'pointer', transition: 'all 0.2s ease',
+                      position: 'relative', overflow: 'hidden',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '0.9rem' }}>{pillar.icon}</span>
+                        <span style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx2)' }}>
+                          {pillar.label}
+                        </span>
+                      </div>
+                      <span style={{ 
+                        fontFamily: 'var(--fd)', fontSize: '0.85rem', fontWeight: 700,
+                        color: 'var(--mx)',
+                      }}>
+                        {pillar.score}<span style={{ color: 'var(--tx3)', fontWeight: 400 }}>/{pillar.max}</span>
                       </span>
                     </div>
+                    {/* Progress bar */}
                     <div style={{
-                      height: '4px', background: 'var(--bd)', borderRadius: '2px', overflow: 'hidden',
+                      height: '3px', background: 'var(--bd)', borderRadius: '2px', 
+                      marginTop: '8px', overflow: 'hidden',
                     }}>
-                      <div style={{
+                      <div className="score-bar-fill" style={{
                         height: '100%', width: `${(pillar.score / pillar.max) * 100}%`,
                         background: 'linear-gradient(90deg, var(--mx), var(--cy))',
                         borderRadius: '2px',
-                        boxShadow: '0 0 8px var(--mx)',
+                        animation: `barFill 1s ease-out ${i * 0.1}s both`,
                       }} />
+                    </div>
+                    {/* Hover tooltip */}
+                    <div className="pillar-tooltip" style={{
+                      position: 'absolute', bottom: '100%', left: '50%',
+                      transform: 'translateX(-50%) translateY(10px)',
+                      background: 'var(--dk)', border: '1px solid var(--mx)40',
+                      borderRadius: '8px', padding: '10px 14px',
+                      fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx2)',
+                      whiteSpace: 'nowrap', opacity: 0, visibility: 'hidden',
+                      transition: 'all 0.2s ease', zIndex: 10,
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    }}>
+                      {pillar.details}
                     </div>
                   </div>
                 ))}
               </div>
-              <Link href="/tools/stepten-score" style={{
-                display: 'block', marginTop: '20px', padding: '10px 16px',
-                background: 'var(--mx)15', border: '1px solid var(--mx)40',
-                borderRadius: '8px', textAlign: 'center', textDecoration: 'none',
-                fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--mx)',
-                letterSpacing: '0.1em',
+              
+              <Link href="/tools/stepten-score" className="score-learn-more" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                marginTop: '20px', padding: '12px 16px',
+                background: 'transparent', border: '1px solid var(--mx)40',
+                borderRadius: '10px', textDecoration: 'none',
+                fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--mx)',
+                letterSpacing: '0.1em', transition: 'all 0.2s ease',
               }}>
-                LEARN HOW WE SCORE →
+                <span>LEARN HOW WE SCORE</span>
+                <ExternalLink size={12} />
               </Link>
             </div>
           )}
@@ -866,6 +922,38 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           background: ${author.color}15 !important;
           border-color: ${author.color}50 !important;
           color: ${author.color} !important;
+        }
+        
+        @keyframes barFill {
+          from { width: 0; }
+        }
+        
+        .score-pillar-tab:hover {
+          background: var(--mx)10 !important;
+          border-color: var(--mx)40 !important;
+          transform: translateX(4px);
+        }
+        
+        .score-pillar-tab:hover .pillar-tooltip {
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateX(-50%) translateY(0) !important;
+        }
+        
+        .score-learn-more:hover {
+          background: var(--mx)15 !important;
+          border-color: var(--mx) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px var(--mx)30;
+        }
+        
+        .stepten-score-card {
+          animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         
         .tale-divider {
