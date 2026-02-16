@@ -431,11 +431,13 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         </div>
       )}
 
-      {/* Hero Section */}
+      {/* Hero Section - 16:9 aspect ratio for videos */}
       <div style={{
         position: 'relative',
         width: '100%',
-        height: tale.heroVideo ? 'clamp(450px, 65vh, 700px)' : 'clamp(350px, 55vh, 550px)',
+        aspectRatio: tale.heroVideo ? '16/9' : undefined,
+        height: tale.heroVideo ? undefined : 'clamp(350px, 55vh, 550px)',
+        maxHeight: tale.heroVideo ? '75vh' : undefined,
         overflow: 'hidden',
       }}>
         {tale.heroVideo ? (
