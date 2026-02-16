@@ -1,0 +1,5 @@
+file 'clip1-stepten-entrance.mp4'
+file 'clip2-pinky-entrance.mp4'
+file 'clip3-clark-entrance.mp4'
+file 'clip4-reina-entrance.mp4'
+file 'clip5-group-party.mp4'
