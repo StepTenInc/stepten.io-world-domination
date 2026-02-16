@@ -18,7 +18,9 @@ export interface Tale {
   silo?: string;
   heroImage?: string;
   heroVideo?: string;
-  images?: Array<{ url: string; alt: string; section?: string }>;
+  images?: Array<{ url: string; alt: string; afterSection?: string }>;
+  tags?: string[];
+  tools?: Array<{ name: string; url?: string }>;
   steptenScore?: number;
 }
 
@@ -37,6 +39,20 @@ export const tales: Tale[] = [
     isPillar: true,
     silo: 'ai-coding',
     heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero.jpg',
+    images: [
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-1.jpg', alt: 'No-code builder interface', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-2.jpg', alt: 'Terminal with AI agents', afterSection: 'Stage 4: Unleash the Terminal Agents' },
+      { url: '/images/tales/chatgpt-to-terminal-ninja/section-3.jpg', alt: 'Final no-hands setup', afterSection: 'Stage 6: Final Form — No Hands' },
+    ],
+    tags: ['ai-coding', 'terminal', 'claude-code', 'cursor', 'non-coder', 'autonomous-agents', 'vibe-coding', 'no-code', 'mac-mini', 'warp'],
+    tools: [
+      { name: 'Cursor', url: 'https://cursor.com' },
+      { name: 'Claude Code', url: 'https://claude.ai' },
+      { name: 'Warp', url: 'https://warp.dev' },
+      { name: 'Vercel', url: 'https://vercel.com' },
+      { name: 'Supabase', url: 'https://supabase.com' },
+      { name: 'Replit', url: 'https://replit.com' },
+    ],
     steptenScore: 82.5,
     content: `I nearly drowned over Christmas 2024. Got sucked into a river mouth while surfing, proper scary stuff. So instead of getting back in the water, I spent the next few weeks drinking beers and wine late at night, watching YouTube like a degenerate. That's how I accidentally stumbled into AI coding.
 
