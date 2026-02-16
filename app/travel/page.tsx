@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { FlightMap } from '@/components/travel';
 
 const stats = {
@@ -24,8 +23,7 @@ const countryStats = [
 
 export default function TravelPage() {
   return (
-    <main>
-      <Header />
+    <PublicLayout>
 
       {/* Hero */}
       <section style={{
@@ -323,7 +321,6 @@ export default function TravelPage() {
         </div>
       </section>
 
-      <Footer />
-    </main>
+    </PublicLayout>
   );
 }

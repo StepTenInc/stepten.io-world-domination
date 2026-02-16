@@ -1,12 +1,8 @@
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { MobileDock } from '@/components/layout/MobileDock';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 
 export default function AboutPage() {
   return (
-    <main>
-      
-      <Header />
+    <PublicLayout>
 
       <section className="section">
         <div className="container">
@@ -75,9 +71,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
-      <MobileDock />
-    </main>
+    </PublicLayout>
   );
 }
 

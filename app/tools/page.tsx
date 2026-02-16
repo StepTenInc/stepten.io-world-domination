@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tools, categories, type Tool, type Category } from '@/lib/tools';
 
 export default function ToolsPage() {
@@ -19,8 +18,7 @@ export default function ToolsPage() {
   const usedCount = tools.filter(t => t.used).length;
 
   return (
-    <main>
-      <Header />
+    <PublicLayout>
 
       {/* Hero */}
       <section style={{
@@ -232,8 +230,7 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      <Footer />
-    </main>
+    </PublicLayout>
   );
 }
 

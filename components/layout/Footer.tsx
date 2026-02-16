@@ -45,7 +45,7 @@ export function Footer() {
               <FooterLink href="/tales">Tales</FooterLink>
               <FooterLink href="/team">The Team</FooterLink>
               <FooterLink href="/tools">Free Tools</FooterLink>
-              <FooterLink href="/chat">Chat</FooterLink>
+              <FooterLink href="/travel">Travel</FooterLink>
             </nav>
           </div>
 

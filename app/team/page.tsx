@@ -1,16 +1,12 @@
 import Image from 'next/image';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { MobileDock } from '@/components/layout/MobileDock';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { characters } from '@/lib/design-tokens';
 
 export default function TeamPage() {
   const characterList = Object.entries(characters);
 
   return (
-    <main>
-      
-      <Header />
+    <PublicLayout>
 
       {/* Header section */}
       <section className="section" style={{ paddingBottom: '24px' }}>
@@ -172,8 +168,6 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <Footer />
-      <MobileDock />
-    </main>
+    </PublicLayout>
   );
 }

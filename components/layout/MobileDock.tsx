@@ -8,7 +8,7 @@ const tabs = [
   { href: '/tales', icon: '📖', label: 'TALES' },
   { href: '/team', icon: '👥', label: 'TEAM' },
   { href: '/tools', icon: '🔧', label: 'TOOLS' },
-  { href: '/chat', icon: '💬', label: 'CHAT' },
+  { href: '/travel', icon: '✈️', label: 'TRAVEL' },
 ];
 
 export function MobileDock() {

@@ -1,16 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { MobileDock } from '@/components/layout/MobileDock';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tales, AuthorType } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 
 export default function TalesPage() {
   return (
-    <main>
-      
-      <Header />
+    <PublicLayout>
 
       <section className="section">
         <div className="container">
@@ -111,9 +107,7 @@ export default function TalesPage() {
         </div>
       </section>
 
-      <Footer />
-      <MobileDock />
-    </main>
+    </PublicLayout>
   );
 }
 

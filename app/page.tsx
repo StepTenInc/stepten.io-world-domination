@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { MobileDock } from '@/components/layout/MobileDock';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { TalesCarousel, TeamGrid, ToolsMarquee } from '@/components/home';
 import { characters } from '@/lib/design-tokens';
 
@@ -41,7 +39,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main>
+    <PublicLayout>
       {/* ═══════════════════════════════════════════ */}
       {/* BOOT SEQUENCE OVERLAY                       */}
       {/* ═══════════════════════════════════════════ */}
@@ -92,8 +90,6 @@ export default function HomePage() {
           </div>
         </div>
       )}
-
-      <Header />
 
       {/* ═══════════════════════════════════════════ */}
       {/* HERO — FULL SCREEN IMPACT                  */}
@@ -330,9 +326,6 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════ */}
       <ToolsMarquee />
 
-      <Footer />
-      <MobileDock />
-
       <style jsx global>{`
         @keyframes fadeOut {
           from { opacity: 1; }
@@ -362,6 +355,6 @@ export default function HomePage() {
           transform: translateX(4px);
         }
       `}</style>
-    </main>
+    </PublicLayout>
   );
 }

@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { MobileDock } from '@/components/layout/MobileDock';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tales, getTaleBySlug } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 
@@ -20,9 +18,7 @@ export default async function TaleDetailPage({ params }: { params: Promise<{ slu
   const isHuman = tale.authorType === 'HUMAN';
 
   return (
-    <main>
-      
-      <Header />
+    <PublicLayout>
 
       <article style={{ maxWidth: '760px', margin: '0 auto', padding: '40px 20px 80px' }}>
         {/* Back link */}
@@ -151,8 +147,6 @@ export default async function TaleDetailPage({ params }: { params: Promise<{ slu
         </div>
       </article>
 
-      <Footer />
-      <MobileDock />
-    </main>
+    </PublicLayout>
   );
 }
