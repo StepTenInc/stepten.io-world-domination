@@ -435,12 +435,14 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
       <div style={{
         position: 'relative',
         width: '100%',
-        height: 'clamp(350px, 55vh, 550px)',
+        height: tale.heroVideo ? 'clamp(400px, 56.25vw, 720px)' : 'clamp(350px, 55vh, 550px)',
+        maxHeight: tale.heroVideo ? '70vh' : undefined,
         overflow: 'hidden',
       }}>
         {tale.heroVideo ? (
           <video autoPlay loop muted playsInline style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain',
+            background: 'var(--bk)',
           }}>
             <source src={tale.heroVideo} type="video/mp4" />
           </video>
