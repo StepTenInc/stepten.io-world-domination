@@ -2,22 +2,21 @@
 
 import { useEffect, useState, useRef } from 'react';
 
-// City coordinates (normalized 0-100 for SVG viewBox)
-// Based on a cropped Asia-Pacific view
+// City coordinates (normalized for Asia-Pacific focus)
 const cities: Record<string, { x: number; y: number; name: string; flag: string }> = {
-  brisbane: { x: 88, y: 75, name: 'Brisbane', flag: '🇦🇺' },
-  sydney: { x: 86, y: 80, name: 'Sydney', flag: '🇦🇺' },
+  brisbane: { x: 88, y: 78, name: 'Brisbane', flag: '🇦🇺' },
+  sydney: { x: 86, y: 82, name: 'Sydney', flag: '🇦🇺' },
   manila: { x: 58, y: 42, name: 'Manila', flag: '🇵🇭' },
-  clark: { x: 57, y: 40, name: 'Clark', flag: '🇵🇭' },
-  bangkok: { x: 42, y: 42, name: 'Bangkok', flag: '🇹🇭' },
+  clark: { x: 56, y: 39, name: 'Clark', flag: '🇵🇭' },
+  bangkok: { x: 42, y: 44, name: 'Bangkok', flag: '🇹🇭' },
   chiangmai: { x: 40, y: 36, name: 'Chiang Mai', flag: '🇹🇭' },
-  hanoi: { x: 48, y: 34, name: 'Hanoi', flag: '🇻🇳' },
+  hanoi: { x: 48, y: 32, name: 'Hanoi', flag: '🇻🇳' },
   danang: { x: 50, y: 42, name: 'Da Nang', flag: '🇻🇳' },
-  saigon: { x: 48, y: 50, name: 'Saigon', flag: '🇻🇳' },
-  bali: { x: 54, y: 65, name: 'Bali', flag: '🇮🇩' },
-  mumbai: { x: 22, y: 38, name: 'Mumbai', flag: '🇮🇳' },
-  chennai: { x: 26, y: 48, name: 'Chennai', flag: '🇮🇳' },
-  kotakinabalu: { x: 54, y: 52, name: 'Kota Kinabalu', flag: '🇲🇾' },
+  saigon: { x: 48, y: 52, name: 'Saigon', flag: '🇻🇳' },
+  bali: { x: 54, y: 68, name: 'Bali', flag: '🇮🇩' },
+  mumbai: { x: 20, y: 40, name: 'Mumbai', flag: '🇮🇳' },
+  chennai: { x: 24, y: 50, name: 'Chennai', flag: '🇮🇳' },
+  kotakinabalu: { x: 54, y: 54, name: 'Kota Kinabalu', flag: '🇲🇾' },
 };
 
 interface Flight {
@@ -28,419 +27,575 @@ interface Flight {
   month?: string;
   title: string;
   description: string;
-  color: string;
 }
 
 const flights: Flight[] = [
-  // 2016
-  { id: 1, from: 'brisbane', to: 'manila', year: 2016, month: 'Jun', title: 'The Big Move', description: 'Left Australia. Started the 10-year journey. No plan, just a one-way ticket.', color: '#ff6b6b' },
-  { id: 2, from: 'manila', to: 'mumbai', year: 2016, month: 'Sep', title: 'Visit CB in Mumbai', description: 'Flew to India to see my mate CB. First time in India. Culture shock.', color: '#ff6b6b' },
-  { id: 3, from: 'mumbai', to: 'brisbane', year: 2016, month: 'Sep', title: 'Quick Home Visit', description: 'Back to Oz briefly before returning to PH.', color: '#ff6b6b' },
-  { id: 4, from: 'brisbane', to: 'mumbai', year: 2016, month: 'Oct', title: 'Sister\'s Wedding Trip', description: 'Back to India for 3 weeks after my sister\'s wedding. Exploring.', color: '#ff6b6b' },
-  { id: 5, from: 'mumbai', to: 'manila', year: 2016, month: 'Nov', title: 'Back to Base', description: 'Returned to Philippines. This is home now.', color: '#ff6b6b' },
-  { id: 6, from: 'manila', to: 'bangkok', year: 2016, month: 'Dec', title: 'NYE with a Girl', description: 'Took a Filipina to Thailand for Christmas & New Years. 11 days in Bangkok.', color: '#ff6b6b' },
-  
-  // 2017
-  { id: 7, from: 'bangkok', to: 'manila', year: 2017, month: 'Jan', title: 'Back from Thailand', description: 'NYE done. Back to work building the business.', color: '#ffd93d' },
-  { id: 8, from: 'clark', to: 'chennai', year: 2017, month: 'Jul', title: 'Chennai Trip #1', description: 'Flew to India to check out dev talent. 4 days in Chennai.', color: '#ffd93d' },
-  { id: 9, from: 'chennai', to: 'clark', year: 2017, month: 'Jul', title: 'Back to Clark', description: 'Returned with insights. Building the team.', color: '#ffd93d' },
-  { id: 10, from: 'clark', to: 'chennai', year: 2017, month: 'Nov', title: 'Chennai Trip #2', description: 'Second India trip. 6 days this time. Dev hunting.', color: '#ffd93d' },
-  { id: 11, from: 'chennai', to: 'clark', year: 2017, month: 'Nov', title: 'Back to Base', description: 'Got the SCWV work visa. Now legally working in Clark.', color: '#ffd93d' },
-  
-  // 2019
-  { id: 12, from: 'clark', to: 'bali', year: 2019, month: 'Feb', title: 'Bali Getaway', description: '3 days in Bali. Quick escape from work.', color: '#4d96ff' },
-  { id: 13, from: 'bali', to: 'clark', year: 2019, month: 'Feb', title: 'Back to Work', description: 'Short but sweet. Bali will become a regular.', color: '#4d96ff' },
-  { id: 14, from: 'clark', to: 'kotakinabalu', year: 2019, month: 'Aug', title: 'Sabah Adventure', description: '3 days in Malaysian Borneo. Kota Kinabalu.', color: '#4d96ff' },
-  { id: 15, from: 'kotakinabalu', to: 'clark', year: 2019, month: 'Aug', title: 'Back to Clark', description: 'Got the original SCWV in December. Official now.', color: '#4d96ff' },
-  
-  // 2022-2023
-  { id: 16, from: 'clark', to: 'bali', year: 2022, month: 'Dec', title: 'Christmas in Bali', description: 'First real travel post-COVID. A week in Bali.', color: '#00d4ff' },
-  { id: 17, from: 'bali', to: 'clark', year: 2023, month: 'Jan', title: 'Back to Clark', description: 'New year, back to building.', color: '#ff00ff' },
-  { id: 18, from: 'clark', to: 'bali', year: 2023, month: 'Mar', title: 'Quick Bali Trip', description: '3 day weekend in Bali. Can\'t stay away.', color: '#ff00ff' },
-  { id: 19, from: 'bali', to: 'clark', year: 2023, month: 'Mar', title: 'Back to Work', description: 'Building ShoreAgents. Growing the team.', color: '#ff00ff' },
-  
-  // 2024 - The Big Travel Year
-  { id: 20, from: 'clark', to: 'bali', year: 2024, month: 'Jan', title: 'January Bali', description: '29 days in Bali. Working remotely. Living the dream.', color: '#00ff41' },
-  { id: 21, from: 'bali', to: 'bangkok', year: 2024, month: 'Feb', title: 'To Thailand', description: 'Left Bali, headed to Bangkok. Month in Thailand coming up.', color: '#00ff41' },
-  { id: 22, from: 'bangkok', to: 'chiangmai', year: 2024, month: 'Mar', title: 'North to Chiang Mai', description: 'Explored northern Thailand. Digital nomad vibes.', color: '#00ff41' },
-  { id: 23, from: 'chiangmai', to: 'hanoi', year: 2024, month: 'Mar', title: 'Vietnam Begins', description: 'Flew to Hanoi. First time in Vietnam.', color: '#00ff41' },
-  { id: 24, from: 'hanoi', to: 'clark', year: 2024, month: 'Apr', title: 'Quick PH Stop', description: 'Back to handle some business.', color: '#00ff41' },
-  { id: 25, from: 'clark', to: 'bangkok', year: 2024, month: 'Jun', title: 'Back to Thailand', description: 'Round 2 in Thailand.', color: '#00ff41' },
-  { id: 26, from: 'bangkok', to: 'danang', year: 2024, month: 'Jun', title: 'To Da Nang', description: '73 days in Vietnam. Working from cafes.', color: '#00ff41' },
-  { id: 27, from: 'danang', to: 'clark', year: 2024, month: 'Sep', title: 'Back to PH', description: 'Long Vietnam trip done. Back to base.', color: '#00ff41' },
-  { id: 28, from: 'clark', to: 'bali', year: 2024, month: 'Dec', title: 'Christmas Bali', description: '9 days in Bali for Christmas.', color: '#00ff41' },
-  { id: 29, from: 'bali', to: 'saigon', year: 2024, month: 'Dec', title: 'To Saigon', description: 'Flew to Ho Chi Minh City. More Vietnam.', color: '#00ff41' },
-  
-  // 2025
-  { id: 30, from: 'saigon', to: 'danang', year: 2025, month: 'Mar', title: 'Da Nang Again', description: 'Quick 1-day trip through Da Nang.', color: '#00e5ff' },
-  { id: 31, from: 'danang', to: 'clark', year: 2025, month: 'Mar', title: 'Back to Clark', description: 'Renewed SCWV. 2-year visa now. Locked in til 2027.', color: '#00e5ff' },
-  
-  // 2026
-  { id: 32, from: 'clark', to: 'brisbane', year: 2026, month: 'Feb', title: 'Visiting Mum', description: 'Currently in Australia. First home visit in a while.', color: '#ffffff' },
+  { id: 1, from: 'brisbane', to: 'manila', year: 2016, month: 'Jun', title: 'THE BIG MOVE', description: 'One-way ticket. No plan. Just a vision.' },
+  { id: 2, from: 'manila', to: 'mumbai', year: 2016, month: 'Sep', title: 'MUMBAI MISSION', description: 'Visiting mate CB. First time in India.' },
+  { id: 3, from: 'mumbai', to: 'brisbane', year: 2016, month: 'Sep', title: 'QUICK HOME RUN', description: 'Back to Oz briefly.' },
+  { id: 4, from: 'brisbane', to: 'mumbai', year: 2016, month: 'Oct', title: 'POST-WEDDING INDIA', description: '3 weeks exploring after sisters wedding.' },
+  { id: 5, from: 'mumbai', to: 'manila', year: 2016, month: 'Nov', title: 'BACK TO BASE', description: 'Philippines is home now.' },
+  { id: 6, from: 'manila', to: 'bangkok', year: 2016, month: 'Dec', title: 'NYE WITH A GIRL', description: '11 days in Bangkok. Christmas & New Years.' },
+  { id: 7, from: 'bangkok', to: 'manila', year: 2017, month: 'Jan', title: 'BACK FROM THAILAND', description: 'NYE done. Back to building.' },
+  { id: 8, from: 'clark', to: 'chennai', year: 2017, month: 'Jul', title: 'CHENNAI TRIP #1', description: '4 days. Checking out dev talent.' },
+  { id: 9, from: 'chennai', to: 'clark', year: 2017, month: 'Jul', title: 'RETURN FLIGHT', description: 'Back with insights.' },
+  { id: 10, from: 'clark', to: 'chennai', year: 2017, month: 'Nov', title: 'CHENNAI TRIP #2', description: '6 days this time. Dev hunting.' },
+  { id: 11, from: 'chennai', to: 'clark', year: 2017, month: 'Nov', title: 'WORK VISA SECURED', description: 'Pre-arranged Employee status granted.' },
+  { id: 12, from: 'clark', to: 'bali', year: 2019, month: 'Feb', title: 'BALI ESCAPE', description: '3 days in paradise.' },
+  { id: 13, from: 'bali', to: 'clark', year: 2019, month: 'Feb', title: 'BACK TO GRIND', description: 'Short but sweet.' },
+  { id: 14, from: 'clark', to: 'kotakinabalu', year: 2019, month: 'Aug', title: 'SABAH ADVENTURE', description: 'Malaysian Borneo. 3 days.' },
+  { id: 15, from: 'kotakinabalu', to: 'clark', year: 2019, month: 'Aug', title: 'SCWV INCOMING', description: 'Original work visa in December.' },
+  { id: 16, from: 'clark', to: 'bali', year: 2022, month: 'Dec', title: 'COVID OVER', description: 'First travel post-pandemic. Christmas in Bali.' },
+  { id: 17, from: 'bali', to: 'clark', year: 2023, month: 'Jan', title: 'NEW YEAR NEW BUILDS', description: 'Back to work.' },
+  { id: 18, from: 'clark', to: 'bali', year: 2023, month: 'Mar', title: 'QUICK BALI FIX', description: '3 day weekend. Cant stay away.' },
+  { id: 19, from: 'bali', to: 'clark', year: 2023, month: 'Mar', title: 'BUILDING SHOREAGENTS', description: 'Growing the team.' },
+  { id: 20, from: 'clark', to: 'bali', year: 2024, month: 'Jan', title: 'NOMAD MODE: ON', description: '29 days working from Bali.' },
+  { id: 21, from: 'bali', to: 'bangkok', year: 2024, month: 'Feb', title: 'THAILAND BOUND', description: 'Month in Thailand coming up.' },
+  { id: 22, from: 'bangkok', to: 'chiangmai', year: 2024, month: 'Mar', title: 'NORTH TO CHIANG MAI', description: 'Digital nomad central.' },
+  { id: 23, from: 'chiangmai', to: 'hanoi', year: 2024, month: 'Mar', title: 'VIETNAM BEGINS', description: 'First time in Vietnam.' },
+  { id: 24, from: 'hanoi', to: 'clark', year: 2024, month: 'Apr', title: 'QUICK PH STOP', description: 'Handle some business.' },
+  { id: 25, from: 'clark', to: 'bangkok', year: 2024, month: 'Jun', title: 'THAILAND ROUND 2', description: 'Back for more.' },
+  { id: 26, from: 'bangkok', to: 'danang', year: 2024, month: 'Jun', title: '73 DAYS IN VIETNAM', description: 'Working from cafes. Living the dream.' },
+  { id: 27, from: 'danang', to: 'clark', year: 2024, month: 'Sep', title: 'BACK TO BASE', description: 'Long trip done.' },
+  { id: 28, from: 'clark', to: 'bali', year: 2024, month: 'Dec', title: 'CHRISTMAS BALI', description: '9 days in paradise.' },
+  { id: 29, from: 'bali', to: 'saigon', year: 2024, month: 'Dec', title: 'TO SAIGON', description: 'More Vietnam time.' },
+  { id: 30, from: 'saigon', to: 'danang', year: 2025, month: 'Mar', title: 'DA NANG QUICK STOP', description: '1 day transit.' },
+  { id: 31, from: 'danang', to: 'clark', year: 2025, month: 'Mar', title: '2-YEAR VISA SECURED', description: 'Locked in til 2027.' },
+  { id: 32, from: 'clark', to: 'brisbane', year: 2026, month: 'Feb', title: 'VISITING MUM', description: 'Currently in Australia.' },
 ];
+
+const yearColors: Record<number, string> = {
+  2016: '#ff6b6b',
+  2017: '#ffd93d',
+  2019: '#4d96ff',
+  2022: '#00d4ff',
+  2023: '#ff00ff',
+  2024: '#00ff41',
+  2025: '#00e5ff',
+  2026: '#ffffff',
+};
 
 export function FlightMap() {
   const [currentFlight, setCurrentFlight] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
   const [progress, setProgress] = useState(0);
-  const svgRef = useRef<SVGSVGElement>(null);
+  const [particles, setParticles] = useState<{ x: number; y: number; age: number }[]>([]);
+  const [showLanding, setShowLanding] = useState(false);
 
-  // Auto-play through flights
+  // Auto-play
   useEffect(() => {
     if (!isPlaying) return;
     
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p >= 100) {
-          setCurrentFlight((f) => (f + 1) % flights.length);
-          return 0;
+          setShowLanding(true);
+          setTimeout(() => {
+            setShowLanding(false);
+            setCurrentFlight((f) => (f + 1) % flights.length);
+          }, 800);
+          return 100;
         }
-        return p + 2;
+        return p + 1.5;
       });
-    }, 50);
+    }, 40);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, currentFlight]);
+
+  // Reset progress when flight changes
+  useEffect(() => {
+    setProgress(0);
+  }, [currentFlight]);
+
+  // Particle trail
+  useEffect(() => {
+    if (progress > 0 && progress < 100) {
+      const flight = flights[currentFlight];
+      const from = cities[flight.from];
+      const to = cities[flight.to];
+      const t = progress / 100;
+      
+      // Quadratic bezier calculation
+      const mx = (from.x + to.x) / 2;
+      const my = Math.min(from.y, to.y) - 15;
+      const x = (1-t)*(1-t)*from.x + 2*(1-t)*t*mx + t*t*to.x;
+      const y = (1-t)*(1-t)*from.y + 2*(1-t)*t*my + t*t*to.y;
+      
+      setParticles(prev => [...prev.slice(-20), { x, y, age: 0 }]);
+    }
+  }, [progress, currentFlight]);
+
+  // Age particles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setParticles(prev => prev.map(p => ({ ...p, age: p.age + 1 })).filter(p => p.age < 15));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
   const flight = flights[currentFlight];
-  const fromCity = cities[flight.from];
-  const toCity = cities[flight.to];
+  const from = cities[flight.from];
+  const to = cities[flight.to];
+  const color = yearColors[flight.year] || '#00ff41';
 
-  // Calculate plane position along path
-  const planeX = fromCity.x + (toCity.x - fromCity.x) * (progress / 100);
-  const planeY = fromCity.y + (toCity.y - fromCity.y) * (progress / 100);
+  // Bezier curve calculation
+  const t = progress / 100;
+  const mx = (from.x + to.x) / 2;
+  const my = Math.min(from.y, to.y) - 15;
+  const planeX = (1-t)*(1-t)*from.x + 2*(1-t)*t*mx + t*t*to.x;
+  const planeY = (1-t)*(1-t)*from.y + 2*(1-t)*t*my + t*t*to.y;
   
-  // Add arc to path (curve upward)
-  const midX = (fromCity.x + toCity.x) / 2;
-  const midY = (fromCity.y + toCity.y) / 2 - 10; // Arc upward
-
-  // Calculate rotation angle for plane
-  const angle = Math.atan2(toCity.y - fromCity.y, toCity.x - fromCity.x) * (180 / Math.PI);
+  // Plane rotation
+  const dx = 2*(1-t)*(mx-from.x) + 2*t*(to.x-mx);
+  const dy = 2*(1-t)*(my-from.y) + 2*t*(to.y-my);
+  const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* Controls */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '16px',
-        marginBottom: '24px',
-      }}>
-        <button
-          onClick={() => setCurrentFlight((f) => (f - 1 + flights.length) % flights.length)}
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            background: 'var(--sf)',
-            border: '1px solid var(--bd)',
-            color: 'var(--tx1)',
-            fontSize: '1.2rem',
-            cursor: 'pointer',
-          }}
-        >
-          ←
-        </button>
-        
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          style={{
-            padding: '12px 32px',
-            borderRadius: '30px',
-            background: isPlaying ? 'var(--mx)' : 'var(--sf)',
-            border: '1px solid var(--mx)',
-            color: isPlaying ? 'var(--dk)' : 'var(--mx)',
-            fontFamily: 'var(--fd)',
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-          }}
-        >
-          {isPlaying ? '⏸ PAUSE' : '▶ PLAY'}
-        </button>
-        
-        <button
-          onClick={() => setCurrentFlight((f) => (f + 1) % flights.length)}
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            background: 'var(--sf)',
-            border: '1px solid var(--bd)',
-            color: 'var(--tx1)',
-            fontSize: '1.2rem',
-            cursor: 'pointer',
-          }}
-        >
-          →
-        </button>
-      </div>
-
-      {/* Flight Counter */}
-      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-        <span style={{
-          fontFamily: 'var(--fm)',
-          fontSize: '0.65rem',
-          color: 'var(--tx3)',
-        }}>
-          FLIGHT {currentFlight + 1} OF {flights.length}
-        </span>
-      </div>
-
-      {/* Map Container */}
+      {/* HUD Frame */}
       <div style={{
         position: 'relative',
-        background: 'linear-gradient(180deg, #0a1628 0%, #0d0d0d 100%)',
-        borderRadius: '20px',
+        background: 'linear-gradient(180deg, rgba(0,20,40,0.95) 0%, rgba(5,5,15,0.98) 100%)',
+        borderRadius: '24px',
         overflow: 'hidden',
-        border: '1px solid var(--bd)',
-        boxShadow: '0 0 60px rgba(0,255,65,0.1)',
+        border: '2px solid rgba(0,255,65,0.3)',
+        boxShadow: '0 0 80px rgba(0,255,65,0.15), inset 0 0 100px rgba(0,255,65,0.03)',
       }}>
+        {/* Scanline effect */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.02) 2px, rgba(0,255,65,0.02) 4px)',
+          pointerEvents: 'none',
+          zIndex: 100,
+        }} />
+
+        {/* Corner brackets */}
+        {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((corner) => (
+          <div
+            key={corner}
+            style={{
+              position: 'absolute',
+              width: '40px',
+              height: '40px',
+              [corner.includes('top') ? 'top' : 'bottom']: '10px',
+              [corner.includes('left') ? 'left' : 'right']: '10px',
+              borderTop: corner.includes('top') ? '2px solid rgba(0,255,65,0.5)' : 'none',
+              borderBottom: corner.includes('bottom') ? '2px solid rgba(0,255,65,0.5)' : 'none',
+              borderLeft: corner.includes('left') ? '2px solid rgba(0,255,65,0.5)' : 'none',
+              borderRight: corner.includes('right') ? '2px solid rgba(0,255,65,0.5)' : 'none',
+              zIndex: 50,
+            }}
+          />
+        ))}
+
+        {/* Top HUD Bar */}
+        <div style={{
+          position: 'absolute',
+          top: '20px',
+          left: '60px',
+          right: '60px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          zIndex: 50,
+        }}>
+          <div style={{
+            fontFamily: 'var(--fm)',
+            fontSize: '0.6rem',
+            color: 'rgba(0,255,65,0.7)',
+            letterSpacing: '0.2em',
+          }}>
+            FLIGHT TRACKER v2.0
+          </div>
+          <div style={{
+            fontFamily: 'var(--fm)',
+            fontSize: '0.7rem',
+            color: color,
+            letterSpacing: '0.1em',
+          }}>
+            {flight.year} {flight.month && `// ${flight.month.toUpperCase()}`}
+          </div>
+          <div style={{
+            fontFamily: 'var(--fm)',
+            fontSize: '0.6rem',
+            color: 'rgba(0,255,65,0.7)',
+          }}>
+            {String(currentFlight + 1).padStart(2, '0')}/{flights.length}
+          </div>
+        </div>
+
+        {/* SVG Map */}
         <svg
-          ref={svgRef}
           viewBox="0 0 100 100"
           style={{
             width: '100%',
             height: 'auto',
-            aspectRatio: '16/10',
+            aspectRatio: '16/9',
           }}
         >
-          {/* Grid lines */}
           <defs>
-            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,65,0.05)" strokeWidth="0.1"/>
+            {/* Glow filter */}
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            
+            {/* Big glow */}
+            <filter id="bigGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+
+            {/* Grid pattern */}
+            <pattern id="grid" width="5" height="5" patternUnits="userSpaceOnUse">
+              <path d="M 5 0 L 0 0 0 5" fill="none" stroke="rgba(0,255,65,0.08)" strokeWidth="0.1"/>
             </pattern>
+
+            {/* Radial gradient for landing effect */}
+            <radialGradient id="landingGlow">
+              <stop offset="0%" stopColor={color} stopOpacity="0.8" />
+              <stop offset="100%" stopColor={color} stopOpacity="0" />
+            </radialGradient>
           </defs>
+
+          {/* Grid background */}
           <rect width="100" height="100" fill="url(#grid)" />
 
-          {/* All previous flight paths (faded) */}
+          {/* All completed flight paths */}
           {flights.slice(0, currentFlight).map((f, i) => {
-            const from = cities[f.from];
-            const to = cities[f.to];
-            const mx = (from.x + to.x) / 2;
-            const my = (from.y + to.y) / 2 - 8;
+            const fromC = cities[f.from];
+            const toC = cities[f.to];
+            const midX = (fromC.x + toC.x) / 2;
+            const midY = Math.min(fromC.y, toC.y) - 12;
+            const c = yearColors[f.year] || '#00ff41';
             return (
               <path
                 key={i}
-                d={`M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`}
+                d={`M ${fromC.x} ${fromC.y} Q ${midX} ${midY} ${toC.x} ${toC.y}`}
                 fill="none"
-                stroke={f.color}
+                stroke={c}
                 strokeWidth="0.3"
-                opacity="0.2"
+                opacity="0.15"
               />
             );
           })}
 
-          {/* Current flight path */}
+          {/* Current flight path background */}
           <path
-            d={`M ${fromCity.x} ${fromCity.y} Q ${midX} ${midY} ${toCity.x} ${toCity.y}`}
+            d={`M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`}
             fill="none"
-            stroke={flight.color}
-            strokeWidth="0.5"
-            strokeDasharray="2,1"
-            opacity="0.6"
+            stroke={color}
+            strokeWidth="0.4"
+            strokeDasharray="1,0.5"
+            opacity="0.3"
           />
 
-          {/* Animated flight path (fills in) */}
+          {/* Animated flight path */}
           <path
-            d={`M ${fromCity.x} ${fromCity.y} Q ${midX} ${midY} ${toCity.x} ${toCity.y}`}
+            d={`M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`}
             fill="none"
-            stroke={flight.color}
+            stroke={color}
             strokeWidth="0.8"
-            strokeDasharray="100"
-            strokeDashoffset={100 - progress}
+            strokeLinecap="round"
             style={{
-              filter: `drop-shadow(0 0 3px ${flight.color})`,
+              strokeDasharray: 50,
+              strokeDashoffset: 50 - (progress / 2),
+              filter: 'url(#glow)',
             }}
           />
 
-          {/* City dots */}
+          {/* Particle trail */}
+          {particles.map((p, i) => (
+            <circle
+              key={i}
+              cx={p.x}
+              cy={p.y}
+              r={0.8 - p.age * 0.05}
+              fill={color}
+              opacity={0.6 - p.age * 0.04}
+            />
+          ))}
+
+          {/* City markers */}
           {Object.entries(cities).map(([id, city]) => {
-            const isActive = id === flight.from || id === flight.to;
+            const isFrom = id === flight.from;
+            const isTo = id === flight.to;
+            const isActive = isFrom || isTo;
+            
             return (
               <g key={id}>
+                {/* Outer pulse for active cities */}
+                {isActive && (
+                  <circle
+                    cx={city.x}
+                    cy={city.y}
+                    r="3"
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="0.3"
+                  >
+                    <animate
+                      attributeName="r"
+                      from="1"
+                      to="5"
+                      dur="2s"
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      from="0.8"
+                      to="0"
+                      dur="2s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                )}
+                
+                {/* City dot */}
                 <circle
                   cx={city.x}
                   cy={city.y}
-                  r={isActive ? 1.5 : 0.8}
-                  fill={isActive ? flight.color : '#00ff41'}
+                  r={isActive ? 1.2 : 0.6}
+                  fill={isActive ? color : '#00ff41'}
                   opacity={isActive ? 1 : 0.4}
-                  style={{
-                    filter: isActive ? `drop-shadow(0 0 4px ${flight.color})` : undefined,
-                  }}
+                  style={{ filter: isActive ? 'url(#glow)' : undefined }}
                 />
+
+                {/* City label for active */}
                 {isActive && (
-                  <>
-                    <circle
-                      cx={city.x}
-                      cy={city.y}
-                      r="3"
-                      fill="none"
-                      stroke={flight.color}
-                      strokeWidth="0.2"
-                      opacity="0.5"
-                    >
-                      <animate
-                        attributeName="r"
-                        from="1.5"
-                        to="4"
-                        dur="1.5s"
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        from="0.6"
-                        to="0"
-                        dur="1.5s"
-                        repeatCount="indefinite"
-                      />
-                    </circle>
+                  <g>
                     <text
                       x={city.x}
-                      y={city.y - 3}
+                      y={city.y + (isFrom ? 4 : -2.5)}
                       textAnchor="middle"
-                      fill="#ffffff"
-                      fontSize="2.5"
+                      fill={color}
+                      fontSize="2.2"
+                      fontWeight="bold"
+                      fontFamily="system-ui"
+                      style={{ filter: 'url(#glow)' }}
+                    >
+                      {city.name.toUpperCase()}
+                    </text>
+                    <text
+                      x={city.x}
+                      y={city.y + (isFrom ? 6.5 : -5)}
+                      textAnchor="middle"
+                      fill="rgba(255,255,255,0.5)"
+                      fontSize="1.5"
                       fontFamily="system-ui"
                     >
-                      {city.flag} {city.name}
+                      {city.flag}
                     </text>
-                  </>
+                  </g>
                 )}
               </g>
             );
           })}
 
-          {/* Plane icon */}
-          <g transform={`translate(${planeX}, ${planeY}) rotate(${angle})`}>
-            <text
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize="4"
-              style={{
-                filter: `drop-shadow(0 0 3px ${flight.color})`,
-              }}
+          {/* Landing explosion effect */}
+          {showLanding && (
+            <circle
+              cx={to.x}
+              cy={to.y}
+              r="8"
+              fill="url(#landingGlow)"
             >
-              ✈️
-            </text>
-          </g>
+              <animate
+                attributeName="r"
+                from="0"
+                to="12"
+                dur="0.8s"
+                fill="freeze"
+              />
+              <animate
+                attributeName="opacity"
+                from="1"
+                to="0"
+                dur="0.8s"
+                fill="freeze"
+              />
+            </circle>
+          )}
+
+          {/* Plane */}
+          {progress < 100 && (
+            <g transform={`translate(${planeX}, ${planeY})`}>
+              {/* Plane glow */}
+              <circle r="2" fill={color} opacity="0.3" style={{ filter: 'url(#bigGlow)' }} />
+              
+              {/* Plane icon */}
+              <g transform={`rotate(${angle})`}>
+                <polygon
+                  points="-1.5,0 1.5,-0.8 1.5,0.8"
+                  fill={color}
+                  style={{ filter: 'url(#glow)' }}
+                />
+                <rect x="-0.5" y="-1.5" width="1" height="3" fill={color} opacity="0.7" />
+              </g>
+            </g>
+          )}
         </svg>
 
-        {/* Flight Info Overlay */}
+        {/* Bottom Info Panel */}
         <div style={{
           position: 'absolute',
           bottom: '20px',
           left: '20px',
           right: '20px',
-          background: 'rgba(0,0,0,0.85)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          border: `1px solid ${flight.color}40`,
+          display: 'flex',
+          gap: '20px',
+          alignItems: 'stretch',
         }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+          {/* Route Card */}
+          <div style={{
+            flex: 1,
+            background: 'rgba(0,0,0,0.6)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            padding: '16px 20px',
+            border: `1px solid ${color}30`,
+          }}>
             <div style={{
-              padding: '8px 12px',
-              background: `${flight.color}20`,
-              borderRadius: '8px',
-              border: `1px solid ${flight.color}40`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '8px',
             }}>
+              <span style={{ fontSize: '1.5rem' }}>{from.flag}</span>
               <div style={{
-                fontFamily: 'var(--fd)',
-                fontSize: '1.2rem',
-                fontWeight: 800,
-                color: flight.color,
+                flex: 1,
+                height: '2px',
+                background: `linear-gradient(90deg, ${color}, ${color}50)`,
+                position: 'relative',
               }}>
-                {flight.year}
+                <div style={{
+                  position: 'absolute',
+                  left: `${progress}%`,
+                  top: '-4px',
+                  fontSize: '0.6rem',
+                }}>
+                  ✈️
+                </div>
               </div>
-              <div style={{
-                fontFamily: 'var(--fm)',
-                fontSize: '0.55rem',
-                color: 'var(--tx3)',
-              }}>
-                {flight.month || ''}
-              </div>
+              <span style={{ fontSize: '1.5rem' }}>{to.flag}</span>
             </div>
-            
-            <div style={{ flex: 1 }}>
-              <div style={{
-                fontFamily: 'var(--fd)',
-                fontSize: '1rem',
-                fontWeight: 700,
-                color: '#fff',
-                marginBottom: '4px',
-              }}>
-                {flight.title}
-              </div>
-              <div style={{
-                fontFamily: 'var(--fm)',
-                fontSize: '0.7rem',
-                color: flight.color,
-                marginBottom: '6px',
-              }}>
-                {fromCity.flag} {fromCity.name} → {toCity.flag} {toCity.name}
-              </div>
-              <div style={{
-                fontFamily: 'var(--fb)',
-                fontSize: '0.8rem',
-                color: 'var(--tx2)',
-                lineHeight: 1.5,
-              }}>
-                {flight.description}
-              </div>
+            <div style={{
+              fontFamily: 'var(--fd)',
+              fontSize: '0.75rem',
+              color: 'rgba(255,255,255,0.5)',
+            }}>
+              {from.name} → {to.name}
             </div>
           </div>
 
-          {/* Progress bar */}
+          {/* Title Card */}
           <div style={{
-            marginTop: '12px',
-            height: '3px',
-            background: 'rgba(255,255,255,0.1)',
-            borderRadius: '2px',
-            overflow: 'hidden',
+            flex: 2,
+            background: 'rgba(0,0,0,0.6)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            padding: '16px 20px',
+            border: `1px solid ${color}30`,
           }}>
             <div style={{
-              width: `${progress}%`,
-              height: '100%',
-              background: flight.color,
-              transition: 'width 0.05s linear',
-            }} />
+              fontFamily: 'var(--fd)',
+              fontSize: '1.1rem',
+              fontWeight: 800,
+              color: color,
+              marginBottom: '4px',
+              textShadow: `0 0 20px ${color}`,
+            }}>
+              {flight.title}
+            </div>
+            <div style={{
+              fontFamily: 'var(--fb)',
+              fontSize: '0.85rem',
+              color: 'rgba(255,255,255,0.7)',
+            }}>
+              {flight.description}
+            </div>
           </div>
+        </div>
+
+        {/* Progress bar */}
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '3px',
+          background: 'rgba(0,255,65,0.1)',
+        }}>
+          <div style={{
+            height: '100%',
+            width: `${progress}%`,
+            background: color,
+            boxShadow: `0 0 10px ${color}`,
+            transition: 'width 0.04s linear',
+          }} />
         </div>
       </div>
 
-      {/* Year Jump Buttons */}
+      {/* Controls */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '12px',
+        marginTop: '24px',
+      }}>
+        <button
+          onClick={() => { setCurrentFlight((f) => (f - 1 + flights.length) % flights.length); setProgress(0); }}
+          className="flight-btn"
+        >
+          ⏮
+        </button>
+        
+        <button
+          onClick={() => setIsPlaying(!isPlaying)}
+          className="flight-btn-main"
+          style={{ background: isPlaying ? color : 'transparent', borderColor: color }}
+        >
+          {isPlaying ? '⏸' : '▶'}
+        </button>
+        
+        <button
+          onClick={() => { setCurrentFlight((f) => (f + 1) % flights.length); setProgress(0); }}
+          className="flight-btn"
+        >
+          ⏭
+        </button>
+      </div>
+
+      {/* Year Pills */}
       <div style={{
         display: 'flex',
         justifyContent: 'center',
-        gap: '8px',
-        marginTop: '24px',
+        gap: '6px',
+        marginTop: '16px',
         flexWrap: 'wrap',
       }}>
-        {[2016, 2017, 2019, 2022, 2023, 2024, 2025, 2026].map((year) => {
-          const yearIndex = flights.findIndex(f => f.year === year);
-          const isActive = flight.year === year;
-          const color = flights.find(f => f.year === year)?.color || '#00ff41';
+        {Object.entries(yearColors).map(([year, c]) => {
+          const isActive = flight.year === parseInt(year);
+          const yearIndex = flights.findIndex(f => f.year === parseInt(year));
           return (
             <button
               key={year}
-              onClick={() => {
-                setCurrentFlight(yearIndex);
-                setProgress(0);
-              }}
+              onClick={() => { setCurrentFlight(yearIndex); setProgress(0); }}
               style={{
-                padding: '8px 16px',
-                background: isActive ? color : 'var(--sf)',
-                color: isActive ? 'var(--dk)' : 'var(--tx2)',
-                border: `1px solid ${isActive ? color : 'var(--bd)'}`,
-                borderRadius: '8px',
+                padding: '6px 14px',
+                background: isActive ? c : 'transparent',
+                color: isActive ? '#000' : c,
+                border: `1px solid ${c}`,
+                borderRadius: '20px',
                 fontFamily: 'var(--fm)',
-                fontSize: '0.65rem',
+                fontSize: '0.6rem',
+                fontWeight: isActive ? 700 : 400,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
+                boxShadow: isActive ? `0 0 15px ${c}50` : 'none',
               }}
             >
               {year}
@@ -448,6 +603,36 @@ export function FlightMap() {
           );
         })}
       </div>
+
+      <style jsx global>{`
+        .flight-btn {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(0,255,65,0.1);
+          border: 1px solid rgba(0,255,65,0.3);
+          color: #00ff41;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .flight-btn:hover {
+          background: rgba(0,255,65,0.2);
+          box-shadow: 0 0 15px rgba(0,255,65,0.3);
+        }
+        .flight-btn-main {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          border: 2px solid;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .flight-btn-main:hover {
+          transform: scale(1.1);
+        }
+      `}</style>
     </div>
   );
 }
