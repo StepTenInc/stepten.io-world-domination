@@ -606,8 +606,11 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
 
         {/* Sidebar */}
         <aside className="tale-sidebar" style={{
-          position: 'sticky', top: '100px', height: 'fit-content',
+          position: 'sticky', top: '100px', 
+          maxHeight: 'calc(100vh - 120px)',
+          overflowY: 'auto',
           display: 'flex', flexDirection: 'column', gap: '28px',
+          paddingRight: '8px',
         }}>
           
           {/* TOC */}
@@ -755,6 +758,21 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           transform: translateX(4px);
           border-color: ${author.color}50 !important;
           box-shadow: 0 0 15px ${author.color}30;
+        }
+        
+        .tale-sidebar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .tale-sidebar::-webkit-scrollbar-track {
+          background: var(--dk);
+          border-radius: 3px;
+        }
+        .tale-sidebar::-webkit-scrollbar-thumb {
+          background: ${author.color}40;
+          border-radius: 3px;
+        }
+        .tale-sidebar::-webkit-scrollbar-thumb:hover {
+          background: ${author.color}60;
         }
         
         .tag-pill:hover {
