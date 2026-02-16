@@ -216,7 +216,7 @@ export default function TravelPage() {
           letterSpacing: '0.3em',
           marginBottom: '16px',
         }}>
-          // 10 YEARS. 7 COUNTRIES. 1 MISSION.
+          // JUST RENEWED MY PASSPORT. REALIZED SOMETHING.
         </div>
         <h1 style={{
           fontFamily: 'var(--fd)',
@@ -224,16 +224,26 @@ export default function TravelPage() {
           fontWeight: 900,
           marginBottom: '16px',
         }}>
-          THE <span style={{ color: 'var(--mx)' }}>PASSPORT</span> JOURNEY
+          <span style={{ color: 'var(--mx)' }}>10 YEARS</span> GONE.
         </h1>
         <p style={{
           fontFamily: 'var(--fm)',
-          fontSize: '1rem',
+          fontSize: '1.1rem',
           color: 'var(--tx2)',
+          maxWidth: '650px',
+          margin: '0 auto 16px',
+          lineHeight: 1.6,
+        }}>
+          Left Australia in 2016. Just came back for the first real visit — to see mum and renew this passport.
+        </p>
+        <p style={{
+          fontFamily: 'var(--fm)',
+          fontSize: '0.95rem',
+          color: 'var(--tx3)',
           maxWidth: '600px',
           margin: '0 auto',
         }}>
-          Left Australia in 2016 with a one-way ticket. Every stamp tells a story.
+          Maybe 5 weeks total on Australian soil in a decade. Every stamp in here is a chapter.
         </p>
       </section>
 
