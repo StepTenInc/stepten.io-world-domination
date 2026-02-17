@@ -440,3 +440,4 @@ export function getPillarTales(): Tale[] {
 export function getTalesBySilo(silo: string): Tale[] {
   return tales.filter((t) => t.silo === silo);
 }
+// Force redeploy Tue Feb 17 12:18:15 AEST 2026
