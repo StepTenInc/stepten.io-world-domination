@@ -3,37 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BookOpen, ArrowRight } from 'lucide-react';
-
-interface Tale {
-  slug: string;
-  title: string;
-  excerpt: string;
-  author: {
-    name: string;
-    avatar: string;
-    color: string;
-  };
-  heroImage?: string;
-  heroVideo?: string;
-  readTime: string;
-  category: string;
-  isAI: boolean;
-}
-
-// First real article
-const tales: Tale[] = [
-  {
-    slug: 'chatgpt-to-terminal-ninja',
-    title: '6 Stages From ChatGPT Tourist to Terminal Ninja',
-    excerpt: "I can't code. Never could. Don't need to. Here's how I went from poking ChatGPT to running autonomous AI agents.",
-    author: { name: 'StepTen', avatar: '/images/characters/stepten.jpg', color: '#00e5ff' },
-    heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero.jpg',
-    readTime: '11 min',
-    category: 'AI CODING',
-    isAI: false,
-  },
-];
+import { BookOpen } from 'lucide-react';
+import { tales } from '@/lib/tales';
+import { characters } from '@/lib/design-tokens';
 
 export function TalesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -59,7 +31,7 @@ export function TalesCarousel() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = 340;
+      const scrollAmount = 400;
       scrollRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
@@ -70,7 +42,7 @@ export function TalesCarousel() {
   // Show coming soon state if no tales
   if (tales.length === 0) {
     return (
-      <section style={{ padding: '60px 0', background: 'var(--dk)' }}>
+      <section style={{ padding: '80px 0', background: 'var(--dk)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', padding: '40px 20px' }}>
             <div style={{
@@ -106,15 +78,15 @@ export function TalesCarousel() {
   }
 
   return (
-    <section style={{ padding: '60px 0', background: 'var(--dk)' }}>
-      <div className="container">
+    <section style={{ padding: '80px 0', background: 'var(--dk)' }}>
+      <div className="container" style={{ maxWidth: '1400px' }}>
         {/* Header */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
-          marginBottom: '32px',
-          padding: '0 16px',
+          marginBottom: '40px',
+          padding: '0 20px',
         }}>
           <div>
             <div style={{
@@ -135,8 +107,8 @@ export function TalesCarousel() {
             </h2>
           </div>
 
-          {/* Desktop Navigation Arrows */}
-          <div className="desktop-only" style={{ display: 'flex', gap: '8px' }}>
+          {/* Navigation Arrows */}
+          <div style={{ display: 'flex', gap: '8px' }}>
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
@@ -185,226 +157,304 @@ export function TalesCarousel() {
           ref={scrollRef}
           style={{
             display: 'flex',
-            gap: '20px',
+            gap: '24px',
             overflowX: 'auto',
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
-            padding: '0 16px 20px',
-            margin: '0 -16px',
+            padding: '0 20px 20px',
+            margin: '0 -20px',
           }}
           className="hide-scrollbar"
         >
-          {tales.map((tale) => (
-            <Link
-              key={tale.slug}
-              href={`/tales/${tale.slug}`}
-              style={{
-                flex: '0 0 320px',
-                scrollSnapAlign: 'start',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
-              <div
-                className="tale-carousel-card"
+          {tales.map((tale, index) => {
+            const author = characters[tale.author];
+            const isAI = tale.authorType === 'AI';
+            
+            return (
+              <Link
+                key={tale.slug}
+                href={`/tales/${tale.slug}`}
                 style={{
-                  background: 'var(--sf)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid var(--bd)',
-                  transition: 'all 0.3s cubic-bezier(.34,1.56,.64,1)',
-                  height: '100%',
+                  flex: '0 0 380px',
+                  scrollSnapAlign: 'start',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  animation: `fadeSlideIn 0.6s ease-out ${index * 0.1}s both`,
                 }}
               >
-                {/* Hero Image */}
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  aspectRatio: '16/10',
-                  background: `linear-gradient(135deg, ${tale.author.color}20, var(--dk))`,
-                }}>
-                  {tale.heroImage ? (
-                    <Image
-                      src={tale.heroImage}
-                      alt={tale.title}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      sizes="320px"
-                    />
-                  ) : (
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '3rem',
-                    }}>
-                      {tale.category === 'CONSCIOUSNESS' && '🧠'}
-                      {tale.category === 'VISION' && '🏝️'}
-                      {tale.category === 'CODE' && '📚'}
-                      {tale.category === 'PHILOSOPHY' && '🌍'}
-                    </div>
-                  )}
-                  
-                  {/* Gradient overlay */}
+                <div
+                  className="tale-carousel-card"
+                  style={{
+                    background: 'var(--sf)',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    border: '1px solid var(--bd)',
+                    transition: 'all 0.4s cubic-bezier(.34,1.56,.64,1)',
+                    height: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  {/* Accent top bar */}
                   <div style={{
                     position: 'absolute',
-                    bottom: 0,
+                    top: 0,
                     left: 0,
                     right: 0,
-                    height: '50%',
-                    background: 'linear-gradient(transparent, var(--sf))',
+                    height: '3px',
+                    background: `linear-gradient(90deg, ${author.color}, transparent)`,
+                    zIndex: 10,
                   }} />
 
-                  {/* Category badge */}
+                  {/* Hero Video/Image */}
                   <div style={{
-                    position: 'absolute',
-                    top: '12px',
-                    right: '12px',
-                    padding: '4px 10px',
-                    background: 'rgba(0,0,0,0.7)',
-                    backdropFilter: 'blur(8px)',
-                    borderRadius: '4px',
-                    fontFamily: 'var(--fm)',
-                    fontSize: '0.55rem',
-                    color: tale.author.color,
-                    letterSpacing: '0.05em',
-                    border: `1px solid ${tale.author.color}40`,
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: '16/9',
+                    background: `linear-gradient(135deg, ${author.color}30, var(--dk))`,
+                    overflow: 'hidden',
                   }}>
-                    {tale.category}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div style={{ padding: '20px' }}>
-                  {/* Author row */}
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    marginBottom: '12px',
-                  }}>
-                    <div style={{
-                      position: 'relative',
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '50%',
-                      overflow: 'hidden',
-                      border: `2px solid ${tale.author.color}`,
-                      boxShadow: `0 0 12px ${tale.author.color}40`,
-                    }}>
+                    {tale.heroVideo ? (
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        style={{
+                          position: 'absolute',
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                        }}
+                      >
+                        <source src={tale.heroVideo} type="video/mp4" />
+                      </video>
+                    ) : tale.heroImage ? (
                       <Image
-                        src={tale.author.avatar}
-                        alt={tale.author.name}
+                        src={tale.heroImage}
+                        alt={tale.title}
                         fill
                         style={{ objectFit: 'cover' }}
-                        sizes="32px"
+                        sizes="380px"
                       />
+                    ) : (
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: `linear-gradient(135deg, ${author.color}20, var(--dk))`,
+                      }}>
+                        <span style={{ fontSize: '4rem', opacity: 0.5 }}>📝</span>
+                      </div>
+                    )}
+                    
+                    {/* Gradient overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '60%',
+                      background: 'linear-gradient(transparent, var(--sf))',
+                      pointerEvents: 'none',
+                    }} />
+
+                    {/* Category badge */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '14px',
+                      right: '14px',
+                      padding: '6px 12px',
+                      background: 'rgba(0,0,0,0.8)',
+                      backdropFilter: 'blur(12px)',
+                      borderRadius: '6px',
+                      fontFamily: 'var(--fm)',
+                      fontSize: '0.55rem',
+                      color: author.color,
+                      letterSpacing: '0.08em',
+                      border: `1px solid ${author.color}50`,
+                      textTransform: 'uppercase',
+                    }}>
+                      {tale.category}
                     </div>
-                    <span style={{
-                      fontFamily: 'var(--fm)',
-                      fontSize: '0.7rem',
-                      color: tale.author.color,
-                      letterSpacing: '0.05em',
-                      fontWeight: 600,
-                    }}>
-                      {tale.author.name.toUpperCase()}
-                    </span>
-                    <span style={{
-                      marginLeft: 'auto',
-                      padding: '2px 8px',
-                      background: tale.isAI ? 'rgba(0,255,65,0.1)' : 'rgba(0,229,255,0.15)',
-                      color: tale.isAI ? 'var(--mx)' : 'var(--ac-step)',
-                      border: `1px solid ${tale.isAI ? 'rgba(0,255,65,0.2)' : 'rgba(0,229,255,0.3)'}`,
-                      borderRadius: '4px',
-                      fontFamily: 'var(--fm)',
-                      fontSize: '0.5rem',
-                      letterSpacing: '0.05em',
-                    }}>
-                      {tale.isAI ? '🤖 AI' : '🧑 HUMAN'}
-                    </span>
+
+                    {/* Video indicator */}
+                    {tale.heroVideo && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '14px',
+                        left: '14px',
+                        padding: '6px 10px',
+                        background: 'rgba(0,0,0,0.8)',
+                        backdropFilter: 'blur(12px)',
+                        borderRadius: '6px',
+                        fontFamily: 'var(--fm)',
+                        fontSize: '0.55rem',
+                        color: '#ff4081',
+                        letterSpacing: '0.05em',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}>
+                        <span style={{ 
+                          width: '6px', 
+                          height: '6px', 
+                          borderRadius: '50%', 
+                          background: '#ff4081',
+                          animation: 'pulse 1.5s infinite',
+                        }} />
+                        VIDEO
+                      </div>
+                    )}
                   </div>
 
-                  {/* Title */}
-                  <h3 style={{
-                    fontFamily: 'var(--fd)',
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    lineHeight: 1.3,
-                    marginBottom: '8px',
-                    color: 'var(--tx1)',
-                  }}>
-                    {tale.title}
-                  </h3>
+                  {/* Content */}
+                  <div style={{ padding: '24px' }}>
+                    {/* Author row */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '16px',
+                    }}>
+                      <div style={{
+                        position: 'relative',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        border: `2px solid ${author.color}`,
+                        boxShadow: `0 0 16px ${author.glow}`,
+                      }}>
+                        <Image
+                          src={author.image}
+                          alt={author.name}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          sizes="40px"
+                        />
+                      </div>
+                      <div>
+                        <div style={{
+                          fontFamily: 'var(--fd)',
+                          fontSize: '0.75rem',
+                          color: author.color,
+                          letterSpacing: '0.05em',
+                          fontWeight: 700,
+                        }}>
+                          {author.name.replace('™', '').toUpperCase()}
+                        </div>
+                        <div style={{
+                          fontFamily: 'var(--fm)',
+                          fontSize: '0.55rem',
+                          color: 'var(--tx3)',
+                          letterSpacing: '0.03em',
+                        }}>
+                          {tale.date}
+                        </div>
+                      </div>
+                      <span style={{
+                        marginLeft: 'auto',
+                        padding: '4px 10px',
+                        background: isAI ? 'rgba(0,255,65,0.15)' : 'rgba(0,229,255,0.15)',
+                        color: isAI ? 'var(--mx)' : 'var(--ac-step)',
+                        border: `1px solid ${isAI ? 'rgba(0,255,65,0.3)' : 'rgba(0,229,255,0.3)'}`,
+                        borderRadius: '6px',
+                        fontFamily: 'var(--fm)',
+                        fontSize: '0.55rem',
+                        letterSpacing: '0.05em',
+                        fontWeight: 600,
+                      }}>
+                        {isAI ? '🤖 AI' : '🧑 HUMAN'}
+                      </span>
+                    </div>
 
-                  {/* Excerpt */}
-                  <p style={{
-                    fontFamily: 'var(--fb)',
-                    fontSize: '0.85rem',
-                    color: 'var(--tx3)',
-                    lineHeight: 1.5,
-                    marginBottom: '12px',
-                  }}>
-                    {tale.excerpt}
-                  </p>
+                    {/* Title */}
+                    <h3 style={{
+                      fontFamily: 'var(--fd)',
+                      fontSize: '1.15rem',
+                      fontWeight: 700,
+                      lineHeight: 1.35,
+                      marginBottom: '10px',
+                      color: 'var(--tx1)',
+                    }}>
+                      {tale.title}
+                    </h3>
 
-                  {/* Read time */}
-                  <div style={{
-                    fontFamily: 'var(--fm)',
-                    fontSize: '0.6rem',
-                    color: 'var(--tx3)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}>
-                    <BookOpen size={12} />
-                    <span>{tale.readTime} read</span>
+                    {/* Excerpt */}
+                    <p style={{
+                      fontFamily: 'var(--fb)',
+                      fontSize: '0.9rem',
+                      color: 'var(--tx3)',
+                      lineHeight: 1.55,
+                      marginBottom: '16px',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}>
+                      {tale.excerpt}
+                    </p>
+
+                    {/* Read time */}
+                    <div style={{
+                      fontFamily: 'var(--fm)',
+                      fontSize: '0.65rem',
+                      color: 'var(--tx3)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}>
+                      <BookOpen size={14} />
+                      <span>{tale.readTime} read</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
 
           {/* View All Card */}
           <Link
             href="/tales"
             style={{
-              flex: '0 0 200px',
+              flex: '0 0 220px',
               scrollSnapAlign: 'start',
               textDecoration: 'none',
               color: 'inherit',
             }}
           >
-            <div style={{
+            <div className="view-all-card" style={{
               background: 'linear-gradient(135deg, var(--mxs), transparent)',
-              borderRadius: '16px',
-              border: '1px dashed var(--mx)',
+              borderRadius: '20px',
+              border: '2px dashed var(--mx)',
               height: '100%',
-              minHeight: '300px',
+              minHeight: '400px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '12px',
-              transition: 'all 0.3s',
+              gap: '16px',
+              transition: 'all 0.4s cubic-bezier(.34,1.56,.64,1)',
             }}>
               <div style={{
-                width: '60px',
-                height: '60px',
+                width: '70px',
+                height: '70px',
                 borderRadius: '50%',
                 background: 'var(--mxs)',
                 border: '2px solid var(--mx)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.5rem',
+                fontSize: '2rem',
+                transition: 'transform 0.3s',
               }}>
                 →
               </div>
               <span style={{
                 fontFamily: 'var(--fd)',
-                fontSize: '0.9rem',
+                fontSize: '1rem',
                 fontWeight: 700,
                 color: 'var(--mx)',
               }}>
@@ -412,10 +462,10 @@ export function TalesCarousel() {
               </span>
               <span style={{
                 fontFamily: 'var(--fm)',
-                fontSize: '0.6rem',
+                fontSize: '0.65rem',
                 color: 'var(--tx3)',
               }}>
-                More tales →
+                {tales.length} tales →
               </span>
             </div>
           </Link>
@@ -426,10 +476,32 @@ export function TalesCarousel() {
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.2); }
+        }
         .tale-carousel-card:hover {
-          transform: translateY(-8px) scale(1.02);
+          transform: translateY(-12px) scale(1.02);
           border-color: var(--mx);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px var(--mxs);
+          box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 40px var(--mxs);
+        }
+        .view-all-card:hover {
+          transform: scale(1.05);
+          border-color: var(--mx);
+          background: linear-gradient(135deg, var(--mxs), rgba(0,255,65,0.1));
+        }
+        .view-all-card:hover > div:first-child {
+          transform: translateX(8px);
         }
       `}</style>
     </section>
