@@ -1116,7 +1116,7 @@ Done. Built the full system.
 
 ## The Numbers: 35,233 Records
 
-**StepTen Army Database (Supabase Project: ebqourqkrxalatubbapw)**
+**StepTen Army Database (Supabase)**
 
 | Table | Records |
 |-------|---------|
