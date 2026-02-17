@@ -5,6 +5,7 @@
  */
 
 import { config } from '../config';
+import { parseJsonArrayFromLlm } from '../utils/json-parser';
 
 const IDEAS_PROMPT = `Based on this article, generate 5 related article ideas that would:
 1. Be valuable to the same audience
@@ -92,11 +93,6 @@ export async function generateIdeas(
     throw new Error('Failed to generate ideas');
   }
 
-  // Parse JSON array from response
-  const jsonMatch = text.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse ideas output');
-  }
-
-  return JSON.parse(jsonMatch[0]) as IdeaOutput[];
+  // Parse JSON array from response using robust parser
+  return parseJsonArrayFromLlm<IdeaOutput>(text, 'ideas');
 }

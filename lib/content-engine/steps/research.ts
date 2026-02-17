@@ -5,6 +5,7 @@
  */
 
 import { config, ArticleInput } from '../config';
+import { parseJsonFromLlm } from '../utils/json-parser';
 
 const RESEARCH_PROMPT = `You are a research assistant for a content creation engine. Your job is to do DEEP research on a topic and return structured, actionable insights.
 
@@ -155,11 +156,6 @@ export async function runResearch(
   const data = JSON.parse(responseText);
   const content = data.choices?.[0]?.message?.content;
 
-  // Parse the JSON from the response
-  const jsonMatch = content.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse research output');
-  }
-
-  return JSON.parse(jsonMatch[0]) as ResearchOutput;
+  // Parse the JSON from the response using robust parser
+  return parseJsonFromLlm<ResearchOutput>(content, 'research');
 }

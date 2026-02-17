@@ -5,6 +5,7 @@
  */
 
 import { config } from '../config';
+import { parseJsonFromLlm } from '../utils/json-parser';
 
 const OPTIMIZER_PROMPT = `You are an SEO optimization engine. Analyze this article and generate all required SEO elements.
 
@@ -167,11 +168,6 @@ export async function runOptimizer(
     throw new Error('Failed to generate SEO optimization');
   }
 
-  // Parse JSON from response
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse optimizer output');
-  }
-
-  return JSON.parse(jsonMatch[0]) as OptimizerOutput;
+  // Parse JSON from response using robust parser
+  return parseJsonFromLlm<OptimizerOutput>(text, 'optimizer');
 }

@@ -6,6 +6,7 @@
  */
 
 import { config } from '../config';
+import { parseJsonFromLlm } from '../utils/json-parser';
 
 const SCORER_PROMPT = `You are the StepTen Content Analyzer. Your job is to score content against our methodology and provide actionable feedback.
 
@@ -198,21 +199,9 @@ export async function runScorer(
     throw new Error('Failed to score content');
   }
 
-  // Parse JSON from response
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    console.error('Scorer output (no JSON found):', text.slice(0, 500));
-    throw new Error('Failed to parse scorer output - no JSON found');
-  }
-
+  // Parse JSON from response using robust parser
   let result: ScorerOutput;
-  try {
-    result = JSON.parse(jsonMatch[0]) as ScorerOutput;
-  } catch (parseError) {
-    console.error('JSON parse error:', parseError);
-    console.error('Attempted to parse:', jsonMatch[0].slice(0, 500));
-    throw new Error(`Failed to parse scorer JSON: ${parseError}`);
-  }
+  result = parseJsonFromLlm<ScorerOutput>(text, 'scorer');
 
   // Calculate weighted score if not provided
   if (!result.weightedScore) {
