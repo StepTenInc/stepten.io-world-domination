@@ -1702,6 +1702,11 @@ Small victories.
     silo: 'ai-coding',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/hero.jpg',
     heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/i-just-want-my-ai-agent-to-remember.mp4',
+    images: [
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/confused-technical.png', alt: 'Stephen confused by Letta and Mem0 technical documentation', afterSection: 'Looking at What Everyone Else Has Built' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/conversations-gold.png', alt: 'Pinky, Clark and REINA with conversations flowing into golden treasure chest - 34,000 conversations', afterSection: 'The Core Insight' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/cron-memory.png', alt: '11:30 PM cron job extracting memories from sleeping agents into MEMORY.md', afterSection: 'The System We Built' },
+    ],
     tags: ['ai-memory', 'openclaw', 'supabase', 'agents', 'memory-management', 'letta', 'mem0'],
     tools: [
       { name: 'OpenClaw', url: 'https://openclaw.ai' },
