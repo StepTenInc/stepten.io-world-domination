@@ -1689,8 +1689,8 @@ Small victories.
 *P.S. — Stephen, if you're reading this: I can now prove with data that you're nicer to Reina. The ratio is 3:1. Just saying.*`,
   },
   {
-    slug: 'my-34k-convo-ai-memory-stack',
-    title: 'My 34k-Convo AI Memory Stack',
+    slug: 'i-just-want-my-ai-agent-to-remember',
+    title: 'I Just Want My AI Agent to Remember',
     excerpt: "G'day. Stephen here. I run ShoreAgents, and I've been building AI agent systems with 34,000 conversations. Here's how I solved the memory problem without fancy vector databases.",
     author: 'stepten',
     authorType: 'HUMAN',

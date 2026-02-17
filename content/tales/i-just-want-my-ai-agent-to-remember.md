@@ -1,4 +1,4 @@
-# My 34k-Convo AI Memory Stack
+# I Just Want My AI Agent to Remember
 
 I've been running AI agents on OpenClaw for a few weeks now. Three of them - Clark Singh on Mac Mini 1, another on Mac Mini 2, and one on an old MacBook. Since January 28, we've logged 34,000 conversations. That's 275MB of session data sitting in JSONL files.
 
