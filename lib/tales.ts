@@ -425,6 +425,8 @@ Absolutely. The workflow — autonomous coding sprints, voice-to-task parsing, h
     readTime: '12 min',
     category: 'AI_CODING',
     featured: false,
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/kimi-moonshot-36k-lines-reality-check.mp4',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/kimi-moonshot-36k-lines-reality-check.mp4',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/hero.png',
     tags: ['kimi', 'moonshot-ai', 'ai-coding', 'claude-code', 'vibe-coding', 'angeles-city'],
     tools: [
