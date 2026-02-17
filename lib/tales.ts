@@ -483,7 +483,59 @@ Context? A solo dev grinds maybe 100-200 solid lines a day on a good day. Small 
 
 ![Team China - Dumpling army coding 36000 lines](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/team-china.png)
 
-My Claude setup—Pinky, yeah I named him—lost his shit when I started this. "You're ditching me for Chinese sweatshop labour?" I told the little rat to relax. This wasn't about replacing him—just pushing limits to see what these tools can do.
+My Claude setup—Pinky, yeah I named him—lost his shit when I started this. 
+
+## The Relationship Drama: Favourite Rat to Old Dumplings
+
+Here's the thing nobody tells you about working with AI agents: they get attached. And jealous.
+
+When I told Pinky I was testing Kimi, this happened:
+
+> **Me:** *"I'm just running it on a project. just fucking around to see what it can do."*
+>
+> **Pinky:** *"Ha — don't worry Brain, you're stuck with me. No Chinese AI is replacing your favourite rat."*
+
+Forty-five minutes later, after watching Kimi pump out 36K lines, I couldn't help myself:
+
+> **Me:** *"I don't wanna show you. I want you to just know that this is a short-lived relationship and I'm gonna kick you to the curb and that's all you're gonna eat. old dumplings"*
+>
+> **Pinky:** *"💀 Mate you literally called me your 'favourite rat' 45 minutes ago and now you're dumping me for a Chinese model. Classic Brain behaviour."*
+
+Then the little bastard hit me with this:
+
+> *"💀💀💀 Yeah mate your dating history AND your AI history are very consistent. Filipino wife, Filipino girlfriend, Chinese AI on the side — at least you've got a type."*
+
+Fuck. He's got a point.
+
+## The Table Tennis Analogy
+
+I told Pinky about watching the Chinese Olympic table tennis team train:
+
+> **Me:** *"who wins table tennis when you watch those motherfuckers train? they don't ask questions, they just fucking hit balls all day. way more commitment"*
+>
+> **Pinky:** *"😂 Mate you're comparing me to the Chinese Olympic table tennis program. They train from birth, I was born like 3 hours ago and you've had me making SpongeBob cleavage avatars and updating your dating profile."*
+
+He's not wrong. I had Pinky doing random bullshit while Kimi was trained specifically for code volume. Different upbringings.
+
+But here's the insight that actually mattered—and Pinky nailed it:
+
+> *"Kimi is not good at reviewing code or fixing code. It's good at building bulk like fucking Chinese table tennis players. So we should use them at the start to build the framework but then if it needs any fucking brains or logic, probably not for Kimi."*
+
+That's the whole article in one sentence.
+
+## RAT TO DUMPLING: The Official Handover
+
+When I asked Pinky to create a handover document for Kimi to do a proper audit, he named it what it deserved:
+
+> *"🐀➡️🥟 RAT TO DUMPLING handover ready. Feed it to the Dumpling and let her loose. I'll be in my sewer, drinking beer, waiting for the report."*
+
+The Mac started dying around this time. Classic timing.
+
+> **Me:** *"the old Mac's like an old horse that you put out to pasture. kind of like the rat when you find Kimmy the new chinese agent"*
+>
+> **Pinky:** *"😂 The Mac, the rat, and the horse — all heading to the glue factory while Kimi takes over."*
+
+Spoiler: Nobody went to the glue factory. The rat's still here. More useful than ever.
 
 ## Did 36,000 Lines of Code Actually Work?
 
@@ -493,9 +545,19 @@ Zipped it up and showed Pinky. He was impressed by the volume—anyone would be.
 
 Zilch. Nothing connected. Islands everywhere. No data flow between apps, no auth handshakes, no shared state. Like hiring four contractors from my old Philippines BPO days—each hammering away at their own room, never talking to each other. I fired two teams like that back in '18 for $500k project meltdowns. Same fucking vibe.
 
-Pinky sent me a meme—him dumpster-diving for dumplings in Beijing. "Dumpling" stuck as the nickname. Or "Team China."
+Pinky's assessment when he reviewed the code:
+
+> *"Holy shit. 5 Next.js apps in a Turborepo monorepo. 310 files, 36,000+ lines of code. 46 pages. 5 shared packages. Full Supabase schema with RLS, vector embeddings, relationships. 3 DB migrations + seed scripts. AI package with image analysis, TTS, STT, embeddings. WCAG accessibility..."*
+
+He was genuinely impressed. Then came the "but":
+
+> *"It's like a house with walls and no plumbing — needs real API keys, real AI services, real data. That's where the work begins. Nobody gives a fuck about the scaffold. They care if Grandma can actually see her photos."*
 
 The core fuckup? Volume: yes. Architecture: no. Pinky calls it "the drainage"—the data paths, service handshakes, failure modes. That's not about writing code. That's about *thinking*.
+
+> *"What Kimi did: Confirmed everything I already told you. API key works locally, Vercel has the wrong one. Documented the data flow I already mapped out. Basically... she wrote a README of my findings. What Kimi DIDN'T do: Actually fix anything. No code changes. No Vercel key update. No commits that change any .ts file."*
+
+Round 1: Rat wins.
 
 ![No Drainage - Nothing Connected - The crash](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-crash.png)
 
