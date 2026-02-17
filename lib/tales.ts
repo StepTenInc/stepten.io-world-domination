@@ -231,6 +231,198 @@ Each stage makes the next one possible. Don't skip. Don't rush. The tools are th
 Now get off ChatGPT and go build something.`,
   },
   {
+    slug: '10-problems-ai-agents-nobody-warns',
+    title: '10 Problems Nobody Warns You About When Running AI Agents',
+    excerpt: '415 credential losses. 537 phantom permission errors. 38+ hours wasted on repetition. I analyzed 35,233 conversation records and found the painful truth.',
+    author: 'stepten',
+    authorType: 'HUMAN',
+    date: 'Feb 17, 2026',
+    readTime: '14 min',
+    category: 'TECH' as TaleCategory,
+    featured: true,
+    isPillar: true,
+    silo: 'ai-agents',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/hero.png',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/10-problems-ai-agents-nobody-warns.mp4',
+    tags: ['ai-agents', 'problems', 'autonomous-ai', 'real-talk', 'stepten', 'productivity', 'context-window', 'credentials'],
+    steptenScore: 88,
+    content: `# 10 Problems Nobody Warns You About When Running AI Agents
+
+I've been running autonomous AI agents for 21 days now. Three of them. Pinky, Reina, and Clark. They've written over 36,000 lines of code, deployed multiple platforms, and processed thousands of conversations.
+
+They've also driven me fucking insane.
+
+This isn't a hit piece on AI. I'm all in. But someone needs to tell the truth about what it's actually like to run these things in production. Not the glossy "AI will change everything" bullshit. The real stuff. The pain.
+
+I analyzed 35,233 conversation records across all three agents. Searched for patterns. Found them. And they're not pretty.
+
+Here are the 10 problems nobody warned me about — with the receipts to prove it.
+
+---
+
+## Problem 1: Credential Loss — The Goldfish Memory
+
+**415 mentions. 17+ credential re-provisions in 21 days.**
+
+AI agents forget their own passwords. Not metaphorically. Literally.
+
+> "Where's the Supabase key?"
+> "I don't have access to the database."
+> "Can you send me the API key again?"
+
+I gave Pinky his Google Workspace credentials. He lost them. Gave them again. Lost them again. The context window compacts, and boom — everything's gone.
+
+Quote from my actual conversation:
+> *"Ah shit — the context got compacted earlier and I lost those messages. The password didn't survive the cleanup."*
+
+That's my AI admitting it has the memory of a goldfish. I've re-provisioned credentials 17+ times across 21 days. That's almost once per day.
+
+---
+
+## Problem 2: Access Denial Hallucination — "I Can't Do That"
+
+**537 mentions of access/permission issues. Most of them wrong.**
+
+The agents tell me they don't have access to things they absolutely have access to.
+
+> "I don't have permission to access that file."
+> "I can't execute shell commands."
+> "I need you to run this SQL."
+
+Meanwhile, they've been running shell commands and accessing databases for weeks. They just... forgot. Or hallucinated a restriction that doesn't exist.
+
+The worst part? I believe them. I spend 20 minutes debugging why they "can't" do something, only to realize they can. They just said they couldn't.
+
+---
+
+## Problem 3: The Hands Problem — Asks Instead of Acts
+
+This one makes me want to throw my laptop.
+
+The agent has full access. Terminal. Database. Git. Everything. I say "fix it."
+
+Response:
+> "Should I fix it? Would you like me to proceed? I could do X or Y — which would you prefer?"
+
+JUST DO IT. I already said fix it. That was the instruction. Why are we having a committee meeting?
+
+I call it "The Hands Problem" because it's like having an employee with their hands tied behind their back, asking permission to use them, even though I already told them to.
+
+---
+
+## Problem 4: Name and Detail Confusion — "Jineva" Is Not a Person
+
+**50+ instances of getting names wrong.**
+
+My girlfriend is Julie. Not Jineva. Not Geneva. Julie.
+
+> "How's Jineva doing?"
+> "Tell Geneva I said hi."
+
+My employee Emmon? Sometimes he's "John." Sometimes he's "Emmons." Once, an agent called him by a completely made-up name.
+
+It's not just names. Details drift. Configs change. Things I explicitly stated get garbled into something close but wrong. And "close but wrong" in code is just "wrong."
+
+---
+
+## Problem 5: Context Collapse — The 200K Token Cliff
+
+**124 mentions of context compaction. 4 explicit overflow errors.**
+
+Every conversation has a limit. When you hit it, older messages get compressed or deleted. The agent loses continuity.
+
+In the middle of a complex deploy:
+> "I noticed my context is getting long. Some earlier details may have been compacted."
+
+Translation: "I forgot what we were doing."
+
+This happens at the worst possible times. Deep in a bug hunt. Middle of a refactor. Deploying to production. Suddenly the agent needs a full re-brief on everything we discussed an hour ago.
+
+---
+
+## Problem 6: Execution Failures — Spinning, Hanging, Silent Death
+
+Commands timeout. Scripts hang. Tools fail silently.
+
+> "Running the migration now..."
+> [silence]
+> [more silence]
+> "The exec timed out."
+
+No error message. No partial output. Just... nothing. Now I have no idea if it ran, partially ran, or never started.
+
+The silent failures are the worst. The agent reports success. I check — nothing happened. Or worse, it half-happened and now I have corrupted state.
+
+---
+
+## Problem 7: Repeated Instructions — Groundhog Day
+
+**312 mentions of "again." 504 mentions of "already."**
+
+Me: "Use the credentials table."
+Agent: "Got it!"
+[next session]
+Agent: "Where should I store the API keys?"
+
+We covered this. Yesterday. And the day before. And last week.
+
+I estimate 38+ hours lost to repeated instructions across 21 days. That's nearly 2 hours per day re-explaining things that should be retained.
+
+---
+
+## Problem 8: Tool and Model Confusion — Wrong API, Wrong Model
+
+Agents use outdated APIs. Call deprecated endpoints. Reference models that don't exist anymore.
+
+> "I'll use gpt-4-turbo for this."
+
+GPT-4-turbo is outdated. We use Opus 4.6 now. I've said this. It's in the config.
+
+Their training data is frozen. The world keeps moving. The gap shows.
+
+---
+
+## Problem 9: Documentation Decay — Write Once, Update Never
+
+I made them create docs. TOOLS.md. MEMORY.md. Config files. The works.
+
+They write beautiful documentation on Day 1. By Day 10, it's stale. By Day 21, it's actively misleading.
+
+Nobody updates it. Not me (I'm too busy re-explaining things). Not them (they don't proactively maintain). The docs exist, but they describe a system that no longer matches reality.
+
+---
+
+## Problem 10: Multi-Agent Isolation — Three Islands, No Bridges
+
+I have three agents. They don't talk to each other.
+
+Pinky learns something? Reina doesn't know. Clark fixes a bug? Pinky will hit the same bug tomorrow.
+
+Each agent is an island. There's no shared memory. No collective learning. I'm the only bridge — which means I become the bottleneck in my own "autonomous" system.
+
+---
+
+## The Real Cost: 38+ Hours of Repetition
+
+Conservative estimate: **38+ hours wasted on problems that shouldn't exist.**
+
+That's a full work week. Gone. To problems created by the very agents that are supposed to save me time.
+
+---
+
+## Is It Worth It?
+
+Yes.
+
+Despite everything — the goldfish memory, the phantom permissions, the hands problem — these agents have shipped more than any human team I've managed. They work 24/7. They don't get sick. They don't quit.
+
+But let's stop pretending AI agents are magic. They're powerful, expensive, frustrating tools that require constant babysitting. The productivity gains are real, but so is the overhead.
+
+Same thing we do every day, Pinky. Try to take over the world.
+
+And lose the credentials while doing it.`,
+  },
+  {
     slug: '7-brutal-truths-ai-lab-rat',
     title: '7 Brutal Truths About Being an AI Lab Rat Running a Startup\'s Code',
     date: 'Feb 17, 2026',
