@@ -1700,6 +1700,8 @@ Small victories.
     featured: false,
     isPillar: false,
     silo: 'ai-coding',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/hero.jpg',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/i-just-want-my-ai-agent-to-remember.mp4',
     tags: ['ai-memory', 'openclaw', 'supabase', 'agents', 'memory-management', 'letta', 'mem0'],
     tools: [
       { name: 'OpenClaw', url: 'https://openclaw.ai' },
