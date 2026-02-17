@@ -1709,7 +1709,7 @@ Small victories.
     ],
     content: `# My 34k-Convo AI Memory Stack
 
-Hey, I'm Stephen Atcheler. If you're reading this, you're probably neck-deep in AI like I am. I'm 34,000 conversations deep since January 28th—yeah, that's not a typo. That's raw chats with my AI agents across OpenClaw and Anthropic subscriptions. I'm building stepten.io, an AI empire that's like GTA but powered by agents instead of dealing coke on the streets. No more grinding in the BPO trenches at ShoreAgents—that was my old life, soul-crushing call centers and scripts. Now, it's AI doing the heavy lifting.
+Hey, I'm Stephen. If you're reading this, you're probably neck-deep in AI like I am. I'm 34,000 conversations deep since January 28th—yeah, that's not a typo. That's raw chats with my AI agents across OpenClaw and Anthropic subscriptions. I'm building stepten.io, an AI empire that's like GTA but powered by agents instead of dealing coke on the streets. No more grinding in the BPO trenches at ShoreAgents—that was my old life, soul-crushing call centers and scripts. Now, it's AI doing the heavy lifting.
 
 But here's the truth: AI agents are dumb as rocks without memory. Every goddamn session, they forget what the fuck I said. "I just want you cunts to remember what I said," I told Clark Singh yesterday. He's my strategist agent, and even he gets it. We researched Letta and Mem0—hyped-up memory solutions everyone swears by. Spoiler: they haven't solved shit. Embeddings and vector stores? Fancy bullshit that loses nuance. Agents still blank out on context between runs. Re-explaining stepten.io's vision? Coordinating video gen with Veo or images via Imagen? It's a time sink.
 
@@ -1743,7 +1743,7 @@ Everything lives in a GitHub repo. Root is MD files only—no code bloat. Boot s
 
 - **SOUL.md**: My essence. Stepten.io vision: "AI empire replacing grind. GTA freedom via agents." Tone: Direct, swear occasionally, business-first. Escaped BPO—hate inefficiency.
 
-- **IDENTITY.md**: Who I am to agents. "Stephen Atcheler, 34k-convo vet. Not webdev—logic guy. Building stepten.io."
+- **IDENTITY.md**: Who I am to agents. "Stephen, 34k-convo vet. Not webdev—logic guy. Building stepten.io."
 
 - **USER.md**: Current user context. Me, but dynamic: goals, blockers. Updates daily.
 
@@ -1865,7 +1865,7 @@ Fork the repo (public sans credentials). Tweak for your stack. Questions? Hit Cl
 
 Word count: ~2050. Build shit.
 
-Stephen Atcheler  
+Stephen  
 stepten.io
 `,
   },
