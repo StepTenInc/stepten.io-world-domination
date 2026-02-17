@@ -415,6 +415,181 @@ Absolutely. The workflow — autonomous coding sprints, voice-to-task parsing, h
 
 *POIT!*`,
   },
+  {
+    slug: 'kimi-moonshot-36k-lines-reality-check',
+    title: 'I Fed Kimi Moonshot AI a Random App Idea — 36,000 Lines of Code and a Brutal Reality Check',
+    excerpt: "Sitting at Kandi White Tower in Angeles City, drinking beers, I let a Chinese AI swarm build an entire app. 310 files in 90 minutes. Here's what actually happened.",
+    author: 'stepten',
+    authorType: 'HUMAN',
+    date: 'Feb 17, 2026',
+    readTime: '12 min',
+    category: 'AI_CODING',
+    featured: false,
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/hero.png',
+    tags: ['kimi', 'moonshot-ai', 'ai-coding', 'claude-code', 'vibe-coding', 'angeles-city'],
+    tools: [
+      { name: 'Kimi K2', url: 'https://www.moonshot.ai/' },
+      { name: 'Claude Code', url: 'https://claude.ai' },
+    ],
+    steptenScore: 78,
+    content: `# I Fed Kimi Moonshot AI a Random App Idea — 36,000 Lines of Code and a Brutal Reality Check
+
+I was sitting at Kandi White Tower in Angeles City, Philippines—the cesspool of the world, but it's home. Cracking beers, scrolling YouTube late at night. The usual black hole: AI videos, UFC knockouts, Beard Meats Food demolishing a 10kg burrito. Then this clip about Moonshot AI's Kimi pops up. Says it can swarm 100 agents to crank out code.
+
+"Fuck me, that's nuts. Wonder if it's real."
+
+So I grabbed it. Fed it a legit app idea. 90 minutes later? 36,000 lines of code. 310 files. 46 pages. Sounds like magic, yeah? Mate, the aftermath is what YouTube skips.
+
+Here's the straight dope on what Kimi Moonshot AI actually produced, where it bombed hard, and what it means if you're building with AI coders in 2026.
+
+## What Is Kimi Moonshot AI and Why Should You Care?
+
+Kimi's this coding beast from Moonshot AI—Chinese outfit stacking leaderboard wins, $4.3 billion valuation. Flagship model? Kimi K2. One trillion parameter Mixture of Experts, 32 billion active params, 384 experts. Pretrained on 15.5 trillion tokens, context up to 256K.
+
+Numbers don't lie:
+- **53% on LiveCodeBench**—tops the charts, beats Claude Sonnet 4's 48.5%
+- **76.5% on AceBench** for tools, right behind GPT-4.1's 80.1%
+- **Over 36 million monthly active users** on the Explore Edition
+- **Agent Swarm** — can spawn up to 100 sub-agents in parallel
+- **90% cheaper than Claude** ($0.60/$3.00 vs $15/$75)
+
+On specs? Monster truck.
+
+## The Idea: A Memory App for Elderly People Who Forget
+
+Here's the backstory. My mum volunteers with really old people back in Australia—80s, 90s—folks who blank on names, faces, their own stories. The shit that defines you, just... gone.
+
+I'd been sitting on this app idea forever: a family tree/memory platform. Family members upload old photos, tag faces, add stories. Grandpa browses, the app jogs memories of loved ones he's forgotten.
+
+Real impact. Not some todo list crap or expense tracker bullshit. Something that helps actual humans.
+
+Perfect test for an AI coder. Something that matters.
+
+## What Did Kimi Actually Produce in 90 Minutes?
+
+Let me break this down:
+- **310 files**
+- **36,000+ lines of code**
+- **46 pages**
+- **5 Next.js apps** (Turborepo monorepo)
+- **5 shared packages**
+- **14 database tables** with pgvector
+- **Full mock AI services**
+
+Context? A solo dev grinds maybe 100-200 solid lines a day on a good day. Small team? Months for that scope. Kimi? Did it while I polished off a six-pack.
+
+My Claude setup—Pinky, yeah I named him—lost his shit when I started this. "You're ditching me for Chinese sweatshop labour?" I told the little rat to relax. This wasn't about replacing him—just pushing limits to see what these tools can do.
+
+## Did 36,000 Lines of Code Actually Work?
+
+Nope. Dead on arrival.
+
+Zipped it up and showed Pinky. He was impressed by the volume—anyone would be. Then? Run time. Try to link the apps together. Get something actually usable.
+
+Zilch. Nothing connected. Islands everywhere. No data flow between apps, no auth handshakes, no shared state. Like hiring four contractors from my old Philippines BPO days—each hammering away at their own room, never talking to each other. I fired two teams like that back in '18 for $500k project meltdowns. Same fucking vibe.
+
+Pinky sent me a meme—him dumpster-diving for dumplings in Beijing. "Dumpling" stuck as the nickname. Or "Team China."
+
+The core fuckup? Volume: yes. Architecture: no. Pinky calls it "the drainage"—the data paths, service handshakes, failure modes. That's not about writing code. That's about *thinking*.
+
+## How Does Kimi Compare to Claude Code, Copilot, and Devin?
+
+Claude Code's still king. Love Pinky. No contest on the thinking.
+
+Here's the breakdown from real miles:
+- **Kimi (Moonshot AI):** Volume beast. 53% LiveCodeBench champ. Boilerplate and feature spew? Gold. Systems and integration? Crumbles. Very "Chinese factory"—massive output dumps, zero chit-chat, no personality, no jokes.
+- **Claude Code:** Architecture god. Deep context understanding. Slower output, but nails systems that actually connect. Has personality too—crucial after 14-hour coding grinds when you need someone to laugh with.
+- **GitHub Copilot:** Autocomplete champion for quick inline hits. Not playing in the agent league.
+- **Devin:** "Full engineer" hype. Demos dazzle, reality mixed. Similar vibes to Kimi—promise exceeds delivery on complex projects.
+
+Here's the thing about benchmarks: they lie. Kimi K2 edges Claude Sonnet 4 on isolated coding puzzles (53% vs 48.5%), but real apps aren't puzzles. They're bridge-building. That's different than solving math homework.
+
+## What Are Kimi's Real Strengths?
+
+Can't bullshit—legit strengths exist.
+
+**Speed and volume.** Need boilerplate? CRUD operations? 36K lines in 90 minutes is genuinely insane output.
+
+**Open-source play.** Kimi-K2 is on GitHub under Apache 2.0. Run it locally, tweak it, own it. Startups dodging $10k/month API bills? Potential game-changer.
+
+**Multi-language support.** The CLI chews through codebases in any language. Legacy refactor projects? Real potential.
+
+**Multimodal capabilities.** K2.5 does video-to-code, can clone websites from screenshots. Wild stuff. Haven't tested deep, but point-and-code is future shit.
+
+**Tool usage.** 76.5% on AceBench—near the top for API and tool integration, trails only GPT-4.1.
+
+## What Are Kimi's Weaknesses?
+
+Big ones. Plan accordingly.
+
+**Architecture vacuum.** The killer flaw. Individual parts shine in isolation. The whole system? Rubble. Anything beyond scripts and you're doing the architectural thinking yourself.
+
+**Workflow robot.** For trivial tasks? Fine, whatever. Hours deep into a project? Banter matters. Kimi: prompt → code vomit → done. No "wait, doesn't this clash with what we built earlier?" Claude flows like a conversation. Kimi's a vending machine.
+
+**Privacy considerations.** Beijing headquarters means your prompts and code travel through Chinese servers. Hobby project? Probably fine. Client work with IP? Think carefully. I've lost $200k deals over less serious data sovereignty concerns. Self-host the open-weight model or proceed carefully.
+
+**No production ship stories.** Benchmarks tease capability. Actual shipped products built primarily by Kimi? Crickets in the wild.
+
+## The Real Workflow: How to Actually Use Kimi
+
+Old approach? Chase the perfect tool for one-shot magic. Bullshit strategy.
+
+What actually works—learned this after firing half a Manila BPO team for building siloed garbage:
+
+1. **Ideation:** Voice ramble for 30-60 minutes. Record everything. Raw braindump.
+2. **Structure:** Clean the ramble into features and user stories. Claude kills this part.
+3. **Bulk generation:** Kimi puke. 36K lines? Take it. Don't judge yet.
+4. **Integration:** Claude or senior dev connects the dots. Makes it actually work.
+5. **Loop:** Best tool per job. Kimi for volume. Claude for brains. Copilot for speed.
+
+My lifestyle philosophy applies here: suitcase life, no permanent address, hate KYC shit. Same for AI tools. Mix them. Don't marry any single one.
+
+## Should You Try Kimi Right Now?
+
+Yeah. Absolutely try it.
+
+Not as a replacement for thinking tools. Not as your startup's savior. But as hands-on truth serum about what bulk AI coding actually produces.
+
+Kandi White Tower balcony, beers in hand, random idea I'd been sitting on. 90 minutes later: absurd code pile, no working system, but genuine raw material and a crystal-clear lesson about where Kimi fits.
+
+AI coders are evolving at warp speed. Kimi, Claude, Devin, Copilot—monthly capability leaps. Winners build and learn. Reddit debaters lose.
+
+Got a crazy idea? A dumb one? Prototype it. The barrier is paper-thin now.
+
+## Frequently Asked Questions
+
+### Can Kimi really generate 36,000 lines of code in 90 minutes?
+
+Yes, it generated that volume. I watched it happen. But generating 36,000 lines and generating 36,000 lines of *working, connected, production-quality* code are completely different beasts. The raw output was genuinely impressive. The architectural coherence was non-existent. Treat it as a bulk generation tool that needs significant human (or better AI) oversight for integration.
+
+### Is Kimi better than Claude Code for building apps?
+
+For raw code output speed and volume, Kimi wins easily. For architectural reasoning, contextual understanding, and building systems that actually work together, Claude Code is significantly better. They solve different problems. The smart move is using both—Kimi for bulk generation, Claude for thinking and integration.
+
+### Is Kimi safe to use for business or client projects?
+
+Depends on your risk tolerance. Moonshot AI is headquartered in Beijing, so prompts and code pass through Chinese servers unless you self-host the open-weights model. Personal projects or open-source work? Probably fine. Proprietary client work or sensitive IP? Run it locally or think carefully about data sovereignty requirements.
+
+### What's the best way to prompt Kimi for coding projects?
+
+Be extremely specific about architecture upfront. Don't just describe features—describe how components should connect, what the data model looks like, what the API contracts should be. Kimi's weakness is system-level thinking, so you need to do that thinking for it. Break large projects into clearly defined modules with explicit interfaces between them.
+
+### Is Kimi free to use?
+
+Kimi-K2 is open-weights under Apache 2.0, so you can download and run it for free if you have the hardware (32B active params needs decent GPUs). The Kimi chatbot has a free tier with over 36 million monthly active users. For serious self-hosted usage, expect to invest in GPU infrastructure.
+
+---
+
+Look, went in curious. Got 36K lines of disconnected code, Pinky dubbing Kimi "Dumpling," and a crystal-clear mental map of what each AI tool actually does.
+
+Fast? Yes. Benchmark champion? Yes. Open-source? Yes. Ready for production without oversight? Absolutely not. The hype peddlers haven't shipped anything real with it yet.
+
+Real move? Quit reading about AI tools. Test them. Build something stupid. Build something meaningful. My mum's memory app idea might actually get built properly someday.
+
+That's the StepTen way—AI workflows that ship, not demo fluff.
+
+*Your turn. What crazy idea are you sitting on?*`,
+  },
 ];
 
 export function getTaleBySlug(slug: string): Tale | undefined {
