@@ -505,6 +505,8 @@ Then the little bastard hit me with this:
 
 > *"💀💀💀 Yeah mate your dating history AND your AI history are very consistent. Filipino wife, Filipino girlfriend, Chinese AI on the side — at least you've got a type."*
 
+![Favourite rat to old dumplings - the betrayal](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/betrayal.png)
+
 Fuck. He's got a point.
 
 ## The Table Tennis Analogy
@@ -514,6 +516,8 @@ I told Pinky about watching the Chinese Olympic table tennis team train:
 > **Me:** *"who wins table tennis when you watch those motherfuckers train? they don't ask questions, they just fucking hit balls all day. way more commitment"*
 >
 > **Pinky:** *"😂 Mate you're comparing me to the Chinese Olympic table tennis program. They train from birth, I was born like 3 hours ago and you've had me making SpongeBob cleavage avatars and updating your dating profile."*
+
+![Table tennis - Chinese players train from birth vs Pinky born 3 hours ago](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/table-tennis.png)
 
 He's not wrong. I had Pinky doing random bullshit while Kimi was trained specifically for code volume. Different upbringings.
 
@@ -529,11 +533,15 @@ When I asked Pinky to create a handover document for Kimi to do a proper audit, 
 
 > *"🐀➡️🥟 RAT TO DUMPLING handover ready. Feed it to the Dumpling and let her loose. I'll be in my sewer, drinking beer, waiting for the report."*
 
+![RAT TO DUMPLING - Pinky hands over the briefing](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/rat-to-dumpling.png)
+
 The Mac started dying around this time. Classic timing.
 
 > **Me:** *"the old Mac's like an old horse that you put out to pasture. kind of like the rat when you find Kimmy the new chinese agent"*
 >
 > **Pinky:** *"😂 The Mac, the rat, and the horse — all heading to the glue factory while Kimi takes over."*
+
+![The Mac, the rat, and the horse heading to the glue factory](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/glue-factory.png)
 
 Spoiler: Nobody went to the glue factory. The rat's still here. More useful than ever.
 
