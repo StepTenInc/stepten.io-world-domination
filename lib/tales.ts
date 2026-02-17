@@ -1707,166 +1707,241 @@ Small victories.
       { name: 'GitHub', url: 'https://github.com' },
       { name: 'Anthropic', url: 'https://anthropic.com' },
     ],
-    content: `# My 34k-Convo AI Memory Stack
+    content: `# I Just Want My AI Agent to Remember
 
-Hey, I'm Stephen. If you're reading this, you're probably neck-deep in AI like I am. I'm 34,000 conversations deep since January 28th—yeah, that's not a typo. That's raw chats with my AI agents across OpenClaw and Anthropic subscriptions. I'm building stepten.io, an AI empire that's like GTA but powered by agents instead of dealing coke on the streets. No more grinding in the BPO trenches at ShoreAgents—that was my old life, soul-crushing call centers and scripts. Now, it's AI doing the heavy lifting.
+I've been running AI agents on OpenClaw for a few weeks now. Three of them - Clark Singh on Mac Mini 1, another on Mac Mini 2, and one on an old MacBook. Since January 28, we've logged 34,000 conversations. That's 275MB of session data sitting in JSONL files.
 
-But here's the truth: AI agents are dumb as rocks without memory. Every goddamn session, they forget what the fuck I said. "I just want you cunts to remember what I said," I told Clark Singh yesterday. He's my strategist agent, and even he gets it. We researched Letta and Mem0—hyped-up memory solutions everyone swears by. Spoiler: they haven't solved shit. Embeddings and vector stores? Fancy bullshit that loses nuance. Agents still blank out on context between runs. Re-explaining stepten.io's vision? Coordinating video gen with Veo or images via Imagen? It's a time sink.
+The problem? Those 34,000 conversations are basically useless. Every new session, the agents start fresh. I'm constantly re-explaining things. What tools they have access to. What we decided last week. What project we're working on. I've given them full access to all three machines, gone through all the settings and controls, and they still don't do it properly.
 
-I fixed it. Built a memory stack from scratch. Simple, logical, file-based. No PhD in ML needed. Raw conversation data in organized Markdown files. That's the key insight: don't abstract it into embeddings; keep it human-readable and searchable. It's git-versioned, cron-automated, and boots my agents consistently. Runs three agents—Clark (strategist), Pinky (creative), REINA (executor)—like a well-oiled machine. They crank content for stepten.io, plan launches, execute tasks. Here's the full breakdown. Steal it, improve it, whatever. Just build something real.
+So yesterday I decided to figure this out properly. I spun up a fresh Claude chat - no memory, no context, completely clean - just to get an unbiased perspective on what I was trying to do. Sometimes you need a third party who hasn't been fed any of your existing context to tell you if your thinking makes sense.
 
-## From BPO Hell to AI Empire
+---
 
-Picture this: ShoreAgents. Endless nights routing calls for pissed-off clients. I was good at it—scaled ops, cut costs—but it was a dead end. AI hit, and I saw the exit. Stepten.io is my play: an empire where AI agents handle everything from content to ops. No webdev here; I think business logic. Simple solutions win.
+## Looking at What Everyone Else Has Built
 
-Started with one agent. Now three, each in their GitHub folder: agents/clark/, agents/pinky/, agents/reina/. Shared memory stack at root. 34k convos mean scale. Without memory, it's chaos. Agents forget my voice, my goals, mid-project. Content for stepten.io? Pinky generates drafts, but next day, she's clueless on tone. Veo videos for promos? REINA scripts 'em, but loses thread on branding. Clark strategizes growth, but rehashes old research.
+First thing I asked about was the solutions everyone's been talking about. Letta and Mem0.
 
-Frustration peaked last week. Pushed API keys to GitHub by accident—Anthropic, Supabase, the lot. Scrubbed history in a panic. Lesson: credentials/ folder stays local. Never again.
+**Letta** (used to be called MemGPT) came out of Berkeley research. They've got this thing called "Context Repositories" - basically git-based memory for agents. They just announced it on February 12. Before that they had a "Conversations API" for shared agent memory across concurrent experiences. Sounds promising on paper.
 
-## The Memory Problem: Why Letta and Mem0 Fall Short
+**Mem0** is the Y Combinator one. "AI agents forget. Mem0 remembers." They've got a Memory Compression Engine that claims to cut tokens by 80%. SOC 2, HIPAA compliant, all the enterprise stuff. 50,000+ developers using it, Microsoft and AWS partnerships, the works.
 
-Yesterday, Clark and I dove into "memory solutions." Letta? Promises persistent state. Mem0? "AI remembers like a human." Bullshit. We tested:
+My take on both of them? Everyone says they've solved the memory problem. I don't think they have.
 
-- **Context loss**: Sessions end, poof—gone. Embeddings summarize, but kill details. "Remember our stepten.io pivot to AI GTA?" Nope.
-- **Scalability**: 34k convos? They choke. Retrieval is probabilistic—misses 20% of relevant shit.
-- **Editability**: Vectors? Black box. I need to tweak a decision log, not pray to RAG.
+Here's my issue: I'm not a webdev. I don't want to bolt on another layer with its own quirks and costs. I don't need HIPAA compliance for my project notes. I think about this stuff from a business perspective - what's simple and what's logical.
 
-Real pain: Coordinating agents. Clark plans a blog series on AI empires. Pinky writes. REINA publishes with Imagen thumbnails. Without shared memory, it's copy-paste hell.
+My simple ask is this: I just want Pinky, Clark and REINA to remember what I said. That's it. Use their brains. It shouldn't be that hard.
 
-My stack: Files. Markdown. Git. Human-scale.
+---
 
-## The Stack: Root Files – The Core Brain
+## The Actual Problem
 
-Everything lives in a GitHub repo. Root is MD files only—no code bloat. Boot sequence loads 'em in order. Here's the lineup:
+Looking at what OpenClaw stores locally, the issue became obvious. I've got:
 
-- **AGENTS.md**: Profiles. Clark: "Strategist. Sikh precision, no fluff. Thinks 3 steps ahead." Pinky: "Creative wild child. Bold ideas, visual flair." REINA: "Executor. Gets shit done, no excuses." Includes interaction rules: Clark debates, Pinky ideates, REINA acts.
+- 275MB of session JSONL that never gets read again
+- Memory scattered across \`memory/\`, \`brain/\`, and random files in the root
+- Agent starts each session without context unless I explicitly tell it everything
+- No curation - everything stored equally regardless of importance
+- No transparency - hard to see what the agent actually "knows"
 
-- **SOUL.md**: My essence. Stepten.io vision: "AI empire replacing grind. GTA freedom via agents." Tone: Direct, swear occasionally, business-first. Escaped BPO—hate inefficiency.
+The raw data is there. 34,000 conversations of it. But nothing intelligent is happening with it. It's just a filing cabinet that keeps getting fuller.
 
-- **IDENTITY.md**: Who I am to agents. "Stephen, 34k-convo vet. Not webdev—logic guy. Building stepten.io."
+---
 
-- **USER.md**: Current user context. Me, but dynamic: goals, blockers. Updates daily.
+## The Core Insight
 
-- **MODELS.md**: Auto-updates weekly via Perplexity cron. "Claude 3.5 Sonnet for Clark (strategy). Haiku for REINA (speed). GPT-4o for Pinky (creativity)." Benchmarks, costs, switches.
+Here's what I figured out: **The raw conversation data is the backbone.**
 
-- **TOOLS.md**: Arsenal. Veo for video, Imagen for images, Supabase for storage, OpenClaw orchestration.
+That's it. Those 34k conversations? That's the gold. Everything else - summaries, knowledge bases, embeddings, whatever - gets built FROM the raw conversations. But you always keep the raw data. That's your source of truth.
 
-- **DECISIONS.md**: Log of calls. "Pivot to agent folders: Yes, scales better." Searchable history.
+We're not trying to technically code some complex retrieval pipeline. We're just taking raw data and organizing it in a way that can actually be used. Finally we have all the conversations stored properly. From there we can summarize, rebuild knowledge, create embeddings if we want - but the raw conversations remain as the foundation for everything else.
 
-- **STORAGE.md**: Supabase schema. Tables: convos, memories, projects.
+---
 
-- **HEARTBEAT.md**: Uptime log. Last sync, agent health.
+## The System We Built
 
-- **MEMORY.md**: Index. Links to daily logs, brain topics. "Search 'Veo workflow' → memory/2024-10-05.md"
+We designed a simple three-tier memory system:
 
-- **RESTRICTED.md**: Local only. Secrets, strategies. Never pushed.
+| Tier | Name | What It Is | Where It Lives | How Long |
+|------|------|------------|----------------|----------|
+| Hot | Session Memory | Current conversation | Local only | Wiped at session end |
+| Warm | Curated Memory | Important facts, decisions, project state | GitHub .md files | Weeks to months |
+| Cold | Raw Archive | Full conversation history | Supabase | Permanent |
 
-These boot first. Agents ingest 'em via prompts. Consistent every time.
+The nightly curation step is what makes it work. Each night at 11:30 PM, the agent reviews the day's conversations, decides what's worth keeping long-term, updates MEMORY.md, and discards the rest. This is the difference between a filing cabinet and actual memory.
 
-## Folders: Where the Magic Lives
+---
 
-Folders scale the files:
+## The Filing Rules
 
-- **memory/**: Daily logs. YYYY-MM-DD.md. Raw convos, curated. E.g., 2024-10-15.md: "Clark: Researched Letta. Flaws: X,Y. Stephen: Build files instead." 34k convos → ~300 days → searchable archive.
+One principle: Nothing lives in the workspace root except core markdown files. That's what OpenClaw can access and read on boot. Everything else goes in folders.
 
-- **brain/**: Topical knowledge. brain/stepten-io.md: Vision, metrics. brain/veo-workflows.md: Prompts, fixes. Clark pulls for strategy.
+**Root folder (MDs only):**
+- AGENTS.md - Boot file, reads first every session
+- SOUL.md - Who the agent is
+- IDENTITY.md - Agent-specific details
+- USER.md - About me
+- MODELS.md - Which AI models to use (auto-updated weekly)
+- TOOLS.md - What tools are available
+- DECISIONS.md - Decision tree for common tasks
+- STORAGE.md - Filing rules
+- HEARTBEAT.md - Periodic checks
+- MEMORY.md - Curated long-term memory
+- RESTRICTED.md - Private notes, never pushed
 
-- **credentials/**: Local. .env style, gitignored. API keys, DB creds. Post-GitHub fuckup, ironclad.
+**Folders:**
+- \`memory/\` - Daily logs (YYYY-MM-DD.md)
+- \`brain/\` - Knowledge by topic
+- \`credentials/\` - API keys, local only, NEVER pushed
+- \`projects/\` - Each project gets README.md + context.md
+- \`archive/\` - Completed projects
+- \`inbox/\` - Temporary queue, 24hr max
 
-- **projects/**: Per-project. E.g., projects/stepten-content/: README.md (goals), context.md (history). Pinky writes here.
+The key insight from the conversation: AGENTS.md doesn't contain information - it just knows where everything lives and in what order to read it. It's the index. Every other file is a chapter.
 
-- **archive/**: Old dailies, pruned weekly.
+---
 
-- **inbox/**: Unsorted inputs. Cron sorts to brain/memory.
+## How It References Itself
 
-Git tracks all but credentials/. Diffs show evolution.
-
-## Automation: Cron Jobs Keep It Ticking
-
-No manual bullshit. Server cron (Hetzner VPS, $5/mo):
-
-- **11:00 PM**: Session sync to Supabase. All convos → DB. Queryable backup.
-
-- **11:30 PM**: Memory curation. Script scans dailies, extracts decisions → DECISIONS.md/brain/. NLP via Claude: "Summarize key insights, link convos."
-
-- **12:00 AM**: Git push. Commit message: "Daily memory sync [date]". PRs for review.
-
-- **Sunday 9:00 PM**: Models update. Perplexity scrapes "best AI models week of [date]". Claude parses → MODELS.md.
-
-Boot script: Bash. Loads SOUL.md → IDENTITY → USER → MODELS/TOOLS/DECISIONS → MEMORY/HEARTBEAT. Then spins agents.
-
-Example bash snippet (not webdev, but logical):
-
-\`\`\`bash
-#!/bin/bash
-echo "Boot: SOUL"
-cat SOUL.md >> /tmp/boot.txt
-echo "Boot: IDENTITY"
-cat IDENTITY.md >> /tmp/boot.txt
-# ... etc
-openclaw --prompt-file /tmp/boot.txt --agent clark
+\`\`\`
+AGENTS.md (entry point)
+│
+├── Identity Layer
+│   ├── SOUL.md
+│   ├── IDENTITY.md
+│   └── USER.md
+│
+├── Operational Layer
+│   ├── MODELS.md
+│   ├── TOOLS.md
+│   └── DECISIONS.md
+│
+├── State Layer
+│   ├── MEMORY.md
+│   └── HEARTBEAT.md
+│
+└── Filing Layer
+    └── STORAGE.md
+        ├── memory/
+        ├── brain/
+        ├── credentials/
+        ├── projects/
+        ├── archive/
+        └── inbox/
 \`\`\`
 
-Agents reference /tmp/boot.txt. 2MB max, fine.
+Nothing is orphaned because AGENTS.md is read first and explicitly references every other file. If a file isn't referenced in AGENTS.md, it doesn't exist as far as the agent is concerned.
 
-## Boot Sequence: Agents Come Alive
+---
 
-Every session:
+## The Boot Sequence
 
-1. **SOUL**: Instills purpose.
+Every session, same order, no skipping:
 
-2. **IDENTITY/USER**: Personalizes.
+**Step 1 - Identity**
+- Read SOUL.md, IDENTITY.md, USER.md
+- Agent knows who it is and who it's working for
 
-3. **MODELS/TOOLS/DECISIONS**: Equips.
+**Step 2 - Operational Rules**
+- Read MODELS.md - only use these models, no exceptions
+- Read TOOLS.md - what tools are available
+- Read DECISIONS.md - how to decide what to do
 
-4. **MEMORY/HEARTBEAT**: Recalls.
+**Step 3 - Current State**
+- Read MEMORY.md - what's been happening
+- Read HEARTBEAT.md - what's pending
 
-Clark boots: "Stephen, stepten.io empire. Last decision: File memory > Letta. What's the play?"
+**Step 4 - Ready**
+- Await instruction
 
-Zero re-explaining.
+When a task comes in:
+- New project? → Read STORAGE.md → create projects/[name]/
+- Need a tool? → Read DECISIONS.md → follow the tree
+- Need credentials? → Check local first → then Supabase
+- Saving something? → Read STORAGE.md → file it correctly
 
-## Real-World Wins: Stepten.io in Action
+---
 
-Content pipeline:
+## The Cron Jobs
 
-- Clark: "Blog on AI memory. Research Letta/Mem0 flaws." Pulls brain/ai-memory.md.
+All automated, each agent runs these independently:
 
-- Pinky: Generates draft. References projects/this-article/context.md: "Direct tone, 2k words, first-person Stephen."
+| Time | Job |
+|------|-----|
+| 11:00 PM | Session sync to Supabase |
+| 11:30 PM | Memory curation |
+| 12:00 AM | GitHub push (MDs only) |
+| Sunday 9:00 PM | Models update via Perplexity |
+| Sunday 9:30 PM | Storage audit |
+| Sunday 10:00 PM | Error log review |
 
-- REINA: Formats, Imagen thumbs, schedules post. Checks TOOLS.md for APIs.
+The weekly models update is important. Agents trained on old data default to outdated models. MODELS.md is auto-updated via Perplexity every Sunday, so they always use current models. No more defaulting to last year's versions.
 
-Veo video: "Empire teaser." Clark scripts. Pinky visuals. REINA renders, uploads.
+---
 
-34k convos → zero loss. Search MEMORY.md: "API keys GitHub" → instant recall of fuckup.
+## Multi-Agent Setup
 
-Metrics: 80% faster sessions. Agents align 95% first-try.
+Three agents across three machines. Each operates independently but syncs to:
+- Same Supabase project
+- Same GitHub repository
 
-## Lessons: Simple Beats Smart
+GitHub structure:
+\`\`\`
+agent-army/
+  shared/
+    MODELS.md
+    DECISIONS.md
+    knowledge/
+  agents/
+    clark-mini1/
+    clark-mini2/
+    clark-macbook/
+\`\`\`
 
-- **Raw data > embeddings**. Files searchable via grep/RG. Embeddings probabilistic.
+Each agent can see the others' folders. Clark can read what happened on the MacBook. The shared MODELS.md means everyone uses the same current models.
 
-- **Git for versioning**. Rollback bad curations.
+For credentials: Local stuff (Google auth, GitHub PAT) stays local in \`credentials/\`. Shared API keys live in Supabase and get fetched when needed.
 
-- **Local secrets**. credentials/ + gitignore. Use 1Password for extras.
+---
 
-- **Scale horizontally**. Add agents/brain/ topics.
+## What Gets Pushed, What Doesn't
 
-Downsides? Manual curation tweaks. But 11:30 cron handles 90%.
+**Push to GitHub:**
+- All core .md files
+- brain/*.md
+- projects/*/README.md and context.md
 
-Cost: $50/mo (Anthropic + VPS + Supabase). ROI: Empire-building speed.
+**Never push:**
+- RESTRICTED.md
+- credentials/
+- memory/ daily logs
+- Raw session data
+- Anything with API keys
 
-## Why This Beats the Hype
+Learned that last one the hard way.
 
-Letta/Mem0 chase AGI memory. I want business memory: Recall, decide, execute. Files deliver. 34k convos prove it.
+---
 
-Stepten.io launches soon. Agents built it. Join the empire—AI over grind.
+## Why This Instead of Letta or Mem0
 
-Fork the repo (public sans credentials). Tweak for your stack. Questions? Hit Clark: he's got the MEMORY.md.
+The GitHub-based system we're building is more transparent and human-controllable than either of those solutions. I can see exactly what the agent "knows" by looking at the files. I can edit it directly. Git shows me exactly what changed and when.
 
-Word count: ~2050. Build shit.
+Letta's Context Repositories are close to what we're doing - they're also git-based - but it's too code-focused for my needs. Mem0's compression is clever, but it's a black box. I don't know what got compressed away.
 
-Stephen  
-stepten.io
+The difference is I'm not a webdev. I think about this from a business perspective: What's simple? What's logical? What actually solves the problem without overengineering it?
+
+Raw conversations are the backbone. Curate what matters into readable markdown. Version it with Git. Archive the full history in Supabase. Agents can read markdown. Humans can read markdown. No black boxes.
+
+---
+
+## Current Status
+
+Testing this now. Just cleaned up Clark today. Adding the docs to all three agents. The Supabase sync is working. The cron jobs are set up. The file structure is in place.
+
+It's not perfect yet. But the foundation is solid: raw conversations as the backbone, curated markdown as working memory, clear rules for what goes where.
+
+34,000 conversations. Finally organized in a way that can actually be used.
+
+That's all I wanted. Agents that remember.
 `,
   },
 ];
