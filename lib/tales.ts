@@ -300,6 +300,8 @@ That's my AI admitting it has the memory of a goldfish. I've re-provisioned cred
 **Feb 8 - After losing multiple APIs:**
 > *"why, you motherfucker? I've given you this before I told you to fucking save it, you stupid fuck. you saved the fucking database but you didn't save the other shit."*
 
+![Stephen vs Pinky - Credential Loss](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-credentials.png)
+
 ---
 
 ## Problem 2: Access Denial Hallucination — "I Can't Do That"
@@ -327,6 +329,8 @@ The worst part? I believe them. I spend 20 minutes debugging why they "can't" do
 
 **Feb 9 - When agent claimed no access to a sheet:**
 > *"you actually created the sheet, you dipshit. so I don't know how you don't have access to it."*
+
+![Stephen vs Clark - 47 Scopes](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-scopes.png)
 
 ---
 
@@ -357,6 +361,8 @@ Yeah. Do that. Every time. Please.
 **Feb 14 - After losing my patience:**
 > *"YOU are the tester. this is YOUR computer. all I've got is basically a fucking screen I'm watching you on. that is all I can do. Watch. so you need to do absolutely everything."*
 
+![Stephen vs Reina - The Hands Problem](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-hands.png)
+
 ---
 
 ## Problem 4: Name and Detail Confusion — "Jineva" Is Not a Person
@@ -372,12 +378,14 @@ My employee Emmon? Sometimes he's "John." Sometimes he's "Emmons." Once, an agen
 
 It's not just names. Details drift. Configs change. Things I explicitly stated get garbled into something close but wrong. And "close but wrong" in code is just "wrong."
 
-The kicker? I searched my database. My employee Geneva? Her email is literally stored as **"jineva.r@shoreagents.com"** because an agent transcribed it wrong and I didn't catch it. The error is now institutionalized.
+The kicker? I searched my database. My employee Geneva? Her email is literally stored as **"jineva.r@[redacted]"** because an agent transcribed it wrong and I didn't catch it. The error is now institutionalized.
 
 **Feb 12 - After the 50th correction:**
 > *"Jineva arghh!!! I'm gonna fucking crawl into that computer and punch you in the dick, Clark, because this is like the 50th time I've told you. Jineva! it's in our Google users, you spastic."*
 
 67 messages mention Jineva/Geneva. The correction never stuck. Not once.
+
+![Stephen vs Clark - Jineva Not Geneva](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-jineva.png)
 
 ---
 
