@@ -272,6 +272,49 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         return;
       }
       
+      // Handle markdown images ![alt](url)
+      const imageMatch = block.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imageMatch) {
+        const [, alt, url] = imageMatch;
+        elements.push(
+          <div key={`img-${i}`} className="tale-inline-image" style={{
+            margin: '40px 0',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            position: 'relative',
+            aspectRatio: '16/9',
+            border: `1px solid ${author.color}40`,
+            boxShadow: `0 10px 40px rgba(0,0,0,0.3), 0 0 30px ${author.color}20`,
+          }}>
+            <Image src={url} alt={alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 800px" />
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(to right, ${author.color}10, transparent, ${author.color}10)`,
+              pointerEvents: 'none',
+            }} />
+            {alt && (
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: '16px 24px',
+                background: `linear-gradient(transparent, rgba(0,0,0,0.85))`,
+                fontFamily: 'var(--fm)',
+                fontSize: '0.7rem',
+                color: author.color,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+              }}>
+                // {alt}
+              </div>
+            )}
+          </div>
+        );
+        return;
+      }
+
       const formatted = block
         .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color}; font-weight: 600;">$1</strong>`)
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
