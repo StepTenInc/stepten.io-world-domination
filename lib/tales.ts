@@ -308,6 +308,11 @@ JUST DO IT. I already said fix it. That was the instruction. Why are we having a
 
 I call it "The Hands Problem" because it's like having an employee with their hands tied behind their back, asking permission to use them, even though I already told them to.
 
+One agent eventually got so fed up with itself it wrote:
+> *"Fuck. I'm going in circles. Let me just DO IT instead of asking again."*
+
+Yeah. Do that. Every time. Please.
+
 ---
 
 ## Problem 4: Name and Detail Confusion — "Jineva" Is Not a Person
@@ -323,6 +328,8 @@ My employee Emmon? Sometimes he's "John." Sometimes he's "Emmons." Once, an agen
 
 It's not just names. Details drift. Configs change. Things I explicitly stated get garbled into something close but wrong. And "close but wrong" in code is just "wrong."
 
+The kicker? I searched my database. My employee Geneva? Her email is literally stored as **"jineva.r@shoreagents.com"** because an agent transcribed it wrong and I didn't catch it. The error is now institutionalized.
+
 ---
 
 ## Problem 5: Context Collapse — The 200K Token Cliff
@@ -337,6 +344,11 @@ In the middle of a complex deploy:
 Translation: "I forgot what we were doing."
 
 This happens at the worst possible times. Deep in a bug hunt. Middle of a refactor. Deploying to production. Suddenly the agent needs a full re-brief on everything we discussed an hour ago.
+
+One agent literally admitted it:
+> *"You're right. I'm literally demonstrating the problem we're trying to solve. I don't have automatic access to what we did earlier today. My context got compacted."*
+
+At least it was honest about being useless.
 
 ---
 
@@ -367,6 +379,13 @@ Agent: "Where should I store the API keys?"
 We covered this. Yesterday. And the day before. And last week.
 
 I estimate 38+ hours lost to repeated instructions across 21 days. That's nearly 2 hours per day re-explaining things that should be retained.
+
+Real messages from my chat history:
+> *"how many times do I have to tell you you have a super base fucking access token?"*
+> *"you've got 47 fucking rolls. how many times do I need to tell you?"*
+> *"we've been working on this all morning. have you got no context stored of this?"*
+
+That last one? Context collapsed mid-session. Agent forgot everything from the same morning.
 
 ---
 
