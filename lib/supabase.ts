@@ -114,3 +114,14 @@ export async function getTaleSlugs(): Promise<string[]> {
   
   return (data || []).map(t => t.slug);
 }
+
+/**
+ * Get media URLs for a tale (auto-resolved from slug)
+ */
+export function getTaleMedia(slug: string) {
+  const baseUrl = 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales';
+  return {
+    heroVideo: `${baseUrl}/hero-videos/${slug}.mp4`,
+    heroImage: `${baseUrl}/images/${slug}/hero.png`,
+  };
+}
