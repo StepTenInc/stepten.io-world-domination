@@ -185,6 +185,7 @@ export async function runScorer(
         generationConfig: {
           temperature: 0.2, // Lower for more consistent scoring
           maxOutputTokens: 4000,
+          responseMimeType: 'application/json', // Force JSON output
         },
       }),
     }
@@ -200,10 +201,18 @@ export async function runScorer(
   // Parse JSON from response
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
-    throw new Error('Failed to parse scorer output');
+    console.error('Scorer output (no JSON found):', text.slice(0, 500));
+    throw new Error('Failed to parse scorer output - no JSON found');
   }
 
-  const result = JSON.parse(jsonMatch[0]) as ScorerOutput;
+  let result: ScorerOutput;
+  try {
+    result = JSON.parse(jsonMatch[0]) as ScorerOutput;
+  } catch (parseError) {
+    console.error('JSON parse error:', parseError);
+    console.error('Attempted to parse:', jsonMatch[0].slice(0, 500));
+    throw new Error(`Failed to parse scorer JSON: ${parseError}`);
+  }
 
   // Calculate weighted score if not provided
   if (!result.weightedScore) {

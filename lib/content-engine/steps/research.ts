@@ -127,20 +127,32 @@ export async function runResearch(
     .replace('{{TOPIC}}', input.topic)
     .replace('{{KEYWORDS}}', input.targetKeywords?.join(', ') || 'none specified');
 
+  const requestBody = {
+    model: config.models.research.model,
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: 4000,
+  };
+
   const response = await fetch(config.models.research.endpoint, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      model: config.models.research.model,
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: 4000,
-    }),
+    body: JSON.stringify(requestBody),
   });
 
-  const data = await response.json();
+  const responseText = await response.text();
+  
+  // Debug: check if response is HTML (error page)
+  if (responseText.startsWith('<')) {
+    console.error('Perplexity returned HTML instead of JSON:');
+    console.error('Status:', response.status, response.statusText);
+    console.error('Response preview:', responseText.slice(0, 200));
+    throw new Error(`Perplexity API error: ${response.status} ${response.statusText}`);
+  }
+
+  const data = JSON.parse(responseText);
   const content = data.choices?.[0]?.message?.content;
 
   // Parse the JSON from the response

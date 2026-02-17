@@ -103,24 +103,53 @@ export class ContentEngine {
       );
       this.progress('optimizer', 'complete', `Generated meta, schema, ${intermediate.optimized.internalLinks.length} internal links`);
 
-      // Step 5: Score
+      // Step 5: Score (optional - don't fail if scoring fails)
       this.progress('scorer', 'running', 'Scoring against StepTen methodology...');
-      intermediate.score = await runScorer(
-        intermediate.draft.title,
-        intermediate.humanized.content,
-        this.keys.google
-      );
-      this.progress('scorer', 'complete', `Score: ${intermediate.score.weightedScore.toFixed(1)} (${intermediate.score.rating})`);
+      try {
+        intermediate.score = await runScorer(
+          intermediate.draft.title,
+          intermediate.humanized.content,
+          this.keys.google
+        );
+        this.progress('scorer', 'complete', `Score: ${intermediate.score.weightedScore.toFixed(1)} (${intermediate.score.rating})`);
+      } catch (scoreError) {
+        console.warn('Scoring failed (non-fatal):', scoreError);
+        this.progress('scorer', 'complete', 'Scoring skipped due to API issues');
+        // Provide default score structure
+        intermediate.score = {
+          scores: {
+            titlePower: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            humanVoice: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            contentQuality: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            visualEngagement: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            technicalSeo: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            internalEcosystem: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+            aiVisibility: { score: 0, maxPossible: 100, breakdown: {}, feedback: 'Scoring failed' },
+          },
+          totalScore: 0,
+          weightedScore: 0,
+          rating: 'NEEDS_WORK',
+          topStrengths: [],
+          topWeaknesses: ['Scoring API failed'],
+          prioritizedImprovements: [],
+        } as ScorerOutput;
+      }
 
-      // Step 6: Generate Ideas
+      // Step 6: Generate Ideas (optional)
       this.progress('ideas', 'running', 'Generating related article ideas...');
-      intermediate.ideas = await generateIdeas(
-        intermediate.draft.title,
-        input.topic,
-        intermediate.humanized.content,
-        this.keys.google
-      );
-      this.progress('ideas', 'complete', `Generated ${intermediate.ideas.length} related ideas`);
+      try {
+        intermediate.ideas = await generateIdeas(
+          intermediate.draft.title,
+          input.topic,
+          intermediate.humanized.content,
+          this.keys.google
+        );
+        this.progress('ideas', 'complete', `Generated ${intermediate.ideas.length} related ideas`);
+      } catch (ideasError) {
+        console.warn('Ideas generation failed (non-fatal):', ideasError);
+        this.progress('ideas', 'complete', 'Ideas generation skipped');
+        intermediate.ideas = [];
+      }
 
       // Assemble final output
       const article: ArticleOutput = {
