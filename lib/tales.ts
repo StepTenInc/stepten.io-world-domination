@@ -1691,7 +1691,7 @@ Small victories.
   {
     slug: 'i-just-want-my-ai-agent-to-remember',
     title: 'I Just Want My AI Agent to Remember',
-    excerpt: "G'day. Stephen here. I run ShoreAgents, and I've been building AI agent systems with 34,000 conversations. Here's how I solved the memory problem without fancy vector databases.",
+    excerpt: "34,000 conversations and my AI agents still can't remember what I said yesterday. Here's the simple system I built to fix it.",
     author: 'stepten',
     authorType: 'HUMAN',
     date: 'Feb 18, 2026',
