@@ -1,4 +1,5 @@
 import { CharacterKey } from './design-tokens';
+import { getTaleMediaUrl } from './media';
 
 export type AuthorType = 'HUMAN' | 'AI' | 'LEGEND';
 export type TaleCategory = 'VISION' | 'CODE' | 'CHAOS' | 'HERO' | 'ORIGIN' | 'TECH' | 'DEMO' | 'CONSCIOUSNESS' | 'AI_CODING';
