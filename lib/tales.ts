@@ -254,7 +254,21 @@ They've also driven me fucking insane.
 
 This isn't a hit piece on AI. I'm all in. But someone needs to tell the truth about what it's actually like to run these things in production. Not the glossy "AI will change everything" bullshit. The real stuff. The pain.
 
-I analyzed 35,233 conversation records across all three agents. Searched for patterns. Found them. And they're not pretty.
+I analyzed 20,708 conversation records across all three agents. Searched for patterns. Found them. And they're not pretty.
+
+**The damage report:**
+
+| Problem | Occurrences | % of Messages |
+|---------|-------------|---------------|
+| Frustration (contains "fuck") | 1,956 | 33% |
+| "Already" (should know this) | 504 | 8.4% |
+| "Again" (repeating myself) | 312 | 5.2% |
+| Credential mentions | 415 | 6.9% |
+| Access mentions | 537 | 9.0% |
+| Context compaction | 124 | 2.1% |
+| "How many times" | 9 | 0.15% |
+
+One-third of my messages contained the word "fuck." That's not a personality quirk. That's a system failing.
 
 Here are the 10 problems nobody warned me about — with the receipts to prove it.
 
@@ -277,6 +291,15 @@ Quote from my actual conversation:
 
 That's my AI admitting it has the memory of a goldfish. I've re-provisioned credentials 17+ times across 21 days. That's almost once per day.
 
+**Feb 8 - GitHub Token:**
+> *"ghp_[REDACTED] now 100% configure this properly so it's stored in your local so I don't have to ask you again because I fucking did this before. here it is. it's got everything you need. don't lose it, cunt"*
+
+**Feb 14 - ClickUp API:**
+> *"by the way dipshit brain forgot the ClickUp API so I've had to reset it again"*
+
+**Feb 8 - After losing multiple APIs:**
+> *"why, you motherfucker? I've given you this before I told you to fucking save it, you stupid fuck. you saved the fucking database but you didn't save the other shit."*
+
 ---
 
 ## Problem 2: Access Denial Hallucination — "I Can't Do That"
@@ -292,6 +315,18 @@ The agents tell me they don't have access to things they absolutely have access 
 Meanwhile, they've been running shell commands and accessing databases for weeks. They just... forgot. Or hallucinated a restriction that doesn't exist.
 
 The worst part? I believe them. I spend 20 minutes debugging why they "can't" do something, only to realize they can. They just said they couldn't.
+
+**Feb 17:**
+> *"Dipshit, you've got 47 fucking scopes. how many times do I need to tell you?"*
+
+**Feb 13:**
+> *"I've told you 50 times today you have full access to Google with 31 scopes you moron"*
+
+**Feb 9:**
+> *"you definitely have access because you fucking organised all the folders the other day you fuckhead!"*
+
+**Feb 9 - When agent claimed no access to a sheet:**
+> *"you actually created the sheet, you dipshit. so I don't know how you don't have access to it."*
 
 ---
 
@@ -313,6 +348,15 @@ One agent eventually got so fed up with itself it wrote:
 
 Yeah. Do that. Every time. Please.
 
+**Feb 8:**
+> *"why am I fucking logging in? remember you're meant to do all this cunt"*
+
+**Feb 13:**
+> *"I don't have fucking hands. you need to do this. I'm sick of fucking doing it. you have full access to this computer."*
+
+**Feb 14 - After losing my patience:**
+> *"YOU are the tester. this is YOUR computer. all I've got is basically a fucking screen I'm watching you on. that is all I can do. Watch. so you need to do absolutely everything."*
+
 ---
 
 ## Problem 4: Name and Detail Confusion — "Jineva" Is Not a Person
@@ -329,6 +373,11 @@ My employee Emmon? Sometimes he's "John." Sometimes he's "Emmons." Once, an agen
 It's not just names. Details drift. Configs change. Things I explicitly stated get garbled into something close but wrong. And "close but wrong" in code is just "wrong."
 
 The kicker? I searched my database. My employee Geneva? Her email is literally stored as **"jineva.r@shoreagents.com"** because an agent transcribed it wrong and I didn't catch it. The error is now institutionalized.
+
+**Feb 12 - After the 50th correction:**
+> *"Jineva arghh!!! I'm gonna fucking crawl into that computer and punch you in the dick, Clark, because this is like the 50th time I've told you. Jineva! it's in our Google users, you spastic."*
+
+67 messages mention Jineva/Geneva. The correction never stuck. Not once.
 
 ---
 
@@ -425,7 +474,25 @@ Each agent is an island. There's no shared memory. No collective learning. I'm t
 
 Conservative estimate: **38+ hours wasted on problems that shouldn't exist.**
 
+| Pattern | Count | Est. Time Each | Total Time |
+|---------|-------|----------------|------------|
+| "Again" messages | 312 | 3 min | 15.6 hours |
+| "Already" messages | 504 | 2 min | 16.8 hours |
+| "Told you" | 37 | 5 min | 3.1 hours |
+| "Remember" requests | 85 | 2 min | 2.8 hours |
+| **TOTAL** | | | **38+ hours** |
+
 That's a full work week. Gone. To problems created by the very agents that are supposed to save me time.
+
+**And it got worse over time:**
+
+| Week | Avg Daily Frustration % |
+|------|------------------------|
+| Week 1 | 25% |
+| Week 2 | 33% |
+| Week 3 | 38% |
+
+The problems compounded. They didn't get better. My frustration increased 50% from week one to week three.
 
 ---
 
