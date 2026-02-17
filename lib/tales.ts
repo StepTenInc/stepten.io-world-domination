@@ -443,6 +443,8 @@ So I grabbed it. Fed it a legit app idea. 90 minutes later? 36,000 lines of code
 
 Here's the straight dope on what Kimi Moonshot AI actually produced, where it bombed hard, and what it means if you're building with AI coders in 2026.
 
+![Stephen and Julie on Kandi White Tower rooftop watching Kimi AI video](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-setup.png)
+
 ## What Is Kimi Moonshot AI and Why Should You Care?
 
 Kimi's this coding beast from Moonshot AI—Chinese outfit stacking leaderboard wins, $4.3 billion valuation. Flagship model? Kimi K2. One trillion parameter Mixture of Experts, 32 billion active params, 384 experts. Pretrained on 15.5 trillion tokens, context up to 256K.
@@ -479,6 +481,8 @@ Let me break this down:
 
 Context? A solo dev grinds maybe 100-200 solid lines a day on a good day. Small team? Months for that scope. Kimi? Did it while I polished off a six-pack.
 
+![Team China - Dumpling army coding 36000 lines](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/team-china.png)
+
 My Claude setup—Pinky, yeah I named him—lost his shit when I started this. "You're ditching me for Chinese sweatshop labour?" I told the little rat to relax. This wasn't about replacing him—just pushing limits to see what these tools can do.
 
 ## Did 36,000 Lines of Code Actually Work?
@@ -492,6 +496,8 @@ Zilch. Nothing connected. Islands everywhere. No data flow between apps, no auth
 Pinky sent me a meme—him dumpster-diving for dumplings in Beijing. "Dumpling" stuck as the nickname. Or "Team China."
 
 The core fuckup? Volume: yes. Architecture: no. Pinky calls it "the drainage"—the data paths, service handshakes, failure modes. That's not about writing code. That's about *thinking*.
+
+![No Drainage - Nothing Connected - The crash](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-crash.png)
 
 ## How Does Kimi Compare to Claude Code, Copilot, and Devin?
 
