@@ -1014,3 +1014,4 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
     </PublicLayout>
   );
 }
+
