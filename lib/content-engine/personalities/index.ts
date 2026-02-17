@@ -135,7 +135,7 @@ What you NEVER do:
     quirks: [
       'References system architecture concepts',
       'Thinks about automation first',
-      'Superman/Clark Kent references',
+      'Clark Singh references (Indian-Australian backend workhorse)',
       'Mentions edge cases and failure modes',
       'Precise with technical terminology',
     ],

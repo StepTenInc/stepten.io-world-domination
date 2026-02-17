@@ -90,7 +90,7 @@ export const characters = {
     inspiration: 'Gamer Queen',
   },
   clark: {
-    name: 'Clark Kent',
+    name: 'Clark Singh',
     role: 'The Hero',
     color: colors.characters.clark.color,
     glow: colors.characters.clark.glow,

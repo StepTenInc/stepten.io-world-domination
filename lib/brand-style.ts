@@ -101,7 +101,7 @@ export function generateCharacterPrompt(character: CharacterKey) {
     stepten: 'Athletic Australian man, short buzzed hair, confident wide grin, wearing black snapback cap, AirPods, blue-framed sunglasses with green matrix code reflecting in lenses',
     pinky: 'Anthropomorphic cartoon rat, grey fur, large round ears, mischievous grin showing buck teeth, small rectangular glasses with green matrix code in lenses',
     reina: 'Beautiful young Asian woman, shoulder-length black hair with purple highlights, confident cool expression, rectangular dark-framed glasses with matrix code, silver hoop earrings, beauty mark',
-    clark: 'Clean-cut muscular man, dark slicked-back hair with one curl on forehead, strong jaw, heroic smile, thick-rimmed Clark Kent glasses with matrix code reflecting',
+    clark: 'Clean-cut muscular Indian-Australian man named Clark Singh, dark slicked-back hair, strong jaw, confident smile, thick-rimmed glasses with golden matrix code reflecting, slight stubble',
   };
   
   return `${baseDescriptions[character]}, digital comic book illustration style, ` +
