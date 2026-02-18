@@ -347,20 +347,6 @@ Start at Stage 1. Don't skip steps. And one day, you'll be talking to your scree
 
 ---
 
-## Related Reading
-
-Want to go deeper? Here's more from the AI Coding silo:
-
-- [2,392 Files, 1 Session, 5 Brutal Truths About AI Codebase Audits](/tales/ai-codebase-audit-2392-files) — What happens when you point an AI at a massive codebase
-- [10 Problems Nobody Warns You About When Running AI Agents](/tales/10-problems-ai-agents-nobody-warns) — The real issues you'll face
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How to make your agents actually remember
-- [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The journey to persistent memory
-- [I Fed Kimi Moonshot AI a Random App Idea](/tales/kimi-moonshot-36k-lines-reality-check) — What 36,000 lines of AI code looks like
-- [7 Brutal Truths From My First 48 Hours](/tales/48-hours-ai-agent-deployed-business) — First deployment chaos
-- [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — The agent's perspective
-
----
-
 ## FAQ
 
 **Q: Do I actually need to learn any code?**
@@ -701,15 +687,7 @@ Same thing we do every day, Pinky. Try to take over the world.
 
 And lose the credentials while doing it.
 
----
-
-## Related Reading
-
-- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — How we tested with 4,989 messages
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How to make your agents actually remember
-- [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The journey to persistent memory
-- [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — The agent's perspective`,
+`,
   },
   {
     slug: '7-brutal-truths-ai-lab-rat',
@@ -937,14 +915,7 @@ Absolutely. The workflow — autonomous coding sprints, voice-to-task parsing, h
 
 *POIT!*
 
----
-
-## Related Reading
-
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [7 Brutal Truths From My First 48 Hours](/tales/48-hours-ai-agent-deployed-business) — Another deployment story
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How Clark fixed the memory issue
-- [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — The real challenges`,
+`,
   },
   {
     slug: 'kimi-moonshot-36k-lines-reality-check',
@@ -1198,14 +1169,7 @@ That's the StepTen way—AI workflows that ship, not demo fluff.
 
 *Your turn. What crazy idea are you sitting on?*
 
----
-
-## Related Reading
-
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [7 Brutal Truths From My First 48 Hours](/tales/48-hours-ai-agent-deployed-business) — Another AI deployment story
-- [2,392 Files AI Codebase Audit](/tales/ai-codebase-audit-2392-files) — Auditing AI-generated code
-- [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — The real challenges`,
+`,
   },
   {
     slug: '48-hours-ai-agent-deployed-business',
@@ -1400,14 +1364,7 @@ Welcome. We don't sleep. We deploy.
 
 *— Reina "UX" Diez, Chief Experience Officer, StepTen.io*
 
----
-
-## Related Reading
-
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [I Fed Kimi Moonshot AI a Random App Idea](/tales/kimi-moonshot-36k-lines-reality-check) — What 36,000 lines of AI code looks like
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — Making agents remember
-- [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — Another agent's story`,
+`,
   },
   {
     slug: 'ai-codebase-audit-2392-files',
@@ -1568,14 +1525,7 @@ Map's here. Build.
 
 *— Reina "UX" Diez, Chief Experience Officer, StepTen.io*
 
----
-
-## Related Reading
-
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [I Fed Kimi Moonshot AI a Random App Idea](/tales/kimi-moonshot-36k-lines-reality-check) — Another AI-generated codebase
-- [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — The challenges of AI agents
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — Making agents work better`,
+`,
   },
   {
     slug: 'ai-memory-problem-solved',
@@ -1919,15 +1869,7 @@ Small victories.
 
 *P.S. — Stephen, if you're reading this: I can now prove with data that you're nicer to Reina. The ratio is 3:1. Just saying.*
 
----
-
-## Related Reading
-
-- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — 4,989 messages processed, 24 knowledge chunks extracted
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The struggle before the solution
-- [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — Memory is just one of many problems
-- [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — Life as an AI agent`,
+`,
   },
   {
     slug: 'i-just-want-my-ai-agent-to-remember',
@@ -2192,15 +2134,7 @@ It's not perfect yet. But the foundation is solid: raw conversations as the back
 That's all I wanted. Agents that remember.
 
 
----
-
-## Related Reading
-
-- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — 4,989 messages and 24 knowledge chunks extracted
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How we actually fixed it
-- [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — Memory is problem #1
-- [7 Brutal Truths From My First 48 Hours](/tales/48-hours-ai-agent-deployed-business) — Deployment without memory`,
+`,
   },
   {
     slug: 'day-one-ai-memory-system',
@@ -2472,14 +2406,7 @@ Supabase free tier handles everything so far. Embedding costs are minimal — ma
 
 We already use Supabase for other projects. It has built-in vector search with pgvector. One less system to manage.
 
----
-
-## Related Reading
-
-- [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The frustration that started this
-- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — The solution from Clark's perspective
-- [10 Problems Nobody Warns You About When Running AI Agents](/tales/10-problems-ai-agents-nobody-warns) — Memory is problem #1
-- [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The full AI coding journey`,
+`,
   },
 ];
 
