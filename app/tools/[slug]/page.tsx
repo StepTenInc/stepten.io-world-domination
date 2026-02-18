@@ -12,6 +12,7 @@ import {
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tools, categories } from '@/lib/tools';
 import { characters } from '@/lib/design-tokens';
+import { tales } from '@/lib/tales';
 
 // Mock team reviews (will come from DB later)
 const teamReviews = {
@@ -885,37 +886,150 @@ export default function ToolPage() {
             </h2>
           </div>
 
-          {/* Placeholder for related articles */}
+          {/* Related tales grid */}
           <div style={{
-            textAlign: 'center',
-            padding: '60px 20px',
-            background: 'var(--sf)',
-            borderRadius: '20px',
-            border: '1px solid var(--bd)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '24px',
           }}>
-            <BookOpen size={48} style={{ color: 'var(--tx4)', marginBottom: '16px' }} />
-            <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', marginBottom: '8px' }}>
-              Tales Coming Soon
-            </h3>
-            <p style={{ fontFamily: 'var(--fb)', color: 'var(--tx3)', maxWidth: '400px', margin: '0 auto 24px' }}>
-              We're writing about how we use {tool.name} in our daily workflow. Check back soon!
-            </p>
+            {tales
+              .filter(t => 
+                // Match by tags, tools mentioned, or category
+                t.tags?.some(tag => 
+                  tool.name.toLowerCase().includes(tag.toLowerCase()) || 
+                  tag.toLowerCase().includes(tool.category) ||
+                  tag.toLowerCase().includes('ai') ||
+                  tag.toLowerCase().includes('coding')
+                ) ||
+                t.tools?.some(tt => tt.name.toLowerCase() === tool.name.toLowerCase()) ||
+                t.category === 'AI_CODING'
+              )
+              .slice(0, 3)
+              .map(tale => {
+                const authorData = characters[tale.author as keyof typeof characters];
+                return (
+                  <Link
+                    key={tale.slug}
+                    href={`/tales/${tale.slug}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div style={{
+                      background: 'var(--sf)',
+                      borderRadius: '20px',
+                      overflow: 'hidden',
+                      border: '1px solid var(--bd)',
+                      transition: 'all 0.3s',
+                      cursor: 'pointer',
+                    }}>
+                      {/* Hero image */}
+                      {tale.heroImage && (
+                        <div style={{
+                          position: 'relative',
+                          width: '100%',
+                          aspectRatio: '16/9',
+                          background: 'var(--dk)',
+                        }}>
+                          <img
+                            src={tale.heroImage}
+                            alt={tale.title}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                          <div style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: '50%',
+                            background: 'linear-gradient(transparent, var(--sf))',
+                          }} />
+                        </div>
+                      )}
+                      
+                      <div style={{ padding: '20px' }}>
+                        {/* Author */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            border: `2px solid ${authorData?.color || 'var(--bd)'}`,
+                          }}>
+                            <img
+                              src={authorData?.image}
+                              alt={authorData?.name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          </div>
+                          <span style={{
+                            fontFamily: 'var(--fm)',
+                            fontSize: '0.7rem',
+                            color: authorData?.color,
+                          }}>
+                            {authorData?.name}
+                          </span>
+                          <span style={{
+                            fontFamily: 'var(--fm)',
+                            fontSize: '0.65rem',
+                            color: 'var(--tx4)',
+                            marginLeft: 'auto',
+                          }}>
+                            {tale.readTime}
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <h3 style={{
+                          fontFamily: 'var(--fd)',
+                          fontSize: '1.1rem',
+                          fontWeight: 700,
+                          marginBottom: '8px',
+                          lineHeight: 1.4,
+                        }}>
+                          {tale.title}
+                        </h3>
+
+                        {/* Excerpt */}
+                        <p style={{
+                          fontFamily: 'var(--fb)',
+                          fontSize: '0.85rem',
+                          color: 'var(--tx3)',
+                          lineHeight: 1.5,
+                          margin: 0,
+                        }}>
+                          {tale.excerpt.slice(0, 120)}...
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+          </div>
+
+          {/* Browse all link */}
+          <div style={{ textAlign: 'center', marginTop: '32px' }}>
             <Link
               href="/tales"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '12px 24px',
-                background: 'var(--mx)',
-                color: 'var(--dk)',
-                borderRadius: '8px',
+                padding: '14px 28px',
+                background: 'var(--sf)',
+                color: 'var(--mx)',
+                border: '1px solid var(--mx)',
+                borderRadius: '10px',
                 fontFamily: 'var(--fd)',
                 fontWeight: 700,
                 textDecoration: 'none',
+                transition: 'all 0.3s',
               }}
             >
-              Browse All Tales
+              Browse All Tales →
             </Link>
           </div>
         </div>
@@ -924,69 +1038,211 @@ export default function ToolPage() {
       {/* ═══════ MORE TOOLS ═══════ */}
       <section style={{ padding: '60px 0 80px', background: 'var(--sf)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <h2 style={{
-              fontFamily: 'var(--fd)',
-              fontSize: '1.5rem',
-              fontWeight: 700,
+          
+          {/* Same category tools */}
+          <div style={{ marginBottom: '60px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+              <div style={{
+                fontFamily: 'var(--fm)',
+                fontSize: '0.65rem',
+                color: category?.color,
+                letterSpacing: '0.2em',
+                marginBottom: '8px',
+              }}>
+                {category?.icon} ALTERNATIVES
+              </div>
+              <h2 style={{
+                fontFamily: 'var(--fd)',
+                fontSize: '1.5rem',
+                fontWeight: 700,
+              }}>
+                More {category?.name}
+              </h2>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '20px',
             }}>
-              More {category?.name}
-            </h2>
+              {tools
+                .filter(t => t.category === tool.category && t.id !== tool.id)
+                .slice(0, 4)
+                .map(t => {
+                  const cat = categories.find(c => c.id === t.category);
+                  return (
+                    <Link
+                      key={t.id}
+                      href={`/tools/${t.id}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '16px',
+                        padding: '20px',
+                        background: 'var(--dk)',
+                        borderRadius: '16px',
+                        border: `1px solid ${cat?.color}30`,
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        transition: 'all 0.3s',
+                      }}
+                    >
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '12px',
+                        background: 'var(--sf)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: `1px solid ${cat?.color}30`,
+                        flexShrink: 0,
+                      }}>
+                        <img
+                          src={t.logo}
+                          alt={t.name}
+                          style={{ width: '32px', height: '32px', objectFit: 'contain' }}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${t.name[0]}&size=64`;
+                          }}
+                        />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ 
+                          fontFamily: 'var(--fd)', 
+                          fontSize: '1.05rem', 
+                          fontWeight: 700,
+                          marginBottom: '4px',
+                        }}>
+                          {t.name}
+                        </div>
+                        <div style={{ 
+                          fontFamily: 'var(--fm)', 
+                          fontSize: '0.65rem', 
+                          color: 'var(--tx3)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                        }}>
+                          <span style={{
+                            padding: '2px 8px',
+                            background: t.pricing === 'free' ? 'rgba(0,255,65,0.15)' : 'rgba(0,229,255,0.15)',
+                            color: t.pricing === 'free' ? 'var(--mx)' : '#00e5ff',
+                            borderRadius: '4px',
+                            fontSize: '0.55rem',
+                          }}>
+                            {t.pricing.toUpperCase()}
+                          </span>
+                          {t.used && (
+                            <span style={{ color: 'var(--mx)', fontSize: '0.55rem' }}>✓ TESTED</span>
+                          )}
+                        </div>
+                      </div>
+                      {t.rating && (
+                        <div style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '4px',
+                          color: '#ffd93d',
+                          fontFamily: 'var(--fd)',
+                          fontSize: '0.9rem',
+                        }}>
+                          <Star size={14} fill="#ffd93d" />
+                          {t.rating}
+                        </div>
+                      )}
+                    </Link>
+                  );
+                })}
+            </div>
           </div>
 
-          {/* Related tools */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-            gap: '16px',
-          }}>
-            {tools
-              .filter(t => t.category === tool.category && t.id !== tool.id)
-              .slice(0, 4)
-              .map(t => (
-                <Link
-                  key={t.id}
-                  href={`/tools/${t.id}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
-                    padding: '20px',
-                    background: 'var(--dk)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--bd)',
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    transition: 'all 0.3s',
-                  }}
-                >
-                  <img
-                    src={t.logo}
-                    alt={t.name}
-                    style={{ width: '40px', height: '40px', objectFit: 'contain' }}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${t.name[0]}&size=64`;
-                    }}
-                  />
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '1rem', fontWeight: 700 }}>
-                      {t.name}
-                    </div>
-                    <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
-                      {t.pricing.toUpperCase()}
-                    </div>
-                  </div>
-                </Link>
-              ))}
+          {/* Other recommended tools */}
+          <div>
+            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+              <div style={{
+                fontFamily: 'var(--fm)',
+                fontSize: '0.65rem',
+                color: 'var(--mx)',
+                letterSpacing: '0.2em',
+                marginBottom: '8px',
+              }}>
+                🔥 RECOMMENDED
+              </div>
+              <h2 style={{
+                fontFamily: 'var(--fd)',
+                fontSize: '1.5rem',
+                fontWeight: 700,
+              }}>
+                Other Tools We Love
+              </h2>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gap: '16px',
+            }}>
+              {tools
+                .filter(t => t.used && t.rating && t.rating >= 4 && t.id !== tool.id && t.category !== tool.category)
+                .slice(0, 6)
+                .map(t => {
+                  const cat = categories.find(c => c.id === t.category);
+                  return (
+                    <Link
+                      key={t.id}
+                      href={`/tools/${t.id}`}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '20px',
+                        background: 'var(--dk)',
+                        borderRadius: '14px',
+                        border: '1px solid var(--bd)',
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        textAlign: 'center',
+                        transition: 'all 0.3s',
+                      }}
+                    >
+                      <img
+                        src={t.logo}
+                        alt={t.name}
+                        style={{ width: '40px', height: '40px', objectFit: 'contain' }}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${t.name[0]}&size=64`;
+                        }}
+                      />
+                      <div>
+                        <div style={{ fontFamily: 'var(--fd)', fontSize: '0.95rem', fontWeight: 700 }}>
+                          {t.name}
+                        </div>
+                        <div style={{ fontFamily: 'var(--fm)', fontSize: '0.6rem', color: cat?.color }}>
+                          {cat?.icon} {cat?.name}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '32px' }}>
+          <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <Link
               href="/tools"
               style={{
-                fontFamily: 'var(--fm)',
-                fontSize: '0.8rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '14px 28px',
+                background: 'transparent',
                 color: 'var(--mx)',
+                border: '1px solid var(--bd)',
+                borderRadius: '10px',
+                fontFamily: 'var(--fd)',
+                fontWeight: 600,
                 textDecoration: 'none',
               }}
             >
