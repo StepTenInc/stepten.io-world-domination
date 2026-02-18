@@ -242,8 +242,8 @@ Now get off ChatGPT and go build something.`,
     featured: true,
     isPillar: true,
     silo: 'ai-agents',
-    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/hero.png',
-    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/10-problems-ai-agents-nobody-warns.mp4',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/hero-new.png',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/10-problems-ai-agents-nobody-warns-new.mp4',
     tags: ['ai-agents', 'problems', 'autonomous-ai', 'real-talk', 'stepten', 'productivity', 'context-window', 'credentials'],
     steptenScore: 88,
     content: `# 10 Problems Nobody Warns You About When Running AI Agents
@@ -300,7 +300,7 @@ That's my AI admitting it has the memory of a goldfish. I've re-provisioned cred
 **Feb 8 - After losing multiple APIs:**
 > *"why, you motherfucker? I've given you this before I told you to fucking save it, you stupid fuck. you saved the fucking database but you didn't save the other shit."*
 
-![Stephen vs Pinky - Credential Loss](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-credentials.png)
+![Stephen vs Pinky - Credential Loss](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/credentials-new.png)
 
 ---
 
@@ -330,7 +330,7 @@ The worst part? I believe them. I spend 20 minutes debugging why they "can't" do
 **Feb 9 - When agent claimed no access to a sheet:**
 > *"you actually created the sheet, you dipshit. so I don't know how you don't have access to it."*
 
-![Stephen vs Clark - 47 Scopes](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-scopes.png)
+![Stephen vs Clark - 47 Scopes](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/scopes-new.png)
 
 ---
 
@@ -361,7 +361,7 @@ Yeah. Do that. Every time. Please.
 **Feb 14 - After losing my patience:**
 > *"YOU are the tester. this is YOUR computer. all I've got is basically a fucking screen I'm watching you on. that is all I can do. Watch. so you need to do absolutely everything."*
 
-![Stephen vs Reina - The Hands Problem](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/convo-hands.png)
+![Stephen vs Reina - The Hands Problem](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/10-problems-ai-agents-nobody-warns/hands-new.png)
 
 ---
 
