@@ -5,15 +5,15 @@ import Image from 'next/image';
 
 export default function LanguageWarningModal() {
   const [showModal, setShowModal] = useState(false);
-  const [rejected, setRejected] = useState(false);
+  const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
     // Check if user has already made a choice
     const accepted = localStorage.getItem('stepten-language-accepted');
-    const declined = localStorage.getItem('stepten-language-declined');
+    const blockedUser = localStorage.getItem('stepten-language-blocked');
     
-    if (declined === 'true') {
-      setRejected(true);
+    if (blockedUser === 'true') {
+      setBlocked(true);
       setShowModal(true);
     } else if (accepted !== 'true') {
       setShowModal(true);
@@ -22,83 +22,78 @@ export default function LanguageWarningModal() {
 
   const handleAccept = () => {
     localStorage.setItem('stepten-language-accepted', 'true');
-    localStorage.removeItem('stepten-language-declined');
+    localStorage.removeItem('stepten-language-blocked');
     setShowModal(false);
     
-    // Track acceptance (you can add analytics here)
+    // Track acceptance
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'language_warning_accepted');
     }
   };
 
   const handleDecline = () => {
-    localStorage.setItem('stepten-language-declined', 'true');
+    localStorage.setItem('stepten-language-blocked', 'true');
     localStorage.removeItem('stepten-language-accepted');
-    setRejected(true);
+    setBlocked(true);
     
     // Track decline
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'language_warning_declined');
+      (window as any).gtag('event', 'language_warning_blocked');
     }
   };
 
   if (!showModal) return null;
 
-  // If they declined before, show the "fuck off" screen
-  if (rejected) {
+  // BLOCKED - They declined, they're done
+  if (blocked) {
     return (
       <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center p-4">
         <div className="max-w-2xl text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-red-500 mb-6">
-            🚫 ACCESS DENIED
+          <h1 className="text-5xl md:text-7xl font-bold text-red-500 mb-6">
+            🚫 BLOCKED
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-4">
-            You said you couldn&apos;t handle it last time.
+          <p className="text-2xl md:text-3xl text-white mb-4">
+            You said you couldn&apos;t handle it.
           </p>
-          <p className="text-lg text-gray-400 mb-8">
-            This site contains Australian levels of profanity. You already told us you&apos;re too sensitive for that.
+          <p className="text-lg text-gray-400 mb-6">
+            This browser has been blocked from accessing StepTen.io.
           </p>
-          <p className="text-2xl text-white mb-8">
-            Maybe try the Bible instead? 📖
+          <p className="text-xl text-gray-300 mb-8">
+            There&apos;s plenty of other places to learn from.<br/>
+            Go find one that doesn&apos;t offend your delicate sensibilities.
           </p>
           <div className="space-y-4">
-            <button
-              onClick={() => window.location.href = 'https://www.bible.com'}
+            <a
+              href="https://www.google.com/search?q=ai+tutorials+for+beginners"
               className="block w-full px-8 py-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              Take me to the Bible →
-            </button>
-            <button
-              onClick={() => {
-                localStorage.removeItem('stepten-language-declined');
-                setRejected(false);
-              }}
-              className="block w-full px-8 py-3 text-gray-500 hover:text-gray-300 transition-colors text-sm"
-            >
-              Actually, I&apos;ve grown up since then. Give me another chance.
-            </button>
+              Find somewhere else to learn →
+            </a>
+            <p className="text-gray-600 text-sm mt-8">
+              Changed your mind? Clear your browser data and come back when you&apos;ve grown a thicker skin.
+            </p>
           </div>
         </div>
       </div>
     );
   }
 
-  // First-time warning modal
+  // FIRST TIME - Warning modal
   return (
-    <div className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="max-w-4xl w-full bg-gray-900 rounded-2xl border border-yellow-500/50 overflow-hidden my-8">
+    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center p-4 overflow-y-auto">
+      <div className="max-w-4xl w-full bg-gray-900 rounded-2xl border-2 border-yellow-500 overflow-hidden my-8">
         {/* Warning Header */}
-        <div className="bg-yellow-500 text-black px-6 py-3 flex items-center gap-3">
-          <span className="text-2xl">⚠️</span>
-          <span className="font-bold text-lg">LANGUAGE WARNING</span>
-          <span className="text-2xl">⚠️</span>
+        <div className="bg-yellow-500 text-black px-6 py-4 flex items-center justify-center gap-3">
+          <span className="text-3xl">⚠️</span>
+          <span className="font-bold text-xl md:text-2xl tracking-wide">EXPLICIT LANGUAGE WARNING</span>
+          <span className="text-3xl">⚠️</span>
         </div>
         
         {/* Team Image */}
         <div className="relative w-full aspect-video">
           <Image
             src="/images/team-warning.png"
-            alt="The StepTen Team - Warning"
+            alt="The StepTen Team"
             fill
             className="object-cover"
             priority
@@ -106,24 +101,48 @@ export default function LanguageWarningModal() {
         </div>
         
         {/* Content */}
-        <div className="p-6 md:p-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            This site contains Australian levels of profanity.
+        <div className="p-6 md:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+            Before you enter...
           </h2>
           
-          <p className="text-gray-300 text-lg mb-4">
-            Words like <span className="text-yellow-400 font-bold">&quot;cunt&quot;</span> and <span className="text-yellow-400 font-bold">&quot;fuck&quot;</span> are used liberally and affectionately.
-          </p>
+          <div className="space-y-4 text-gray-300 text-lg mb-8">
+            <p>
+              This site is for <span className="text-cyan-400 font-semibold">educating people about AI</span>. 
+              It&apos;s fun, it&apos;s real, and it&apos;s uncensored.
+            </p>
+            
+            <p>
+              The CEO likes to use the <span className="text-yellow-400 font-bold">f-bomb</span> and 
+              some <span className="text-yellow-400 font-bold">colorful fucking language</span>. 
+              That&apos;s just how we communicate here.
+            </p>
+            
+            <p>
+              <span className="text-green-400 font-semibold">If you want to learn and really grow yourself</span> — 
+              if you want to understand AI, automation, and building shit that actually works — 
+              then this is the place for you.
+            </p>
+            
+            <p>
+              If you&apos;re going to get <span className="text-red-400">pissed off by a bit of bad language</span>, 
+              then there&apos;s plenty of other people to go and learn from. This isn&apos;t for you.
+            </p>
+            
+            <p className="border-l-4 border-cyan-500 pl-4 italic text-gray-400">
+              &quot;The reason this site is good is BECAUSE it&apos;s got colorful language. 
+              If you go on this learning journey, I can guarantee you&apos;re going to be using 
+              fucking colorful language too — out of frustration, excitement, and breakthrough moments. 
+              Feel my pain and laugh with me.&quot;
+              <br/><span className="text-cyan-400 not-italic">— Stephen, CEO</span>
+            </p>
+          </div>
           
-          <p className="text-gray-400 mb-6">
-            If you&apos;re sensitive to these things, just don&apos;t read. Go somewhere else. 
-            Read the Bible. We don&apos;t want you if you&apos;re politically correct and can&apos;t 
-            take a joke or see the funny side in something.
-          </p>
-          
-          <p className="text-xl text-white font-semibold mb-8">
-            We build AI agents, not safe spaces.
-          </p>
+          <div className="bg-gray-800 rounded-lg p-4 mb-8">
+            <p className="text-center text-white font-semibold">
+              Do you accept that you will not be offended by any language you see on this site?
+            </p>
+          </div>
           
           {/* Buttons */}
           <div className="space-y-3">
@@ -131,19 +150,19 @@ export default function LanguageWarningModal() {
               onClick={handleAccept}
               className="w-full px-8 py-4 bg-green-600 hover:bg-green-500 text-white font-bold text-lg rounded-lg transition-colors"
             >
-              I&apos;m not a soft cunt — Let me in 🤙
+              ✅ Yes, I Accept — Let&apos;s fucking go!
             </button>
             
             <button
               onClick={handleDecline}
-              className="w-full px-8 py-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 rounded-lg transition-colors"
+              className="w-full px-8 py-3 bg-red-900/50 hover:bg-red-800 text-red-300 hover:text-red-100 rounded-lg transition-colors border border-red-700"
             >
-              I&apos;m too sensitive for this — Take me somewhere nicer
+              ❌ No, I&apos;m too sensitive — Block me from this site
             </button>
           </div>
           
-          <p className="text-gray-600 text-sm mt-6">
-            18+ content. By entering, you confirm you&apos;re an adult who can handle colorful language.
+          <p className="text-gray-600 text-sm mt-6 text-center">
+            ⚠️ If you decline, your browser will be blocked from accessing this site.
           </p>
         </div>
       </div>
