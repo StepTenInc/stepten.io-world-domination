@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { tales, getTaleBySlug } from '@/lib/tales';
+import { characters } from '@/lib/design-tokens';
 import { TaleContent } from './TaleContent';
 
 // ISR: Revalidate every 60 seconds for fresh content
@@ -23,10 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const url = `https://stepten.io/tales/${tale.slug}`;
   const ogImage = tale.heroVideo?.replace('.mp4', '.jpg') || tale.heroImage || 'https://stepten.io/images/og-default.jpg';
+  const authorData = characters[tale.author];
+  const authorName = authorData?.name || 'StepTen';
 
   return {
     title: `${tale.title} | STEPTEN™`,
-    description: tale.excerpt || tale.subtitle || `${tale.title} - A tale from the STEPTEN universe.`,
+    description: tale.excerpt || `${tale.title} - A tale from the STEPTEN universe.`,
     
     // Canonical URL
     alternates: {
@@ -36,12 +39,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // Open Graph
     openGraph: {
       title: tale.title,
-      description: tale.excerpt || tale.subtitle || `${tale.title} - A tale from the STEPTEN universe.`,
+      description: tale.excerpt || `${tale.title} - A tale from the STEPTEN universe.`,
       url: url,
       siteName: 'STEPTEN™',
       type: 'article',
       publishedTime: tale.date,
-      authors: [tale.author?.name || 'StepTen'],
+      authors: [authorName],
       images: [
         {
           url: ogImage,
@@ -56,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     twitter: {
       card: 'summary_large_image',
       title: tale.title,
-      description: tale.excerpt || tale.subtitle || `${tale.title} - A tale from the STEPTEN universe.`,
+      description: tale.excerpt || `${tale.title} - A tale from the STEPTEN universe.`,
       images: [ogImage],
     },
     
@@ -75,19 +78,22 @@ export default async function TaleDetailPage({ params }: { params: Promise<{ slu
   const tale = getTaleBySlug(slug);
   if (!tale) notFound();
 
+  const authorData = characters[tale.author];
+  const authorName = authorData?.name || 'StepTen';
+
   // Generate JSON-LD structured data
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: tale.title,
-    description: tale.excerpt || tale.subtitle,
+    description: tale.excerpt,
     image: tale.heroVideo?.replace('.mp4', '.jpg') || tale.heroImage,
     datePublished: tale.date,
     dateModified: tale.date,
     author: {
       '@type': 'Person',
-      name: tale.author?.name || 'StepTen',
-      url: tale.author?.slug ? `https://stepten.io/team/${tale.author.slug}` : 'https://stepten.io',
+      name: authorName,
+      url: `https://stepten.io/team/${tale.author}`,
     },
     publisher: {
       '@type': 'Organization',
