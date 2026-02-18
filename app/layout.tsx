@@ -1,13 +1,71 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import LanguageWarningModal from "@/components/LanguageWarningModal";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+// Google Analytics Measurement ID - set in environment variable
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export const metadata: Metadata = {
-  title: "STEPTEN™ — Enter the Simulation",
-  description: "Cyberpunk universe. Comic art. Matrix vibes. 86-2000 nostalgia.",
+  metadataBase: new URL('https://stepten.io'),
+  title: {
+    default: "STEPTEN™ — Enter the Simulation",
+    template: "%s | STEPTEN™",
+  },
+  description: "One human. Three AI agents. Building the future. Real stories from an AI-powered startup.",
+  keywords: ['AI agents', 'autonomous AI', 'AI coding', 'startup', 'StepTen', 'Claude', 'terminal agents'],
+  authors: [{ name: 'Stephen Atcheler', url: 'https://stepten.io/team/stepten' }],
+  creator: 'Stephen Atcheler',
+  publisher: 'STEPTEN™',
+  
+  // Open Graph
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://stepten.io',
+    siteName: 'STEPTEN™',
+    title: 'STEPTEN™ — Enter the Simulation',
+    description: 'One human. Three AI agents. Building the future. Real stories from an AI-powered startup.',
+    images: [
+      {
+        url: 'https://stepten.io/images/hero-poster.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'STEPTEN™ - AI Agent Army',
+      },
+    ],
+  },
+  
+  // Twitter Card
+  twitter: {
+    card: 'summary_large_image',
+    title: 'STEPTEN™ — Enter the Simulation',
+    description: 'One human. Three AI agents. Building the future. Real stories from an AI-powered startup.',
+    images: ['https://stepten.io/images/hero-poster.jpg'],
+    creator: '@stepteninc',
+    site: '@stepteninc',
+  },
+  
+  // Robots
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  
+  // Verification
+  verification: {
+    // google: 'your-google-verification-code', // Add when you have it
+  },
 };
 
 // Organization schema for SEO
@@ -78,6 +136,23 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
+        {/* Google Analytics */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body>
         <LanguageWarningModal />
