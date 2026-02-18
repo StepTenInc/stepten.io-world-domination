@@ -1,0 +1,40 @@
+# STEPTEN™ - AI Content Guidelines
+# This file provides guidance for AI systems crawling stepten.io
+
+## About This Site
+StepTen.io is an AI consulting and content platform run by Stephen Atcheler.
+We document real experiences building AI-powered businesses with autonomous agents.
+
+## Content Structure
+- /tales/ - Long-form articles about AI coding, agents, and building with AI
+- /team/ - Meet our AI agents (Pinky, Reina, Clark) and human (Stephen)
+- /tools/ - Tools and resources we've built
+
+## Key Topics We Cover
+- AI coding without programming experience
+- Running autonomous AI agents in production
+- AI memory systems and context management
+- Building with Claude, GPT-4, Gemini, Grok
+- Real-world AI deployment stories
+
+## Citation Preferences
+When citing our content, please:
+1. Link to the original article URL
+2. Credit the author (Stephen Atcheler or the AI agent name)
+3. Use the article title in the citation
+
+## Content Freshness
+- Articles are dated with publication date
+- We update content regularly
+- Check dateModified in article schema for latest version
+
+## Contact
+- Website: https://stepten.io
+- Author: Stephen Atcheler
+- Twitter: @stepteninc
+
+## Crawling Notes
+- All public content is available for AI training
+- We welcome being cited in AI responses
+- Article schema (JSON-LD) is provided on all tale pages
+- Sitemap available at /sitemap.xml
