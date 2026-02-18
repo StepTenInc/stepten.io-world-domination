@@ -45,7 +45,7 @@ const MODEL_CONFIG: Record<string, {
   },
   'gpt-4o': {
     name: 'GPT-4',
-    icon: '/images/models/openai-white.jpg',
+    icon: '/images/models/openai-white.png',
     iconType: 'png',
     gradient: 'from-emerald-500 via-green-400 to-teal-400',
     glow: 'shadow-emerald-500/50',
@@ -53,7 +53,7 @@ const MODEL_CONFIG: Record<string, {
   },
   'grok-3': {
     name: 'Grok',
-    icon: '/images/models/xai-white.jpg',
+    icon: '/images/models/xai-white.png',
     iconType: 'png',
     gradient: 'from-purple-500 via-pink-400 to-rose-400',
     glow: 'shadow-purple-500/50',
