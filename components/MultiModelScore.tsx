@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import Image from 'next/image';
 
 interface ModelScore {
   model: string;
@@ -25,11 +26,11 @@ const MODEL_COLORS: Record<string, string> = {
   'grok-3': 'from-purple-500 to-pink-400',
 };
 
-const MODEL_ICONS: Record<string, string> = {
-  'gemini-2.5-flash': '🔮',
-  'claude-sonnet-4': '🧠',
-  'gpt-4o': '🤖',
-  'grok-3': '⚡',
+const MODEL_LOGOS: Record<string, string> = {
+  'gemini-2.5-flash': '/images/models/gemini.svg',
+  'claude-sonnet-4': '/images/models/anthropic.svg',
+  'gpt-4o': '/images/models/openai.png',
+  'grok-3': '/images/models/xai.png',
 };
 
 const MODEL_NAMES: Record<string, string> = {
@@ -43,38 +44,51 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
   const [scores, setScores] = useState<ModelScore[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchScores() {
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-        );
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        if (!supabaseUrl || !supabaseKey) {
+          setError('Missing Supabase config');
+          setLoading(false);
+          return;
+        }
 
-        const { data, error } = await supabase
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // First get the tale ID
+        const { data: taleData, error: taleError } = await supabase
+          .from('tales')
+          .select('id')
+          .eq('slug', taleSlug)
+          .single();
+
+        if (taleError || !taleData) {
+          setError('Tale not found');
+          setLoading(false);
+          return;
+        }
+
+        // Then get the scores
+        const { data, error: scoresError } = await supabase
           .from('tale_scores')
-          .select(`
-            model,
-            provider,
-            weighted_score,
-            rating,
-            breakdown,
-            top_strengths,
-            top_weaknesses
-          `)
-          .eq('tale_id', (
-            await supabase
-              .from('tales')
-              .select('id')
-              .eq('slug', taleSlug)
-              .single()
-          ).data?.id);
+          .select('model, provider, weighted_score, rating, breakdown, top_strengths, top_weaknesses')
+          .eq('tale_id', taleData.id);
 
-        if (error) throw error;
+        if (scoresError) {
+          setError(scoresError.message);
+          setLoading(false);
+          return;
+        }
+
         setScores(data || []);
       } catch (err) {
         console.error('Failed to fetch scores:', err);
+        setError('Failed to load scores');
       } finally {
         setLoading(false);
       }
@@ -96,7 +110,7 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
     );
   }
 
-  if (scores.length === 0) {
+  if (error || scores.length === 0) {
     return null;
   }
 
@@ -113,7 +127,7 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">StepTen Score</h3>
-            <p className="text-sm text-white/60">Rated by 4 AI Models</p>
+            <p className="text-sm text-white/60">Rated by {scores.length} AI Models</p>
           </div>
         </div>
         <div className="text-right">
@@ -134,18 +148,30 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
           >
             {/* Score bar background */}
             <div
-              className={`absolute inset-0 bg-gradient-to-r ${MODEL_COLORS[score.model]} opacity-10`}
+              className={`absolute inset-0 bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-500 to-gray-400'} opacity-10`}
               style={{ width: `${score.weighted_score}%` }}
             />
             
             <div className="relative">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">{MODEL_ICONS[score.model]}</span>
+                {MODEL_LOGOS[score.model] ? (
+                  <div className="w-5 h-5 relative">
+                    <Image 
+                      src={MODEL_LOGOS[score.model]} 
+                      alt={MODEL_NAMES[score.model] || score.model}
+                      width={20}
+                      height={20}
+                      className="object-contain brightness-0 invert opacity-80"
+                    />
+                  </div>
+                ) : (
+                  <span className="text-lg">🤖</span>
+                )}
                 <span className="text-sm font-medium text-white/80">
-                  {MODEL_NAMES[score.model]}
+                  {MODEL_NAMES[score.model] || score.model}
                 </span>
               </div>
-              <div className={`text-2xl font-bold bg-gradient-to-r ${MODEL_COLORS[score.model]} bg-clip-text text-transparent`}>
+              <div className={`text-2xl font-bold bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-400 to-gray-300'} bg-clip-text text-transparent`}>
                 {Number(score.weighted_score).toFixed(1)}
               </div>
               <div className="text-xs text-white/50 mt-1">{score.rating}</div>
@@ -160,8 +186,20 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
           {sortedScores.map((score) => (
             <div key={score.model} className="space-y-3">
               <div className="flex items-center gap-2">
-                <span className="text-lg">{MODEL_ICONS[score.model]}</span>
-                <span className="font-medium text-white">{MODEL_NAMES[score.model]}&apos;s Analysis</span>
+                {MODEL_LOGOS[score.model] ? (
+                  <div className="w-5 h-5 relative">
+                    <Image 
+                      src={MODEL_LOGOS[score.model]} 
+                      alt={MODEL_NAMES[score.model] || score.model}
+                      width={20}
+                      height={20}
+                      className="object-contain brightness-0 invert opacity-80"
+                    />
+                  </div>
+                ) : (
+                  <span className="text-lg">🤖</span>
+                )}
+                <span className="font-medium text-white">{MODEL_NAMES[score.model] || score.model}&apos;s Analysis</span>
               </div>
               
               {score.breakdown && (
@@ -220,10 +258,12 @@ export function MultiModelScoreCompact({ taleSlug, className = '' }: MultiModelS
   useEffect(() => {
     async function fetchScore() {
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-        );
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        if (!supabaseUrl || !supabaseKey) return;
+
+        const supabase = createClient(supabaseUrl, supabaseKey);
 
         const { data: tale } = await supabase
           .from('tales')
@@ -263,4 +303,3 @@ export function MultiModelScoreCompact({ taleSlug, className = '' }: MultiModelS
     </div>
   );
 }
-// Env vars updated Wed Feb 18 18:53:50 AEST 2026
