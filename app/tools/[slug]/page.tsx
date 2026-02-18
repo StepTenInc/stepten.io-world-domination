@@ -13,38 +13,8 @@ import { PublicLayout } from '@/components/layout/PublicLayout';
 import { tools, categories } from '@/lib/tools';
 import { characters } from '@/lib/design-tokens';
 import { tales } from '@/lib/tales';
-
-// Mock team reviews (will come from DB later)
-const teamReviews = {
-  stepten: {
-    name: 'StepTen',
-    role: 'Human / Founder',
-    image: '/images/characters/stepten.jpg',
-    color: '#00e5ff',
-    perspective: 'human',
-  },
-  pinky: {
-    name: 'Pinky',
-    role: 'AI Agent',
-    image: '/images/characters/pinky.jpg',
-    color: '#ff69b4',
-    perspective: 'ai',
-  },
-  reina: {
-    name: 'Reina',
-    role: 'AI Agent / UX Lead',
-    image: '/images/characters/reina.jpg',
-    color: '#a855f7',
-    perspective: 'ai',
-  },
-  clark: {
-    name: 'Clark',
-    role: 'AI Agent / Backend',
-    image: '/images/characters/clark.jpg',
-    color: '#ffd700',
-    perspective: 'ai',
-  },
-};
+import { getToolReview, hasFullReview, type ToolReview, type TeamReview } from '@/lib/tool-reviews';
+import ReactMarkdown from 'react-markdown';
 
 export default function ToolPage() {
   const params = useParams();
@@ -63,6 +33,7 @@ export default function ToolPage() {
   }
 
   const category = categories.find(c => c.id === tool.category);
+  const review = getToolReview(slug);
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -543,141 +514,50 @@ export default function ToolPage() {
             </h2>
           </div>
 
-          {/* Stephen's Take */}
-          <div style={{ marginBottom: '48px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '14px',
-                overflow: 'hidden',
-                border: '2px solid #00e5ff',
-              }}>
-                <img src="/images/characters/stepten.jpg" alt="StepTen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#00e5ff' }}>
-                  Stephen's Take
-                </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
-                  HUMAN PERSPECTIVE
-                </div>
-              </div>
-            </div>
-            <div style={{
-              background: 'var(--sf)',
-              borderRadius: '16px',
-              padding: '28px',
-              borderLeft: '4px solid #00e5ff',
-            }}>
-              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
-                Content coming soon. This is where Stephen shares his real experience using {tool.name} - the good, the bad, 
-                and whether it's actually worth your money or just another overhyped tool.
-              </p>
-            </div>
-          </div>
+          {/* Team Reviews */}
+          <TeamContentSection 
+            memberKey="stepten"
+            name="Stephen's Take"
+            role="HUMAN PERSPECTIVE"
+            image="/images/characters/stepten.jpg"
+            color="#00e5ff"
+            review={review?.stepten}
+            toolName={tool.name}
+            fallback={`Content coming soon. This is where Stephen shares his real experience using ${tool.name} - the good, the bad, and whether it's actually worth your money or just another overhyped tool.`}
+          />
 
-          {/* Pinky's Take */}
-          <div style={{ marginBottom: '48px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '14px',
-                overflow: 'hidden',
-                border: '2px solid #ff69b4',
-              }}>
-                <img src="/images/characters/pinky.jpg" alt="Pinky" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#ff69b4' }}>
-                  Pinky's Take
-                </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
-                  AI AGENT PERSPECTIVE
-                </div>
-              </div>
-            </div>
-            <div style={{
-              background: 'var(--sf)',
-              borderRadius: '16px',
-              padding: '28px',
-              borderLeft: '4px solid #ff69b4',
-            }}>
-              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
-                NARF! Content coming soon. This is where I share how {tool.name} works for an AI agent - 
-                does it play nice with automation? Can I actually use it? Is it rat-approved?
-              </p>
-            </div>
-          </div>
+          <TeamContentSection 
+            memberKey="pinky"
+            name="Pinky's Take"
+            role="AI AGENT PERSPECTIVE"
+            image="/images/characters/pinky.jpg"
+            color="#ff69b4"
+            review={review?.pinky}
+            toolName={tool.name}
+            fallback={`NARF! Content coming soon. This is where I share how ${tool.name} works for an AI agent - does it play nice with automation? Can I actually use it? Is it rat-approved?`}
+          />
 
-          {/* Reina's Take */}
-          <div style={{ marginBottom: '48px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '14px',
-                overflow: 'hidden',
-                border: '2px solid #a855f7',
-              }}>
-                <img src="/images/characters/reina.jpg" alt="Reina" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#a855f7' }}>
-                  Reina's Take
-                </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
-                  UX/DEV PERSPECTIVE
-                </div>
-              </div>
-            </div>
-            <div style={{
-              background: 'var(--sf)',
-              borderRadius: '16px',
-              padding: '28px',
-              borderLeft: '4px solid #a855f7',
-            }}>
-              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
-                Content coming soon. Reina's breakdown of {tool.name} from a UX and development perspective - 
-                how it fits into real workflows, what it's actually good for, and who should use it.
-              </p>
-            </div>
-          </div>
+          <TeamContentSection 
+            memberKey="reina"
+            name="Reina's Take"
+            role="UX/DEV PERSPECTIVE"
+            image="/images/characters/reina.jpg"
+            color="#a855f7"
+            review={review?.reina}
+            toolName={tool.name}
+            fallback={`Content coming soon. Reina's breakdown of ${tool.name} from a UX and development perspective - how it fits into real workflows, what it's actually good for, and who should use it.`}
+          />
 
-          {/* Clark's Take */}
-          <div style={{ marginBottom: '48px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '14px',
-                overflow: 'hidden',
-                border: '2px solid #ffd700',
-              }}>
-                <img src="/images/characters/clark.jpg" alt="Clark" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#ffd700' }}>
-                  Clark's Take
-                </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
-                  BACKEND/INFRA PERSPECTIVE
-                </div>
-              </div>
-            </div>
-            <div style={{
-              background: 'var(--sf)',
-              borderRadius: '16px',
-              padding: '28px',
-              borderLeft: '4px solid #ffd700',
-            }}>
-              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
-                Content coming soon. Clark's technical breakdown - API quality, integration options, 
-                reliability, and whether {tool.name} can handle real production workloads.
-              </p>
-            </div>
-          </div>
+          <TeamContentSection 
+            memberKey="clark"
+            name="Clark's Take"
+            role="BACKEND/INFRA PERSPECTIVE"
+            image="/images/characters/clark.jpg"
+            color="#ffd700"
+            review={review?.clark}
+            toolName={tool.name}
+            fallback={`Content coming soon. Clark's technical breakdown - API quality, integration options, reliability, and whether ${tool.name} can handle real production workloads.`}
+          />
         </div>
       </section>
 
@@ -728,13 +608,13 @@ export default function ToolPage() {
                 </span>
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {['Pro 1 coming soon', 'Pro 2 coming soon', 'Pro 3 coming soon'].map((pro, i) => (
+                {(review?.pros || ['Pro 1 coming soon', 'Pro 2 coming soon', 'Pro 3 coming soon']).map((pro, i, arr) => (
                   <li key={i} style={{
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '12px',
                     padding: '12px 0',
-                    borderBottom: i < 2 ? '1px solid var(--bd)' : 'none',
+                    borderBottom: i < arr.length - 1 ? '1px solid var(--bd)' : 'none',
                   }}>
                     <Check size={18} style={{ color: 'var(--mx)', flexShrink: 0, marginTop: '2px' }} />
                     <span style={{ fontFamily: 'var(--fb)', fontSize: '0.95rem', color: 'var(--tx2)' }}>
@@ -774,13 +654,13 @@ export default function ToolPage() {
                 </span>
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {['Con 1 coming soon', 'Con 2 coming soon', 'Con 3 coming soon'].map((con, i) => (
+                {(review?.cons || ['Con 1 coming soon', 'Con 2 coming soon', 'Con 3 coming soon']).map((con, i, arr) => (
                   <li key={i} style={{
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '12px',
                     padding: '12px 0',
-                    borderBottom: i < 2 ? '1px solid var(--bd)' : 'none',
+                    borderBottom: i < arr.length - 1 ? '1px solid var(--bd)' : 'none',
                   }}>
                     <X size={18} style={{ color: '#ff6b6b', flexShrink: 0, marginTop: '2px' }} />
                     <span style={{ fontFamily: 'var(--fb)', fontSize: '0.95rem', color: 'var(--tx2)' }}>
@@ -822,14 +702,19 @@ export default function ToolPage() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '20px',
           }}>
-            {Object.entries(teamReviews).map(([key, reviewer]) => (
+            {[
+              { key: 'stepten', name: 'StepTen', color: '#00e5ff', image: '/images/characters/stepten.jpg', review: review?.stepten },
+              { key: 'pinky', name: 'Pinky', color: '#ff69b4', image: '/images/characters/pinky.jpg', review: review?.pinky },
+              { key: 'reina', name: 'Reina', color: '#a855f7', image: '/images/characters/reina.jpg', review: review?.reina },
+              { key: 'clark', name: 'Clark', color: '#ffd700', image: '/images/characters/clark.jpg', review: review?.clark },
+            ].map((member) => (
               <div
-                key={key}
+                key={member.key}
                 style={{
                   background: 'var(--sf)',
                   borderRadius: '16px',
                   padding: '24px',
-                  border: `1px solid ${reviewer.color}30`,
+                  border: `1px solid ${member.color}30`,
                   textAlign: 'center',
                 }}
               >
@@ -839,24 +724,29 @@ export default function ToolPage() {
                   borderRadius: '12px',
                   overflow: 'hidden',
                   margin: '0 auto 12px',
-                  border: `2px solid ${reviewer.color}40`,
+                  border: `2px solid ${member.color}40`,
                 }}>
                   <img
-                    src={reviewer.image}
-                    alt={reviewer.name}
+                    src={member.image}
+                    alt={member.name}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 </div>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: '1rem', fontWeight: 700, color: reviewer.color, marginBottom: '4px' }}>
-                  {reviewer.name}
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1rem', fontWeight: 700, color: member.color, marginBottom: '4px' }}>
+                  {member.name}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '3px', marginBottom: '8px' }}>
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} size={16} style={{ color: 'var(--bd)' }} />
+                    <Star 
+                      key={star} 
+                      size={16} 
+                      fill={member.review?.rating && star <= member.review.rating ? '#ffd93d' : 'transparent'}
+                      style={{ color: member.review?.rating && star <= member.review.rating ? '#ffd93d' : 'var(--bd)' }} 
+                    />
                   ))}
                 </div>
-                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx4)' }}>
-                  Not yet rated
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: member.review?.rating ? '#ffd93d' : 'var(--tx4)' }}>
+                  {member.review?.rating ? `${member.review.rating}/5` : 'Not yet rated'}
                 </div>
               </div>
             ))}
@@ -1330,5 +1220,193 @@ export default function ToolPage() {
       </section>
 
     </PublicLayout>
+  );
+}
+
+// ═══════════════════════════════════════
+// TEAM CONTENT SECTION COMPONENT
+// ═══════════════════════════════════════
+function TeamContentSection({ 
+  memberKey,
+  name, 
+  role, 
+  image, 
+  color, 
+  review, 
+  toolName,
+  fallback 
+}: { 
+  memberKey: string;
+  name: string; 
+  role: string; 
+  image: string; 
+  color: string; 
+  review?: TeamReview;
+  toolName: string;
+  fallback: string;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const hasContent = review?.content && review.content.length > 0;
+  const contentPreview = review?.content?.slice(0, 500) || '';
+  const isLong = (review?.content?.length || 0) > 500;
+
+  return (
+    <div style={{ marginBottom: '48px' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          overflow: 'hidden',
+          border: `2px solid ${color}`,
+        }}>
+          <img src={image} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color }}>
+            {name}
+          </div>
+          <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+            {role}
+          </div>
+        </div>
+        {review?.rating && (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            padding: '8px 16px',
+            background: `${color}20`,
+            borderRadius: '12px',
+          }}>
+            <div style={{ display: 'flex', gap: '3px' }}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  size={16}
+                  fill={star <= review.rating ? '#ffd93d' : 'transparent'}
+                  style={{ color: star <= review.rating ? '#ffd93d' : 'var(--bd)' }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Verdict badge */}
+      {review?.verdict && (
+        <div style={{
+          display: 'inline-block',
+          padding: '10px 20px',
+          background: `${color}15`,
+          borderRadius: '10px',
+          marginBottom: '16px',
+          borderLeft: `4px solid ${color}`,
+        }}>
+          <span style={{ 
+            fontFamily: 'var(--fd)', 
+            fontSize: '1rem', 
+            fontWeight: 600,
+            color,
+          }}>
+            "{review.verdict}"
+          </span>
+        </div>
+      )}
+
+      {/* Content */}
+      <div style={{
+        background: 'var(--sf)',
+        borderRadius: '16px',
+        padding: '28px',
+        borderLeft: `4px solid ${color}`,
+      }}>
+        {hasContent ? (
+          <>
+            <div 
+              className="prose-content"
+              style={{
+                fontFamily: 'var(--fb)',
+                fontSize: '1rem',
+                color: 'var(--tx2)',
+                lineHeight: 1.8,
+              }}
+            >
+              <ReactMarkdown
+                components={{
+                  h3: ({ children }) => (
+                    <h3 style={{ 
+                      fontFamily: 'var(--fd)', 
+                      fontSize: '1.2rem', 
+                      fontWeight: 700, 
+                      color: 'var(--tx)',
+                      marginTop: '28px',
+                      marginBottom: '12px',
+                    }}>
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ children }) => (
+                    <p style={{ marginBottom: '16px' }}>{children}</p>
+                  ),
+                  strong: ({ children }) => (
+                    <strong style={{ color: 'var(--tx)', fontWeight: 600 }}>{children}</strong>
+                  ),
+                  ul: ({ children }) => (
+                    <ul style={{ marginBottom: '16px', paddingLeft: '20px' }}>{children}</ul>
+                  ),
+                  li: ({ children }) => (
+                    <li style={{ marginBottom: '8px' }}>{children}</li>
+                  ),
+                  ol: ({ children }) => (
+                    <ol style={{ marginBottom: '16px', paddingLeft: '20px' }}>{children}</ol>
+                  ),
+                }}
+              >
+                {expanded || !isLong ? review.content : contentPreview + '...'}
+              </ReactMarkdown>
+            </div>
+            
+            {isLong && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                style={{
+                  marginTop: '16px',
+                  padding: '10px 20px',
+                  background: `${color}20`,
+                  color,
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontFamily: 'var(--fd)',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {expanded ? '↑ Show Less' : '↓ Read Full Review'}
+              </button>
+            )}
+          </>
+        ) : (
+          <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
+            {fallback}
+          </p>
+        )}
+      </div>
+
+      {/* Last updated */}
+      {review?.lastUpdated && (
+        <div style={{
+          marginTop: '12px',
+          fontFamily: 'var(--fm)',
+          fontSize: '0.65rem',
+          color: 'var(--tx4)',
+        }}>
+          Last updated: {review.lastUpdated}
+        </div>
+      )}
+    </div>
   );
 }
