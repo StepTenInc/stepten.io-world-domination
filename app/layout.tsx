@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
+import LanguageWarningModal from "@/components/LanguageWarningModal";
 
 export const metadata: Metadata = {
   title: "STEPTEN™ — Enter the Simulation",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body>
+        <LanguageWarningModal />
         <AppShell>{children}</AppShell>
       </body>
     </html>
