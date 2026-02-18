@@ -87,16 +87,25 @@ export default function LanguageWarningModal() {
           <span className="text-2xl">⚠️</span>
         </div>
         
-        {/* Team Image with glow effect */}
+        {/* Animated Team Video */}
         <div className="relative w-full aspect-video overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
-          <Image
-            src="/images/team-warning.png"
-            alt="The StepTen Team"
-            fill
-            className="object-cover"
-            priority
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10 pointer-events-none" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/videos/team-warning.mp4" type="video/mp4" />
+            {/* Fallback to image if video doesn't load */}
+            <Image
+              src="/images/team-warning.png"
+              alt="The StepTen Team"
+              fill
+              className="object-cover"
+            />
+          </video>
         </div>
         
         {/* Content */}
