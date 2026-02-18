@@ -316,6 +316,94 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         return;
       }
 
+      // Handle bullet lists (lines starting with - )
+      if (block.split('\n').every(line => line.trim().startsWith('- ') || line.trim() === '')) {
+        const items = block.split('\n')
+          .filter(line => line.trim().startsWith('- '))
+          .map(line => line.trim().slice(2));
+        elements.push(
+          <ul key={`ul-${i}`} style={{
+            fontFamily: 'var(--fb)',
+            fontSize: '1.05rem',
+            lineHeight: 1.8,
+            color: 'var(--tx2)',
+            marginBottom: '24px',
+            paddingLeft: '24px',
+            listStyle: 'none',
+          }}>
+            {items.map((item, j) => (
+              <li key={j} style={{
+                position: 'relative',
+                paddingLeft: '20px',
+                marginBottom: '8px',
+              }}>
+                <span style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '0.5em',
+                  width: '6px',
+                  height: '6px',
+                  background: author.color,
+                  borderRadius: '50%',
+                  boxShadow: `0 0 8px ${author.color}`,
+                }} />
+                <span dangerouslySetInnerHTML={{ __html: item
+                  .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
+                  .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                }} />
+              </li>
+            ))}
+          </ul>
+        );
+        return;
+      }
+
+      // Handle numbered lists (lines starting with 1. 2. etc)
+      if (block.split('\n').every(line => /^\d+\.\s/.test(line.trim()) || line.trim() === '')) {
+        const items = block.split('\n')
+          .filter(line => /^\d+\.\s/.test(line.trim()))
+          .map(line => line.trim().replace(/^\d+\.\s/, ''));
+        elements.push(
+          <ol key={`ol-${i}`} style={{
+            fontFamily: 'var(--fb)',
+            fontSize: '1.05rem',
+            lineHeight: 1.8,
+            color: 'var(--tx2)',
+            marginBottom: '24px',
+            paddingLeft: '24px',
+            listStyle: 'none',
+            counterReset: 'list-counter',
+          }}>
+            {items.map((item, j) => (
+              <li key={j} style={{
+                position: 'relative',
+                paddingLeft: '32px',
+                marginBottom: '8px',
+                counterIncrement: 'list-counter',
+              }}>
+                <span style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '0',
+                  fontFamily: 'var(--fd)',
+                  fontWeight: 700,
+                  color: author.color,
+                  fontSize: '0.9em',
+                  textShadow: `0 0 10px ${author.color}60`,
+                }}>
+                  {j + 1}.
+                </span>
+                <span dangerouslySetInnerHTML={{ __html: item
+                  .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
+                  .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                }} />
+              </li>
+            ))}
+          </ol>
+        );
+        return;
+      }
+
       // Authoritative domains that should be followed
       const authoritativeDomains = [
         'github.com', 'stackoverflow.com', 'wikipedia.org', 'docs.python.org',
