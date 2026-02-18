@@ -26,10 +26,10 @@ const MODEL_COLORS: Record<string, string> = {
 };
 
 const MODEL_LOGOS: Record<string, string> = {
-  'gemini-2.5-flash': '/images/models/gemini.svg',
-  'claude-sonnet-4': '/images/models/anthropic.svg',
-  'gpt-4o': '/images/models/openai.svg',
-  'grok-3': '/images/models/xai.svg',
+  'gemini-2.5-flash': '/images/models/gemini.png',
+  'claude-sonnet-4': '/images/models/anthropic.png',
+  'gpt-4o': '/images/models/openai.png',
+  'grok-3': '/images/models/xai.png',
 };
 
 const MODEL_NAMES: Record<string, string> = {
@@ -42,7 +42,7 @@ const MODEL_NAMES: Record<string, string> = {
 export function MultiModelScore({ taleSlug, className = '' }: MultiModelScoreProps) {
   const [scores, setScores] = useState<ModelScore[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
 
         const supabase = createClient(supabaseUrl, supabaseKey);
 
-        // First get the tale ID
         const { data: taleData, error: taleError } = await supabase
           .from('tales')
           .select('id')
@@ -72,7 +71,6 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
           return;
         }
 
-        // Then get the scores
         const { data, error: scoresError } = await supabase
           .from('tale_scores')
           .select('model, provider, weighted_score, rating, breakdown, top_strengths, top_weaknesses')
@@ -115,6 +113,7 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
 
   const avgScore = scores.reduce((sum, s) => sum + Number(s.weighted_score), 0) / scores.length;
   const sortedScores = [...scores].sort((a, b) => Number(b.weighted_score) - Number(a.weighted_score));
+  const selectedScore = selectedModel ? scores.find(s => s.model === selectedModel) : null;
 
   return (
     <div className={`bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 ${className}`}>
@@ -137,160 +136,114 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
         </div>
       </div>
 
-      {/* Model Scores Grid */}
+      {/* Model Tabs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-        {sortedScores.map((score) => (
-          <div
-            key={score.model}
-            className="relative overflow-hidden rounded-xl bg-white/5 p-4 hover:bg-white/10 transition-colors cursor-pointer"
-            onClick={() => setExpanded(!expanded)}
-          >
-            {/* Score bar background */}
-            <div
-              className={`absolute inset-0 bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-500 to-gray-400'} opacity-10`}
-              style={{ width: `${score.weighted_score}%` }}
-            />
-            
-            <div className="relative">
-              <div className="flex items-center gap-2 mb-2">
-                {MODEL_LOGOS[score.model] ? (
+        {sortedScores.map((score) => {
+          const isSelected = selectedModel === score.model;
+          return (
+            <button
+              key={score.model}
+              onClick={() => setSelectedModel(isSelected ? null : score.model)}
+              className={`relative overflow-hidden rounded-xl p-4 text-left transition-all ${
+                isSelected 
+                  ? 'bg-white/15 ring-2 ring-white/30' 
+                  : 'bg-white/5 hover:bg-white/10'
+              }`}
+            >
+              {/* Score bar background */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-500 to-gray-400'} opacity-10`}
+                style={{ width: `${score.weighted_score}%` }}
+              />
+              
+              <div className="relative">
+                <div className="flex items-center gap-2 mb-2">
                   <img 
                     src={MODEL_LOGOS[score.model]} 
                     alt={MODEL_NAMES[score.model] || score.model}
-                    className="w-5 h-5 object-contain brightness-0 invert opacity-80"
+                    className="w-5 h-5 object-contain"
                   />
-                ) : (
-                  <span className="text-lg">🤖</span>
-                )}
-                <span className="text-sm font-medium text-white/80">
-                  {MODEL_NAMES[score.model] || score.model}
-                </span>
+                  <span className="text-sm font-medium text-white/80">
+                    {MODEL_NAMES[score.model] || score.model}
+                  </span>
+                </div>
+                <div className={`text-2xl font-bold bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-400 to-gray-300'} bg-clip-text text-transparent`}>
+                  {Number(score.weighted_score).toFixed(1)}
+                </div>
+                <div className="text-xs text-white/50 mt-1">{score.rating}</div>
               </div>
-              <div className={`text-2xl font-bold bg-gradient-to-r ${MODEL_COLORS[score.model] || 'from-gray-400 to-gray-300'} bg-clip-text text-transparent`}>
-                {Number(score.weighted_score).toFixed(1)}
-              </div>
-              <div className="text-xs text-white/50 mt-1">{score.rating}</div>
-            </div>
-          </div>
-        ))}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Expanded Details */}
-      {expanded && (
-        <div className="mt-6 pt-6 border-t border-white/10 space-y-6">
-          {sortedScores.map((score) => (
-            <div key={score.model} className="space-y-3">
-              <div className="flex items-center gap-2">
-                {MODEL_LOGOS[score.model] ? (
-                  <img 
-                    src={MODEL_LOGOS[score.model]} 
-                    alt={MODEL_NAMES[score.model] || score.model}
-                    className="w-5 h-5 object-contain brightness-0 invert opacity-80"
-                  />
-                ) : (
-                  <span className="text-lg">🤖</span>
-                )}
-                <span className="font-medium text-white">{MODEL_NAMES[score.model] || score.model}&apos;s Analysis</span>
-              </div>
-              
-              {score.breakdown && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {Object.entries(score.breakdown).map(([key, val]) => (
-                    <div key={key} className="bg-white/5 rounded-lg p-2">
-                      <div className="text-xs text-white/50 capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </div>
-                      <div className="text-sm font-medium text-white">{val.score}</div>
-                    </div>
-                  ))}
+      {/* Selected Model Details */}
+      {selectedScore && (
+        <div className="mt-6 pt-6 border-t border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <img 
+              src={MODEL_LOGOS[selectedScore.model]} 
+              alt={MODEL_NAMES[selectedScore.model] || selectedScore.model}
+              className="w-6 h-6 object-contain"
+            />
+            <span className="font-bold text-white text-lg">
+              {MODEL_NAMES[selectedScore.model] || selectedScore.model}&apos;s Analysis
+            </span>
+          </div>
+          
+          {/* Breakdown Grid */}
+          {selectedScore.breakdown && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+              {Object.entries(selectedScore.breakdown).map(([key, val]) => (
+                <div key={key} className="bg-white/5 rounded-lg p-3">
+                  <div className="text-xs text-white/50 capitalize mb-1">
+                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                  </div>
+                  <div className="text-xl font-bold text-white">{val.score}</div>
+                  {val.feedback && (
+                    <div className="text-xs text-white/40 mt-1 line-clamp-2">{val.feedback}</div>
+                  )}
                 </div>
-              )}
-              
-              {score.top_strengths && score.top_strengths.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {score.top_strengths.slice(0, 3).map((s, i) => (
-                    <span key={i} className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full">
-                      ✓ {s}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              {score.top_weaknesses && score.top_weaknesses.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {score.top_weaknesses.slice(0, 3).map((w, i) => (
-                    <span key={i} className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
-                      ✗ {w}
-                    </span>
-                  ))}
-                </div>
-              )}
+              ))}
             </div>
-          ))}
+          )}
+          
+          {/* Strengths */}
+          {selectedScore.top_strengths && selectedScore.top_strengths.length > 0 && (
+            <div className="mb-3">
+              <div className="text-xs text-white/50 uppercase tracking-wider mb-2">Strengths</div>
+              <div className="flex flex-wrap gap-2">
+                {selectedScore.top_strengths.map((s, i) => (
+                  <span key={i} className="text-sm bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+                    ✓ {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Weaknesses */}
+          {selectedScore.top_weaknesses && selectedScore.top_weaknesses.length > 0 && (
+            <div>
+              <div className="text-xs text-white/50 uppercase tracking-wider mb-2">Areas to Improve</div>
+              <div className="flex flex-wrap gap-2">
+                {selectedScore.top_weaknesses.map((w, i) => (
+                  <span key={i} className="text-sm bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
+                    ✗ {w}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Toggle hint */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full mt-4 text-center text-sm text-white/40 hover:text-white/60 transition-colors"
-      >
-        {expanded ? '▲ Hide details' : '▼ Show breakdown'}
-      </button>
-    </div>
-  );
-}
-
-// Compact version for cards/lists
-export function MultiModelScoreCompact({ taleSlug, className = '' }: MultiModelScoreProps) {
-  const [avgScore, setAvgScore] = useState<number | null>(null);
-  const [modelCount, setModelCount] = useState(0);
-
-  useEffect(() => {
-    async function fetchScore() {
-      try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-        
-        if (!supabaseUrl || !supabaseKey) return;
-
-        const supabase = createClient(supabaseUrl, supabaseKey);
-
-        const { data: tale } = await supabase
-          .from('tales')
-          .select('stepten_score, score_breakdown')
-          .eq('slug', taleSlug)
-          .single();
-
-        if (tale?.stepten_score) {
-          setAvgScore(Number(tale.stepten_score));
-          setModelCount(tale.score_breakdown?.models || 4);
-        }
-      } catch (err) {
-        console.error('Failed to fetch score:', err);
-      }
-    }
-
-    fetchScore();
-  }, [taleSlug]);
-
-  if (avgScore === null) return null;
-
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'from-green-400 to-emerald-400';
-    if (score >= 70) return 'from-cyan-400 to-blue-400';
-    if (score >= 60) return 'from-yellow-400 to-orange-400';
-    return 'from-red-400 to-pink-400';
-  };
-
-  return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className={`text-lg font-bold bg-gradient-to-r ${getScoreColor(avgScore)} bg-clip-text text-transparent`}>
-        {avgScore.toFixed(1)}
-      </div>
-      <div className="text-xs text-white/40">
-        ({modelCount} AI)
-      </div>
+      {/* Hint */}
+      {!selectedModel && (
+        <div className="text-center text-sm text-white/30 mt-2">
+          Click a model to see its analysis
+        </div>
+      )}
     </div>
   );
 }
