@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import LanguageWarningModal from "@/components/LanguageWarningModal";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "STEPTEN™ — Enter the Simulation",
@@ -30,6 +32,8 @@ export default function RootLayout({
       <body>
         <LanguageWarningModal />
         <AppShell>{children}</AppShell>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
