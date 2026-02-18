@@ -802,7 +802,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           </div>
 
           {/* Related Articles from Knowledge Base */}
-          <RelatedArticles taleSlug={tale.slug} authorColor={author.color} className="mb-12 pb-12 border-b border-white/10" />
+          <RelatedArticles taleSlug={tale.slug} taleTitle={tale.title} authorColor={author.color} className="mb-12 pb-12 border-b border-white/10" />
 
           {/* Tags */}
           {tale.tags && tale.tags.length > 0 && (

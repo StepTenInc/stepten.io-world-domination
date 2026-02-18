@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles, ArrowRight, Brain } from 'lucide-react';
 
 interface RelatedArticle {
   slug: string;
@@ -14,15 +14,18 @@ interface RelatedArticle {
   relationship_type?: string;
   similarity_score?: number;
   anchor_text?: string;
+  shared_topics?: string[];
+  recommendation_reason?: string;
 }
 
 interface RelatedArticlesProps {
   taleSlug: string;
+  taleTitle?: string;
   authorColor?: string;
   className?: string;
 }
 
-export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className = '' }: RelatedArticlesProps) {
+export function RelatedArticles({ taleSlug, taleTitle, authorColor = '#00d4ff', className = '' }: RelatedArticlesProps) {
   const [articles, setArticles] = useState<RelatedArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,6 +59,7 @@ export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className =
           .select(`
             relationship_type,
             similarity_score,
+            shared_topics,
             target_tale_id,
             tales!tale_relationships_target_tale_id_fkey (
               slug,
@@ -74,6 +78,7 @@ export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className =
           .select(`
             anchor_text,
             relevance_score,
+            context_snippet,
             target_tale_id,
             tales!internal_links_target_tale_id_fkey (
               slug,
@@ -98,6 +103,7 @@ export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className =
               hero_image_url: r.tales.hero_image_url,
               relationship_type: r.relationship_type,
               similarity_score: r.similarity_score,
+              shared_topics: r.shared_topics,
             });
           }
         });
@@ -128,9 +134,9 @@ export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className =
   if (loading) {
     return (
       <div className={`${className}`}>
-        <div className="animate-pulse grid md:grid-cols-3 gap-6">
+        <div className="animate-pulse space-y-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-64 bg-white/5 rounded-2xl" />
+            <div key={i} className="h-40 bg-white/5 rounded-2xl" />
           ))}
         </div>
       </div>
@@ -139,129 +145,149 @@ export function RelatedArticles({ taleSlug, authorColor = '#00d4ff', className =
 
   if (articles.length === 0) return null;
 
-  const getRelationshipLabel = (type?: string) => {
-    switch (type) {
-      case 'supports': return 'Deep Dive';
-      case 'expands': return 'Expanded';
-      case 'related': return 'Related';
-      case 'prerequisite': return 'Start Here';
-      default: return 'Recommended';
+  const getRecommendationReason = (article: RelatedArticle): string => {
+    // Generate intelligent recommendation reason
+    if (article.shared_topics && article.shared_topics.length > 0) {
+      const topics = article.shared_topics.slice(0, 2).join(' and ');
+      return `Both articles explore ${topics}`;
+    }
+    
+    switch (article.relationship_type) {
+      case 'supports':
+        return 'Provides deeper context on concepts mentioned above';
+      case 'expands':
+        return 'Expands on the ideas introduced in this article';
+      case 'related':
+        return 'Covers similar themes from a different angle';
+      case 'prerequisite':
+        return 'Helpful background reading before this article';
+      default:
+        if (article.similarity_score && article.similarity_score > 0.8) {
+          return 'Highly relevant based on semantic analysis';
+        }
+        return 'Recommended by our knowledge graph';
     }
   };
 
   return (
     <div className={`${className}`}>
       {/* Section Header */}
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-start gap-5 mb-10">
         <div 
-          className="w-12 h-12 rounded-xl flex items-center justify-center"
+          className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
           style={{ 
-            background: `linear-gradient(135deg, ${authorColor}20, ${authorColor}05)`,
-            border: `1px solid ${authorColor}30`,
+            background: `linear-gradient(135deg, ${authorColor}25, ${authorColor}08)`,
+            border: `1px solid ${authorColor}40`,
+            boxShadow: `0 0 30px ${authorColor}15`,
           }}
         >
-          <Sparkles size={20} style={{ color: authorColor }} />
+          <Brain size={24} style={{ color: authorColor }} />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--fd)' }}>
-            Continue Reading
+          <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--fd)' }}>
+            The Knowledge Graph Recommends
           </h3>
-          <p className="text-sm text-white/50">Related articles from our knowledge base</p>
+          <p className="text-base text-white/50 leading-relaxed">
+            Our AI analyzed the semantic relationships between articles to find the most relevant reads for you.
+          </p>
         </div>
       </div>
       
-      {/* Cards Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
+      {/* Cards - Vertical Stack */}
+      <div className="space-y-6">
         {articles.map((article, index) => (
           <Link
             key={article.slug}
             href={`/tales/${article.slug}`}
-            className="group relative block overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02]"
+            className="group block overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.01]"
             style={{
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+              background: 'linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))',
               border: '1px solid rgba(255,255,255,0.08)',
             }}
           >
-            {/* Image Container */}
-            <div className="relative aspect-[16/10] overflow-hidden">
-              {article.hero_image_url ? (
-                <Image
-                  src={article.hero_image_url}
-                  alt={article.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              ) : (
+            <div className="flex flex-col md:flex-row">
+              {/* Image */}
+              <div className="relative w-full md:w-72 h-48 md:h-auto flex-shrink-0 overflow-hidden">
+                {article.hero_image_url ? (
+                  <Image
+                    src={article.hero_image_url}
+                    alt={article.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div 
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(135deg, ${authorColor}30, transparent)` }}
+                  />
+                )}
+                
+                {/* Gradient overlay */}
                 <div 
-                  className="absolute inset-0"
-                  style={{ background: `linear-gradient(135deg, ${authorColor}30, transparent)` }}
+                  className="absolute inset-0 md:hidden"
+                  style={{
+                    background: 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%)',
+                  }}
                 />
-              )}
+                
+                {/* Match badge */}
+                {article.similarity_score && article.similarity_score > 0.7 && (
+                  <div 
+                    className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-md flex items-center gap-2"
+                    style={{
+                      background: `${authorColor}20`,
+                      border: `1px solid ${authorColor}50`,
+                      color: authorColor,
+                    }}
+                  >
+                    <Sparkles size={12} />
+                    {Math.round(article.similarity_score * 100)}% match
+                  </div>
+                )}
+              </div>
               
-              {/* Gradient Overlay */}
-              <div 
-                className="absolute inset-0"
-                style={{
-                  background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)`,
-                }}
-              />
-
-              {/* Relationship Badge */}
-              {article.relationship_type && (
+              {/* Content */}
+              <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
+                {/* Why recommended */}
                 <div 
-                  className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm"
-                  style={{
-                    background: `${authorColor}20`,
-                    border: `1px solid ${authorColor}40`,
-                    color: authorColor,
-                  }}
+                  className="text-xs font-medium uppercase tracking-wider mb-3 flex items-center gap-2"
+                  style={{ color: authorColor }}
                 >
-                  {getRelationshipLabel(article.relationship_type)}
+                  <span className="w-8 h-px" style={{ background: authorColor }} />
+                  {getRecommendationReason(article)}
                 </div>
-              )}
-
-              {/* Match Score */}
-              {article.similarity_score && article.similarity_score > 0.7 && (
-                <div 
-                  className="absolute top-3 right-3 px-2 py-1 rounded-md text-xs font-mono backdrop-blur-sm"
-                  style={{
-                    background: 'rgba(0,0,0,0.6)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'rgba(255,255,255,0.7)',
-                  }}
-                >
-                  {Math.round(article.similarity_score * 100)}% match
-                </div>
-              )}
-
-              {/* Title Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-5">
+                
+                {/* Title */}
                 <h4 
-                  className="text-base font-semibold text-white leading-tight line-clamp-2 mb-2 group-hover:text-opacity-100 transition-colors"
-                  style={{ 
-                    fontFamily: 'var(--fd)',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                  }}
+                  className="text-xl md:text-2xl font-bold text-white leading-tight mb-4 group-hover:text-opacity-90 transition-colors"
+                  style={{ fontFamily: 'var(--fd)' }}
                 >
                   {article.title}
                 </h4>
                 
-                {/* Read More */}
+                {/* Excerpt */}
+                {article.excerpt && (
+                  <p className="text-white/50 text-sm md:text-base leading-relaxed line-clamp-2 mb-5">
+                    {article.excerpt}
+                  </p>
+                )}
+                
+                {/* Read more */}
                 <div 
-                  className="flex items-center gap-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="flex items-center gap-3 text-sm font-medium transition-all duration-300 group-hover:gap-4"
                   style={{ color: authorColor }}
                 >
-                  <span>Read article</span>
-                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  <span>Read this article</span>
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </div>
 
-            {/* Hover Glow Effect */}
+            {/* Hover Glow */}
             <div 
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
               style={{
-                boxShadow: `inset 0 0 30px ${authorColor}15, 0 0 40px ${authorColor}10`,
+                boxShadow: `inset 0 0 40px ${authorColor}10, 0 0 60px ${authorColor}08`,
               }}
             />
           </Link>
