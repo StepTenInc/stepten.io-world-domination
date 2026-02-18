@@ -6,26 +6,28 @@ import Image from 'next/image';
 export default function LanguageWarningModal() {
   const [showModal, setShowModal] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user has already made a choice
     const accepted = localStorage.getItem('stepten-language-accepted');
     const blockedUser = localStorage.getItem('stepten-language-blocked');
     
     if (blockedUser === 'true') {
       setBlocked(true);
       setShowModal(true);
+      setTimeout(() => setIsVisible(true), 50);
     } else if (accepted !== 'true') {
       setShowModal(true);
+      setTimeout(() => setIsVisible(true), 50);
     }
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem('stepten-language-accepted', 'true');
     localStorage.removeItem('stepten-language-blocked');
-    setShowModal(false);
+    setIsVisible(false);
+    setTimeout(() => setShowModal(false), 300);
     
-    // Track acceptance
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'language_warning_accepted');
     }
@@ -36,7 +38,6 @@ export default function LanguageWarningModal() {
     localStorage.removeItem('stepten-language-accepted');
     setBlocked(true);
     
-    // Track decline
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'language_warning_blocked');
     }
@@ -44,53 +45,51 @@ export default function LanguageWarningModal() {
 
   if (!showModal) return null;
 
-  // BLOCKED - They declined, they're done
+  // BLOCKED STATE
   if (blocked) {
     return (
       <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center p-4">
-        <div className="max-w-2xl text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-red-500 mb-6">
-            🚫 BLOCKED
+        <div className={`max-w-2xl text-center transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          <div className="text-8xl mb-6 animate-bounce">🚫</div>
+          <h1 className="text-4xl md:text-6xl font-bold text-red-500 mb-6">
+            BLOCKED
           </h1>
-          <p className="text-2xl md:text-3xl text-white mb-4">
-            You said you couldn&apos;t handle it.
+          <p className="text-xl text-gray-300 mb-4">
+            You said this wasn&apos;t for you. Fair enough.
           </p>
-          <p className="text-lg text-gray-400 mb-6">
-            This browser has been blocked from accessing StepTen.io.
+          <p className="text-gray-500 mb-8">
+            There&apos;s plenty of corporate-friendly AI content out there.<br/>
+            This just ain&apos;t it.
           </p>
-          <p className="text-xl text-gray-300 mb-8">
-            There&apos;s plenty of other places to learn from.<br/>
-            Go find one that doesn&apos;t offend your delicate sensibilities.
+          <a
+            href="https://www.google.com"
+            className="inline-block px-8 py-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            Take me somewhere else →
+          </a>
+          <p className="text-gray-700 text-sm mt-8">
+            Changed your mind? Clear your browser data.
           </p>
-          <div className="space-y-4">
-            <a
-              href="https://www.google.com/search?q=ai+tutorials+for+beginners"
-              className="block w-full px-8 py-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              Find somewhere else to learn →
-            </a>
-            <p className="text-gray-600 text-sm mt-8">
-              Changed your mind? Clear your browser data and come back when you&apos;ve grown a thicker skin.
-            </p>
-          </div>
         </div>
       </div>
     );
   }
 
-  // FIRST TIME - Warning modal
+  // WELCOME MODAL
   return (
-    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center p-4 overflow-y-auto">
-      <div className="max-w-4xl w-full bg-gray-900 rounded-2xl border-2 border-yellow-500 overflow-hidden my-8">
-        {/* Warning Header */}
-        <div className="bg-yellow-500 text-black px-6 py-4 flex items-center justify-center gap-3">
-          <span className="text-3xl">⚠️</span>
-          <span className="font-bold text-xl md:text-2xl tracking-wide">EXPLICIT LANGUAGE WARNING</span>
-          <span className="text-3xl">⚠️</span>
+    <div className={`fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`max-w-3xl w-full bg-gradient-to-b from-gray-900 to-black rounded-2xl border-2 border-yellow-500 overflow-hidden my-8 shadow-2xl shadow-yellow-500/20 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}>
+        
+        {/* Animated Warning Header */}
+        <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 text-black px-6 py-3 flex items-center justify-center gap-3 animate-pulse">
+          <span className="text-2xl">⚠️</span>
+          <span className="font-bold text-lg tracking-wider">HEADS UP</span>
+          <span className="text-2xl">⚠️</span>
         </div>
         
-        {/* Team Image */}
-        <div className="relative w-full aspect-video">
+        {/* Team Image with glow effect */}
+        <div className="relative w-full aspect-video overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
           <Image
             src="/images/team-warning.png"
             alt="The StepTen Team"
@@ -101,46 +100,34 @@ export default function LanguageWarningModal() {
         </div>
         
         {/* Content */}
-        <div className="p-6 md:p-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
-            Before you enter...
+        <div className="p-6 md:p-8 -mt-12 relative z-20">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
+            Hey! Welcome to StepTen 👋
           </h2>
           
           <div className="space-y-4 text-gray-300 text-lg mb-8">
-            <p>
-              This site is for <span className="text-cyan-400 font-semibold">educating people about AI</span>. 
-              It&apos;s fun, it&apos;s real, and it&apos;s uncensored.
+            <p className="text-center text-xl">
+              This is a <span className="text-cyan-400 font-semibold">fun fucking site</span> about AI, 
+              coding, and building cool shit.
             </p>
             
-            <p>
-              The CEO likes to use the <span className="text-yellow-400 font-bold">f-bomb</span> and 
-              some <span className="text-yellow-400 font-bold">colorful fucking language</span>. 
-              That&apos;s just how we communicate here.
+            <p className="text-center">
+              It&apos;s basically a <span className="text-yellow-400 font-semibold">hobby project</span> — 
+              just me learning and documenting my journey. Not a serious business (yet). 
+              Just content, experiments, and a lot of swearing.
             </p>
             
-            <p>
-              <span className="text-green-400 font-semibold">If you want to learn and really grow yourself</span> — 
-              if you want to understand AI, automation, and building shit that actually works — 
-              then this is the place for you.
-            </p>
+            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+              <p className="text-center italic text-gray-400">
+                &quot;I&apos;m going through this shit and you can learn too. 
+                Come along, have a laugh, feel my pain, celebrate the wins.&quot;
+              </p>
+            </div>
             
-            <p>
-              If you&apos;re going to get <span className="text-red-400">pissed off by a bit of bad language</span>, 
-              then there&apos;s plenty of other people to go and learn from. This isn&apos;t for you.
-            </p>
-            
-            <p className="border-l-4 border-cyan-500 pl-4 italic text-gray-400">
-              &quot;The reason this site is good is BECAUSE it&apos;s got colorful language. 
-              If you go on this learning journey, I can guarantee you&apos;re going to be using 
-              fucking colorful language too — out of frustration, excitement, and breakthrough moments. 
-              Feel my pain and laugh with me.&quot;
-              <br/><span className="text-cyan-400 not-italic">— Stephen, CEO</span>
-            </p>
-          </div>
-          
-          <div className="bg-gray-800 rounded-lg p-4 mb-8">
-            <p className="text-center text-white font-semibold">
-              Do you accept that you will not be offended by any language you see on this site?
+            <p className="text-center text-lg">
+              <span className="text-green-400">If you want to learn?</span> Great, you&apos;re in the right place.<br/>
+              <span className="text-red-400">If colorful language offends you?</span> Just fuck off, honestly. 
+              There&apos;s plenty of polished corporate content out there.
             </p>
           </div>
           
@@ -148,21 +135,21 @@ export default function LanguageWarningModal() {
           <div className="space-y-3">
             <button
               onClick={handleAccept}
-              className="w-full px-8 py-4 bg-green-600 hover:bg-green-500 text-white font-bold text-lg rounded-lg transition-colors"
+              className="w-full px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-bold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-green-500/25"
             >
-              ✅ Yes, I Accept — Let&apos;s fucking go!
+              🤙 Yeah let&apos;s go — I&apos;m here to learn and laugh
             </button>
             
             <button
               onClick={handleDecline}
-              className="w-full px-8 py-3 bg-red-900/50 hover:bg-red-800 text-red-300 hover:text-red-100 rounded-lg transition-colors border border-red-700"
+              className="w-full px-8 py-3 bg-gray-800/50 hover:bg-red-900/50 text-gray-500 hover:text-red-300 rounded-xl transition-all duration-300 border border-gray-700 hover:border-red-700"
             >
-              ❌ No, I&apos;m too sensitive — Block me from this site
+              Nah, not for me
             </button>
           </div>
           
-          <p className="text-gray-600 text-sm mt-6 text-center">
-            ⚠️ If you decline, your browser will be blocked from accessing this site.
+          <p className="text-gray-600 text-xs mt-6 text-center">
+            This site contains explicit language. 18+ vibes.
           </p>
         </div>
       </div>
