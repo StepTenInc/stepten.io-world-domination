@@ -8,6 +8,7 @@ import { Tale } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag, Menu, X } from 'lucide-react';
 import { MultiModelScore } from '@/components/MultiModelScore';
+import { createClient } from '@supabase/supabase-js';
 
 interface TaleContentProps {
   tale: Tale;
@@ -65,9 +66,51 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dynamicScore, setDynamicScore] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const author = characters[tale.author];
+
+  // Fetch dynamic score from Supabase
+  useEffect(() => {
+    async function fetchScore() {
+      try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        if (!supabaseUrl || !supabaseKey) return;
+
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        
+        // Get tale ID
+        const { data: taleData } = await supabase
+          .from('tales')
+          .select('id, stepten_score')
+          .eq('slug', tale.slug)
+          .single();
+
+        if (taleData?.stepten_score) {
+          setDynamicScore(taleData.stepten_score);
+          return;
+        }
+
+        // Fallback: calculate average from tale_scores
+        if (taleData?.id) {
+          const { data: scores } = await supabase
+            .from('tale_scores')
+            .select('weighted_score')
+            .eq('tale_id', taleData.id);
+
+          if (scores && scores.length > 0) {
+            const avg = scores.reduce((sum, s) => sum + Number(s.weighted_score), 0) / scores.length;
+            setDynamicScore(Math.round(avg));
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch score:', err);
+      }
+    }
+    fetchScore();
+  }, [tale.slug]);
   const isHuman = tale.authorType === 'HUMAN';
   
   const relatedTales = allTales.filter(t => 
@@ -716,7 +759,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   ⭐ PILLAR
                 </span>
               )}
-              {tale.steptenScore && (
+              {(dynamicScore || tale.steptenScore) && (
                 <Link href="/tools/stepten-score" style={{
                   padding: '5px 12px', 
                   background: 'linear-gradient(135deg, var(--mx)20, var(--cy)20)',
@@ -731,7 +774,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                   alignItems: 'center',
                   gap: '6px',
                 }}>
-                  🎯 STEPTEN SCORE: {tale.steptenScore}/100
+                  🎯 STEPTEN SCORE: {dynamicScore || tale.steptenScore}/100
                 </Link>
               )}
             </div>
