@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import Image from 'next/image';
 
 interface ModelScore {
   model: string;
@@ -29,8 +28,8 @@ const MODEL_COLORS: Record<string, string> = {
 const MODEL_LOGOS: Record<string, string> = {
   'gemini-2.5-flash': '/images/models/gemini.svg',
   'claude-sonnet-4': '/images/models/anthropic.svg',
-  'gpt-4o': '/images/models/openai.png',
-  'grok-3': '/images/models/xai.png',
+  'gpt-4o': '/images/models/openai.svg',
+  'grok-3': '/images/models/xai.svg',
 };
 
 const MODEL_NAMES: Record<string, string> = {
@@ -155,15 +154,11 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
             <div className="relative">
               <div className="flex items-center gap-2 mb-2">
                 {MODEL_LOGOS[score.model] ? (
-                  <div className="w-5 h-5 relative">
-                    <Image 
-                      src={MODEL_LOGOS[score.model]} 
-                      alt={MODEL_NAMES[score.model] || score.model}
-                      width={20}
-                      height={20}
-                      className="object-contain brightness-0 invert opacity-80"
-                    />
-                  </div>
+                  <img 
+                    src={MODEL_LOGOS[score.model]} 
+                    alt={MODEL_NAMES[score.model] || score.model}
+                    className="w-5 h-5 object-contain brightness-0 invert opacity-80"
+                  />
                 ) : (
                   <span className="text-lg">🤖</span>
                 )}
@@ -187,15 +182,11 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
             <div key={score.model} className="space-y-3">
               <div className="flex items-center gap-2">
                 {MODEL_LOGOS[score.model] ? (
-                  <div className="w-5 h-5 relative">
-                    <Image 
-                      src={MODEL_LOGOS[score.model]} 
-                      alt={MODEL_NAMES[score.model] || score.model}
-                      width={20}
-                      height={20}
-                      className="object-contain brightness-0 invert opacity-80"
-                    />
-                  </div>
+                  <img 
+                    src={MODEL_LOGOS[score.model]} 
+                    alt={MODEL_NAMES[score.model] || score.model}
+                    className="w-5 h-5 object-contain brightness-0 invert opacity-80"
+                  />
                 ) : (
                   <span className="text-lg">🤖</span>
                 )}
