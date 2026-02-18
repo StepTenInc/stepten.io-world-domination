@@ -43,7 +43,7 @@ export const tools: Tool[] = [
   // ═══════════════════════════════════════
   // CODING IDEs
   // ═══════════════════════════════════════
-  { id: 'cursor', name: 'Cursor', description: 'AI-first code editor. Cmd+K to edit, chat with codebase.', category: 'coding-ide', url: 'https://cursor.sh', logo: logo('cursor.sh'), pricing: 'freemium', rating: 5, review: 'The best AI coding IDE. This is what I use daily.', tags: ['editor', 'vscode', 'claude'], used: true },
+  { id: 'cursor', name: 'Cursor', description: 'AI-first code editor with Composer, MCP, and multi-model support. Powerful but steep learning curve.', category: 'coding-ide', url: 'https://cursor.sh', logo: logo('cursor.sh'), pricing: 'freemium', rating: 4, review: 'Wicked once you get it. Expense concerns and Google catching up drop it to 4/5.', tags: ['editor', 'vscode', 'claude', 'composer', 'mcp'], used: true },
   { id: 'windsurf', name: 'Windsurf', description: 'Codeium AI IDE with Cascade for multi-file edits.', category: 'coding-ide', url: 'https://codeium.com/windsurf', logo: logo('codeium.com'), pricing: 'freemium', tags: ['editor', 'cascade'], used: true },
   { id: 'vscode', name: 'VS Code + Copilot', description: 'Classic VS Code with GitHub Copilot.', category: 'coding-ide', url: 'https://code.visualstudio.com', logo: logo('visualstudio.com'), pricing: 'freemium', tags: ['editor', 'microsoft'], used: true },
   { id: 'zed', name: 'Zed', description: 'Fast multiplayer editor with AI built-in.', category: 'coding-ide', url: 'https://zed.dev', logo: logo('zed.dev'), pricing: 'free', tags: ['editor', 'fast', 'rust'], used: false },
