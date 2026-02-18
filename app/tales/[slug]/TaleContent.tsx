@@ -316,16 +316,42 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         return;
       }
 
+      // Authoritative domains that should be followed
+      const authoritativeDomains = [
+        'github.com', 'stackoverflow.com', 'wikipedia.org', 'docs.python.org',
+        'developer.mozilla.org', 'openai.com', 'anthropic.com', 'google.com',
+        'microsoft.com', 'aws.amazon.com', 'vercel.com', 'supabase.com',
+        'nodejs.org', 'nextjs.org', 'react.dev', 'tailwindcss.com', 'stepten.io'
+      ];
+      
       const formatted = block
         .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color}; font-weight: 600;">$1</strong>`)
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em; border: 1px solid rgba(0,255,65,0.2);">$1</code>`);
+        .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em; border: 1px solid rgba(0,255,65,0.2);">$1</code>`)
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+          const isExternal = url.startsWith('http') && !url.includes('stepten.io');
+          const isAuthoritative = authoritativeDomains.some(d => url.includes(d));
+          const rel = isExternal 
+            ? (isAuthoritative ? 'noopener noreferrer' : 'noopener noreferrer nofollow')
+            : '';
+          const target = isExternal ? 'target="_blank"' : '';
+          return `<a href="${url}" ${target} ${rel ? `rel="${rel}"` : ''} style="color: ${author.color}; text-decoration: underline; text-underline-offset: 3px;">${text}</a>`;
+        });
       
       if (i === 0) {
         const firstChar = block.charAt(0);
         const rest = block.slice(1)
           .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
-          .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em;">$1</code>`);
+          .replace(/`(.+?)`/g, `<code style="background: rgba(0,255,65,0.12); color: var(--mx); padding: 3px 10px; border-radius: 4px; font-family: var(--fm); font-size: 0.9em;">$1</code>`)
+          .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+            const isExternal = url.startsWith('http') && !url.includes('stepten.io');
+            const isAuthoritative = authoritativeDomains.some(d => url.includes(d));
+            const rel = isExternal 
+              ? (isAuthoritative ? 'noopener noreferrer' : 'noopener noreferrer nofollow')
+              : '';
+            const target = isExternal ? 'target="_blank"' : '';
+            return `<a href="${url}" ${target} ${rel ? `rel="${rel}"` : ''} style="color: ${author.color}; text-decoration: underline; text-underline-offset: 3px;">${text}</a>`;
+          });
         elements.push(
           <p key={`p-${i}`} style={{
             fontFamily: 'var(--fb)',
