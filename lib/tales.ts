@@ -50,12 +50,12 @@ export const tales: Tale[] = [
     featured: true,
     isPillar: true,
     silo: 'ai-coding',
-    heroImage: '/images/tales/chatgpt-to-terminal-ninja/hero-still.jpg',
-    heroVideo: '/videos/tales/chatgpt-to-terminal-ninja/hero.mp4',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chatgpt-to-terminal-ninja/hero.png',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/chatgpt-to-terminal-ninja.mp4',
     images: [
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-1.jpg', alt: 'Christmas 2024 - Nearly drowned surfing, then discovered AI coding', afterSection: 'Get Off ChatGPT. Seriously.' },
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-2.jpg', alt: 'No-code builders: Replit, Bolt, Lovable, v0 - drag and drop your way to understanding', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
-      { url: '/images/tales/chatgpt-to-terminal-ninja/section-3.jpg', alt: 'The final form - two Mac Minis, portable screens, no hands, just talk', afterSection: 'Stage 6: Final Form — No Hands' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chatgpt-to-terminal-ninja/surfing.png', alt: 'Christmas 2024 - Nearly drowned surfing, then discovered AI coding', afterSection: 'Get Off ChatGPT. Seriously.' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chatgpt-to-terminal-ninja/nocode.png', alt: 'No-code builders: Replit, Bolt, Lovable, v0 - drag and drop your way to understanding', afterSection: 'Stage 1: Play Around With the No-Code Builders' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chatgpt-to-terminal-ninja/nohands.png', alt: 'The final form - two Mac Minis, portable screens, no hands, just talk', afterSection: 'Stage 6: Final Form — No Hands' },
     ],
     tags: ['ai-coding', 'terminal', 'claude-code', 'cursor', 'non-coder', 'autonomous-agents', 'vibe-coding', 'no-code', 'mac-mini', 'warp'],
     tools: [
