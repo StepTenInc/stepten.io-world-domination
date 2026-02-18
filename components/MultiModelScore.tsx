@@ -26,6 +26,7 @@ const MODEL_CONFIG: Record<string, {
   gradient: string;
   glow: string;
   bgGlow: string;
+  filter?: 'invert';
 }> = {
   'gemini-2.5-flash': {
     name: 'Gemini',
@@ -45,19 +46,21 @@ const MODEL_CONFIG: Record<string, {
   },
   'gpt-4o': {
     name: 'GPT-4',
-    icon: '/images/models/openai-white.png',
+    icon: '/images/models/openai.png',
     iconType: 'png',
     gradient: 'from-emerald-500 via-green-400 to-teal-400',
     glow: 'shadow-emerald-500/50',
     bgGlow: 'bg-gradient-to-r from-emerald-500/20 via-green-400/20 to-teal-400/20',
+    filter: 'invert',
   },
   'grok-3': {
     name: 'Grok',
-    icon: '/images/models/xai-white.png',
+    icon: '/images/models/xai.png',
     iconType: 'png',
     gradient: 'from-purple-500 via-pink-400 to-rose-400',
     glow: 'shadow-purple-500/50',
     bgGlow: 'bg-gradient-to-r from-purple-500/20 via-pink-400/20 to-rose-400/20',
+    filter: 'invert',
   },
 };
 
@@ -66,29 +69,20 @@ function ModelIcon({ model, className = '', animate = false }: { model: string; 
   if (!config) return null;
   
   const animationClass = animate ? 'animate-pulse' : '';
+  const filterClass = config.filter === 'invert' ? 'invert brightness-0 invert' : '';
   
   return (
     <div className={`relative ${animationClass} ${className}`}>
       {/* Glow effect behind icon */}
       <div className={`absolute inset-0 blur-md opacity-60 ${config.bgGlow} rounded-full`} />
       
-      {config.iconType === 'svg' ? (
-        <Image 
-          src={config.icon}
-          alt={config.name}
-          width={32}
-          height={32}
-          className="relative z-10 object-contain drop-shadow-lg"
-        />
-      ) : (
-        <Image 
-          src={config.icon}
-          alt={config.name}
-          width={32}
-          height={32}
-          className="relative z-10 object-contain drop-shadow-lg"
-        />
-      )}
+      <Image 
+        src={config.icon}
+        alt={config.name}
+        width={32}
+        height={32}
+        className={`relative z-10 object-contain drop-shadow-lg ${filterClass}`}
+      />
     </div>
   );
 }
