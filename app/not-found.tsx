@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function NotFound() {
@@ -45,7 +44,7 @@ export default function NotFound() {
         pointerEvents: 'none',
       }} />
       
-      {/* Hero Image */}
+      {/* Hero Video */}
       <div style={{
         position: 'relative',
         width: '100%',
@@ -57,13 +56,21 @@ export default function NotFound() {
         border: '2px solid rgba(0, 255, 65, 0.3)',
         boxShadow: '0 0 60px rgba(0, 255, 65, 0.2), 0 20px 60px rgba(0, 0, 0, 0.5)',
       }}>
-        <Image
-          src="/images/404-hero.png"
-          alt="Lost in the digital void - 404"
-          fill
-          style={{ objectFit: 'cover' }}
-          priority
-        />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/images/404-hero.png"
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+        >
+          <source src="/images/404-hero.mp4" type="video/mp4" />
+        </video>
         {/* Scanline overlay */}
         <div style={{
           position: 'absolute',
