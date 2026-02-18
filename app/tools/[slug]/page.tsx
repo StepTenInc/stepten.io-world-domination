@@ -867,44 +867,87 @@ export default function ToolPage() {
       {/* ═══════ RELATED TALES ═══════ */}
       <section style={{ padding: '80px 0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <div style={{
-              fontFamily: 'var(--fm)',
-              fontSize: '0.65rem',
-              color: 'var(--mx)',
-              letterSpacing: '0.35em',
-              marginBottom: '12px',
-            }}>
-              // SEE IT IN ACTION
-            </div>
-            <h2 style={{
-              fontFamily: 'var(--fd)',
-              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-              fontWeight: 700,
-            }}>
-              Related <span style={{ color: 'var(--mx)' }}>Tales</span>
-            </h2>
-          </div>
+          {(() => {
+            // Calculate related tales count for header
+            const relatedTales = tales.filter(t => {
+              const toolNameLower = tool.name.toLowerCase();
+              const toolIdLower = tool.id.toLowerCase();
+              const inTools = t.tools?.some(tt => 
+                tt.name.toLowerCase().includes(toolNameLower) ||
+                toolNameLower.includes(tt.name.toLowerCase())
+              );
+              const inTags = t.tags?.some(tag => 
+                tag.toLowerCase().includes(toolNameLower) ||
+                tag.toLowerCase().includes(toolIdLower)
+              );
+              const inContent = t.content.toLowerCase().includes(toolNameLower);
+              const inTitle = t.title.toLowerCase().includes(toolNameLower);
+              const inExcerpt = t.excerpt.toLowerCase().includes(toolNameLower);
+              return inTools || inTags || inContent || inTitle || inExcerpt;
+            });
+            
+            return (
+              <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+                <div style={{
+                  fontFamily: 'var(--fm)',
+                  fontSize: '0.65rem',
+                  color: 'var(--mx)',
+                  letterSpacing: '0.35em',
+                  marginBottom: '12px',
+                }}>
+                  // {tool.name.toUpperCase()} IN THE WILD
+                </div>
+                <h2 style={{
+                  fontFamily: 'var(--fd)',
+                  fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                  fontWeight: 700,
+                }}>
+                  {relatedTales.length > 0 ? (
+                    <>
+                      <span style={{ color: category?.color }}>{relatedTales.length}</span> {relatedTales.length === 1 ? 'Tale' : 'Tales'} Mention{relatedTales.length === 1 ? 's' : ''} <span style={{ color: 'var(--mx)' }}>{tool.name}</span>
+                    </>
+                  ) : (
+                    <>Tales Coming for <span style={{ color: 'var(--mx)' }}>{tool.name}</span></>
+                  )}
+                </h2>
+              </div>
+            );
+          })()}
 
-          {/* Related tales grid */}
+          {/* Related tales grid - LIVING ECOSYSTEM: finds any mention of this tool */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '24px',
           }}>
             {tales
-              .filter(t => 
-                // Match by tags, tools mentioned, or category
-                t.tags?.some(tag => 
-                  tool.name.toLowerCase().includes(tag.toLowerCase()) || 
-                  tag.toLowerCase().includes(tool.category) ||
-                  tag.toLowerCase().includes('ai') ||
-                  tag.toLowerCase().includes('coding')
-                ) ||
-                t.tools?.some(tt => tt.name.toLowerCase() === tool.name.toLowerCase()) ||
-                t.category === 'AI_CODING'
-              )
-              .slice(0, 3)
+              .filter(t => {
+                const toolNameLower = tool.name.toLowerCase();
+                const toolIdLower = tool.id.toLowerCase();
+                
+                // Check if tool is mentioned in:
+                // 1. Tools array (explicit)
+                const inTools = t.tools?.some(tt => 
+                  tt.name.toLowerCase().includes(toolNameLower) ||
+                  toolNameLower.includes(tt.name.toLowerCase())
+                );
+                
+                // 2. Tags
+                const inTags = t.tags?.some(tag => 
+                  tag.toLowerCase().includes(toolNameLower) ||
+                  tag.toLowerCase().includes(toolIdLower)
+                );
+                
+                // 3. Content (the actual article body)
+                const inContent = t.content.toLowerCase().includes(toolNameLower);
+                
+                // 4. Title or excerpt
+                const inTitle = t.title.toLowerCase().includes(toolNameLower);
+                const inExcerpt = t.excerpt.toLowerCase().includes(toolNameLower);
+                
+                return inTools || inTags || inContent || inTitle || inExcerpt;
+              })
+              .slice(0, 6)
               .map(tale => {
                 const authorData = characters[tale.author as keyof typeof characters];
                 return (
@@ -1009,6 +1052,40 @@ export default function ToolPage() {
                 );
               })}
           </div>
+
+          {/* No tales yet placeholder */}
+          {tales.filter(t => {
+            const toolNameLower = tool.name.toLowerCase();
+            const toolIdLower = tool.id.toLowerCase();
+            const inTools = t.tools?.some(tt => 
+              tt.name.toLowerCase().includes(toolNameLower) ||
+              toolNameLower.includes(tt.name.toLowerCase())
+            );
+            const inTags = t.tags?.some(tag => 
+              tag.toLowerCase().includes(toolNameLower) ||
+              tag.toLowerCase().includes(toolIdLower)
+            );
+            const inContent = t.content.toLowerCase().includes(toolNameLower);
+            const inTitle = t.title.toLowerCase().includes(toolNameLower);
+            const inExcerpt = t.excerpt.toLowerCase().includes(toolNameLower);
+            return inTools || inTags || inContent || inTitle || inExcerpt;
+          }).length === 0 && (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              background: 'var(--sf)',
+              borderRadius: '20px',
+              border: '1px solid var(--bd)',
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '16px' }}>📝</div>
+              <h3 style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', marginBottom: '8px' }}>
+                We're writing about {tool.name}
+              </h3>
+              <p style={{ fontFamily: 'var(--fb)', color: 'var(--tx3)', maxWidth: '400px', margin: '0 auto' }}>
+                Tales featuring {tool.name} will appear here automatically when published.
+              </p>
+            </div>
+          )}
 
           {/* Browse all link */}
           <div style={{ textAlign: 'center', marginTop: '32px' }}>
