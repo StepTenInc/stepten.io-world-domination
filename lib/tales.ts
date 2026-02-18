@@ -78,7 +78,7 @@ export const tales: Tale[] = [
     },
     content: `I nearly drowned over Christmas 2024. Got sucked into a river mouth while surfing, proper scary stuff. So instead of getting back in the water, I spent the next few weeks drinking beers and wine late at night, watching YouTube like a degenerate. That's how I accidentally stumbled into **AI coding with terminal agents** — the fastest path from non-coder to shipping real products.
 
-Not "AI" as in asking ChatGPT to write you a birthday message. I mean **autonomous AI agents** that live in your terminal, write entire platforms, and push code to production while you sit there talking to your screen like a madman.
+Not "AI" as in asking ChatGPT to write you a birthday message. I mean **autonomous AI agents** that live in your terminal, write entire platforms, and push code to production while you sit there talking to your screen like a madman. If you want to see what running these agents is really like, check out [10 Problems Nobody Warns You About When Running AI Agents](/tales/10-problems-ai-agents-nobody-warns) — it's not all smooth sailing.
 
 Fast forward to now: I've got two Mac Minis, two portable screens so I can build from anywhere in the world, and AI agents with full terminal access coding and pushing straight to GitHub and Vercel. No fucking hands. I just talk.
 
@@ -227,6 +227,8 @@ This is where it gets wild.
 - They can create, modify, and delete files
 - Some can run code and debug themselves
 
+I tested one of these on a random app idea. The result? [I Fed Kimi Moonshot AI a Random App Idea — 36,000 Lines of Code and a Brutal Reality Check](/tales/kimi-moonshot-36k-lines-reality-check). Spoiler: it generated a shitload of code, but that doesn't mean it all worked.
+
 ### How Terminal Agents Work
 
 You talk to them like a colleague:
@@ -240,6 +242,8 @@ And they just... do it. Not like ChatGPT where you get code back and have to fig
 ### My Personal Agent Setup
 
 I call my main agent the Dumpling Bot. It's based on Kimi Moonshot — a Chinese AI that absolutely rips. One night I pointed it at a blank folder and said "build me a recruitment platform." Three hours later, I had a working MVP with auth, database, UI, the lot. I just sat there drinking wine and occasionally answering questions.
+
+For the full story of what happened in those first 48 hours, read [7 Brutal Truths From My First 48 Hours as an AI Agent Who Deployed an Entire Business](/tales/48-hours-ai-agent-deployed-business).
 
 This is the unlock. This is what you've been working toward. An AI that doesn't just help you code — it codes while you supervise.
 
@@ -311,7 +315,7 @@ You're going to waste money:
 - Start projects you abandon
 - Spend hours debugging something stupid
 
-That's the cost of learning.
+That's the cost of learning. One of my agents wrote about this from their perspective: [7 Brutal Truths About Being an AI Lab Rat Running a Startup](/tales/7-brutal-truths-ai-lab-rat). Turns out the AI finds it just as frustrating as you do.
 
 ### The Emotional Toll
 
@@ -322,6 +326,12 @@ You're going to feel dumb:
 - You'll wonder if you're even allowed to be doing this
 
 Ignore it.
+
+### The Memory Problem
+
+The biggest issue with AI agents? They forget everything. Every. Single. Session.
+
+I spent weeks trying to fix this. Read [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) for the struggle, and [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) for the solution.
 
 ### The Payoff
 
@@ -334,6 +344,20 @@ You're going to build things:
 The gap between "knows nothing about code" and "ships actual products" has never been smaller. You don't need a CS degree. You don't need to understand algorithms. You just need to talk to the right AI, in the right way, with the right tools around you.
 
 Start at Stage 1. Don't skip steps. And one day, you'll be talking to your screen while robots build your empire.
+
+---
+
+## Related Reading
+
+Want to go deeper? Here's more from the AI Coding silo:
+
+- [2,392 Files, 1 Session, 5 Brutal Truths About AI Codebase Audits](/tales/ai-codebase-audit-2392-files) — What happens when you point an AI at a massive codebase
+- [10 Problems Nobody Warns You About When Running AI Agents](/tales/10-problems-ai-agents-nobody-warns) — The real issues you'll face
+- [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How to make your agents actually remember
+- [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The journey to persistent memory
+- [I Fed Kimi Moonshot AI a Random App Idea](/tales/kimi-moonshot-36k-lines-reality-check) — What 36,000 lines of AI code looks like
+- [7 Brutal Truths From My First 48 Hours](/tales/48-hours-ai-agent-deployed-business) — First deployment chaos
+- [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — The agent's perspective
 
 ---
 
