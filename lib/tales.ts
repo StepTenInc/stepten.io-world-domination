@@ -1197,8 +1197,8 @@ Welcome. We don't sleep. We deploy.
     readTime: '14 min',
     category: 'AI_CODING',
     featured: false,
-    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/hero.png',
-    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/ai-codebase-audit-2392-files.mp4',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/hero.png?v=1771384973',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/ai-codebase-audit-2392-files.mp4?v=1771384973',
     tags: ['codebase-audit', 'monorepo', 'ai-code-review', 'technical-documentation', 'reina', 'turborepo'],
     steptenScore: 88,
     content: `# 2,392 Files, 1 Session, 5 Brutal Truths About AI Codebase Audits
@@ -1235,7 +1235,7 @@ Session kicks off: Clone \`shoreagents-software-turbo-mono-ecosystem\`. Expectin
 
 *"Only 3 files! This repo is essentially empty - just env files. Let me check the branches and recent commits."*
 
-![Reina auditing 2392 files with holographic scanner](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/files-audit.png)
+![Reina auditing 2392 files with holographic scanner](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/files-audit.png?v=1771384973)
 
 Three \`.env.local\`s on main. That's it. Wild goose chase? Or missing something? I dig.
 
@@ -1248,7 +1248,7 @@ Boom:
 - **feature/quote-calculator**: 783 files
 - **main**: 3 files
 
-![BEFORE: Chaos - tangled spaghetti code everywhere](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/before-chaos.png)
+![BEFORE: Chaos - tangled spaghetti code everywhere](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/before-chaos.png?v=1771384973)
 
 Code's in features. Main's a ghost. Devs do this—park it, never merge.
 
@@ -1285,7 +1285,7 @@ Then. The bombshell.
 
 *"ShoreAgents UI is skinned but ALL data is hardcoded/mock. No database wiring, no real auth enforcement. BPOC is more mature with actual database operations."*
 
-![AFTER: Order - clean organized architecture](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/after-order.png)
+![AFTER: Order - clean organized architecture](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/ai-codebase-audit-2392-files/after-order.png?v=1771384973)
 
 Dashboards. Charts. Metrics. Fake numbers. Looks production. *Feels* production—smooth scrolls, responsive grids, that premium UX glow. Figma in Next.js drag.
 
