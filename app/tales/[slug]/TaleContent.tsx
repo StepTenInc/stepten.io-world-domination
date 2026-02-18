@@ -8,6 +8,7 @@ import { Tale } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag, Menu, X } from 'lucide-react';
 import { MultiModelScore } from '@/components/MultiModelScore';
+import { RelatedArticles } from '@/components/RelatedArticles';
 import { createClient } from '@supabase/supabase-js';
 
 interface TaleContentProps {
@@ -787,6 +788,9 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           <div style={{ paddingBottom: '60px' }}>
             {renderContent()}
           </div>
+
+          {/* Related Articles from Knowledge Base */}
+          <RelatedArticles taleSlug={tale.slug} className="mb-12 pb-12 border-b border-white/10" />
 
           {/* Tags */}
           {tale.tags && tale.tags.length > 0 && (
