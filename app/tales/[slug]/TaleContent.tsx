@@ -9,6 +9,8 @@ import { characters } from '@/lib/design-tokens';
 import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag, Menu, X } from 'lucide-react';
 import { MultiModelScore } from '@/components/MultiModelScore';
 import { RelatedArticles } from '@/components/RelatedArticles';
+import { Breadcrumbs, getTaleBreadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSchema, extractFAQFromContent } from '@/components/FAQSchema';
 import { createClient } from '@supabase/supabase-js';
 
 interface TaleContentProps {
@@ -723,6 +725,13 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
         {/* Article */}
         <article ref={contentRef} style={{ minWidth: 0, padding: '0 20px' }}>
           
+          {/* Breadcrumbs */}
+          <Breadcrumbs 
+            items={getTaleBreadcrumbs({ title: tale.title, slug: tale.slug, silo: tale.silo })} 
+            authorColor={author.color}
+            className="mb-6"
+          />
+
           {/* Author & Meta */}
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',

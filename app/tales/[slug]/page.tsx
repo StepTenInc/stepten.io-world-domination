@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { tales, getTaleBySlug } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 import { TaleContent } from './TaleContent';
+import { extractFAQFromContent } from '@/components/FAQSchema';
 
 // ISR: Revalidate every 60 seconds for fresh content
 export const revalidate = 60;
@@ -112,12 +113,33 @@ export default async function TaleDetailPage({ params }: { params: Promise<{ slu
     keywords: tale.tags?.join(', '),
   };
 
+  // Extract FAQ items from content
+  const faqItems = extractFAQFromContent(tale.content);
+  const faqSchema = faqItems.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  } : null;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <TaleContent tale={tale} allTales={tales} />
     </>
   );
