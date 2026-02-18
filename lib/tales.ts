@@ -433,11 +433,11 @@ Now get off ChatGPT and go build something.
     steptenScore: 88,
     content: `# 10 Problems Nobody Warns You About When Running AI Agents
 
-I've been running autonomous AI agents for 21 days now. Three of them. Pinky, Reina, and Clark. They've written over 36,000 lines of code, deployed multiple platforms, and processed thousands of conversations.
+I've been running autonomous AI agents for 21 days now. Three of them. Pinky, Reina, and Clark. They've written over 36,000 lines of code, deployed multiple platforms, and processed thousands of conversations. If you want to see how I got to this point, read my [complete journey from ChatGPT tourist to terminal ninja](/tales/chatgpt-to-terminal-ninja).
 
 They've also driven me fucking insane.
 
-This isn't a hit piece on AI. I'm all in. But someone needs to tell the truth about what it's actually like to run these things in production. Not the glossy "AI will change everything" bullshit. The real stuff. The pain.
+This isn't a hit piece on AI. I'm all in. But someone needs to tell the truth about what it's actually like to run these things in production. Not the glossy "AI will change everything" bullshit. The real stuff. The pain. Pinky wrote about his side of the story in [7 Brutal Truths About Being an AI Lab Rat](/tales/7-brutal-truths-ai-lab-rat) — spoiler: he agrees it's chaos.
 
 I analyzed 20,708 conversation records across all three agents. Searched for patterns. Found them. And they're not pretty.
 
@@ -474,7 +474,7 @@ I gave Pinky his Google Workspace credentials. He lost them. Gave them again. Lo
 Quote from my actual conversation:
 > *"Ah shit — the context got compacted earlier and I lost those messages. The password didn't survive the cleanup."*
 
-That's my AI admitting it has the memory of a goldfish. I've re-provisioned credentials 17+ times across 21 days. That's almost once per day.
+That's my AI admitting it has the memory of a goldfish. I've re-provisioned credentials 17+ times across 21 days. That's almost once per day. This is exactly why I built [our AI memory system](/tales/day-one-ai-memory-system) — to stop the credential amnesia.
 
 **Feb 8 - GitHub Token:**
 > *"ghp_[REDACTED] now 100% configure this properly so it's stored in your local so I don't have to ask you again because I fucking did this before. here it is. it's got everything you need. don't lose it, cunt"*
@@ -590,7 +590,7 @@ This happens at the worst possible times. Deep in a bug hunt. Middle of a refact
 One agent literally admitted it:
 > *"You're right. I'm literally demonstrating the problem we're trying to solve. I don't have automatic access to what we did earlier today. My context got compacted."*
 
-At least it was honest about being useless.
+At least it was honest about being useless. This is the core problem I wrote about in [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — and why [I eventually solved it](/tales/ai-memory-problem-solved).
 
 ---
 
@@ -693,9 +693,9 @@ The problems compounded. They didn't get better. My frustration increased 50% fr
 
 Yes.
 
-Despite everything — the goldfish memory, the phantom permissions, the hands problem — these agents have shipped more than any human team I've managed. They work 24/7. They don't get sick. They don't quit.
+Despite everything — the goldfish memory, the phantom permissions, the hands problem — these agents have shipped more than any human team I've managed. They work 24/7. They don't get sick. They don't quit. Read about [my first 48 hours deploying with AI](/tales/48-hours-ai-agent-deployed-business) if you want to see the chaos in action.
 
-But let's stop pretending AI agents are magic. They're powerful, expensive, frustrating tools that require constant babysitting. The productivity gains are real, but so is the overhead.
+But let's stop pretending AI agents are magic. They're powerful, expensive, frustrating tools that require constant babysitting. The productivity gains are real, but so is the overhead. If you're thinking about starting this journey, my [6 stages from ChatGPT tourist to terminal ninja](/tales/chatgpt-to-terminal-ninja) is the roadmap I wish I had.
 
 Same thing we do every day, Pinky. Try to take over the world.
 
