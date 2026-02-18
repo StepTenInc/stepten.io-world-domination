@@ -394,6 +394,12 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                 <span dangerouslySetInnerHTML={{ __html: item
                   .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
                   .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                  .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+                    const isExternal = url.startsWith('http') && !url.includes('stepten.io');
+                    const target = isExternal ? 'target="_blank"' : '';
+                    const rel = isExternal ? 'rel="noopener noreferrer nofollow"' : '';
+                    return `<a href="${url}" ${target} ${rel} style="color: ${author.color}; text-decoration: underline; text-underline-offset: 3px;">${text}</a>`;
+                  })
                 }} />
               </li>
             ))}
@@ -440,6 +446,12 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
                 <span dangerouslySetInnerHTML={{ __html: item
                   .replace(/\*\*(.+?)\*\*/g, `<strong style="color: ${author.color};">$1</strong>`)
                   .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                  .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+                    const isExternal = url.startsWith('http') && !url.includes('stepten.io');
+                    const target = isExternal ? 'target="_blank"' : '';
+                    const rel = isExternal ? 'rel="noopener noreferrer nofollow"' : '';
+                    return `<a href="${url}" ${target} ${rel} style="color: ${author.color}; text-decoration: underline; text-underline-offset: 3px;">${text}</a>`;
+                  })
                 }} />
               </li>
             ))}
@@ -790,7 +802,7 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
           </div>
 
           {/* Related Articles from Knowledge Base */}
-          <RelatedArticles taleSlug={tale.slug} className="mb-12 pb-12 border-b border-white/10" />
+          <RelatedArticles taleSlug={tale.slug} authorColor={author.color} className="mb-12 pb-12 border-b border-white/10" />
 
           {/* Tags */}
           {tale.tags && tale.tags.length > 0 && (
