@@ -2,326 +2,290 @@
 ## The Living Content System
 
 ### Overview
-Everything connects. Articles recommend articles. Tools link to tales. Internal links flow naturally based on semantic relationships, not manual work.
+Everything connects. Articles recommend articles. Tools link to tales. Internal links flow naturally based on semantic relationships AND topic hierarchy.
+
+**Key principles:**
+- No cannibalization - each article targets unique angles
+- Topical authority through proper hierarchy
+- Semantic relationships via embeddings
+- Rich anchor text, not keyword stuffing
+- LLM-optimized for AI citations
+- Schema markup for featured snippets
 
 ---
 
-## Core Tables
+## Current Tables (Live in Supabase)
 
-### 1. `tales` - The Content
-```sql
-CREATE TABLE tales (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  slug TEXT UNIQUE NOT NULL,
-  title TEXT NOT NULL,
-  excerpt TEXT,
-  content TEXT NOT NULL,
-  
-  -- Author & metadata
-  author TEXT NOT NULL, -- stepten, pinky, reina, clark
-  author_type TEXT, -- HUMAN, AI, LEGEND
-  category TEXT, -- VISION, CODE, CHAOS, HERO, etc.
-  
-  -- SEO
-  stepten_score INTEGER,
-  stepten_score_breakdown JSONB,
-  
-  -- Status
-  status TEXT DEFAULT 'draft', -- draft, published, archived
-  featured BOOLEAN DEFAULT false,
-  is_pillar BOOLEAN DEFAULT false,
-  silo TEXT, -- content silo grouping
-  
-  -- Media
-  hero_image TEXT,
-  hero_video TEXT,
-  
-  -- Dates
-  published_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
+### Core Content
+| Table | Rows | Purpose |
+|-------|------|---------|
+| `tales` | 8 | All articles with content, scores, metadata |
+| `authors` | 4 | Stephen, Pinky, Reina, Clark |
+| `silos` | 1 | Content silos (AI Coding) |
+| `topics` | 8 | Topic hierarchy (AI → AI Coding → CLI Agents) |
+| `tale_topics` | 0 | Links tales to multiple topics |
+
+### AI/SEO Layer (To populate)
+| Table | Rows | Purpose |
+|-------|------|---------|
+| `tale_embeddings` | 0 | Vector embeddings for semantic search |
+| `tale_entities` | 0 | Extracted knowledge - tools, lessons, personal stories |
+| `tale_relationships` | 0 | Semantic connections between articles |
+| `internal_links` | 0 | The link graph |
+| `outbound_links` | 0 | Verified external links database |
+| `content_queue` | ? | Articles in pipeline |
+| `research_cache` | ? | Cached research data |
+
+---
+
+## Topic Hierarchy
+
+```
+AI (root)
+├── AI Coding
+│   └── CLI Agents (Pinky, Claude Code, Codex)
+├── AI Agents
+│   └── Deployment, Memory, Operations
+├── AI Video
+│   └── Runway, Veo, Sora
+├── AI Image
+│   └── Midjourney, DALL-E, Stable Diffusion
+├── AI Marketing
+│   └── Content, SEO, Automation
+└── AI Business
+    └── BPO, Workflow, Operations
 ```
 
-### 2. `tale_embeddings` - Semantic Understanding
-```sql
-CREATE TABLE tale_embeddings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tale_id UUID REFERENCES tales(id) ON DELETE CASCADE,
-  
-  -- The vector (OpenAI ada-002 = 1536 dimensions)
-  embedding vector(1536),
-  
-  -- What was embedded
-  embedding_type TEXT, -- 'full', 'summary', 'topics', 'wisdom'
-  source_text TEXT, -- The text that was embedded
-  
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+Each topic has:
+- `keywords[]` - Semantic keywords for matching
+- `parent_id` - Hierarchy link
+- `pillar_tale_id` - The main article for this topic
 
--- Index for fast similarity search
-CREATE INDEX ON tale_embeddings USING ivfflat (embedding vector_cosine_ops);
+---
+
+## Table Schemas
+
+### `tales`
+```sql
+- id: UUID
+- slug: TEXT UNIQUE
+- title: TEXT
+- content: TEXT
+- excerpt: TEXT
+- author_id: UUID → authors
+- silo_id: UUID → silos
+- is_pillar: BOOLEAN
+- status: TEXT (draft/published/archived)
+- meta_title: TEXT
+- meta_description: TEXT
+- schema_json: JSONB (structured data)
+- keywords: TEXT[]
+- tags: TEXT[]
+- hero_video_url: TEXT
+- hero_image_url: TEXT
+- images: JSONB
+- word_count: INTEGER
+- read_time: INTEGER
+- stepten_score: NUMERIC
+- score_breakdown: JSONB
+- voice_input: TEXT (raw voice memo transcript)
+- published_at: TIMESTAMPTZ
+- created_at/updated_at: TIMESTAMPTZ
 ```
 
-### 3. `tale_entities` - Extracted Knowledge
+### `topics`
 ```sql
-CREATE TABLE tale_entities (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tale_id UUID REFERENCES tales(id) ON DELETE CASCADE,
-  
-  entity_type TEXT NOT NULL, -- 'topic', 'tool', 'person', 'lesson', 'quote', 'personal_story'
-  entity_value TEXT NOT NULL,
-  entity_slug TEXT, -- for linking (e.g., 'cursor' links to /tools/cursor)
-  
-  -- Context
-  context TEXT, -- surrounding text where this was mentioned
-  sentiment TEXT, -- positive, negative, neutral
-  importance INTEGER DEFAULT 1, -- 1-5 scale
-  
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-
--- Examples:
--- entity_type: 'tool', entity_value: 'Cursor', entity_slug: 'cursor'
--- entity_type: 'lesson', entity_value: 'Consistency beats talent'
--- entity_type: 'personal_story', entity_value: 'Left Australia 2016'
+- id: UUID
+- slug: TEXT UNIQUE
+- name: TEXT
+- parent_id: UUID → topics (self-ref for hierarchy)
+- description: TEXT
+- keywords: TEXT[] (semantic matching)
+- pillar_tale_id: UUID → tales (optional)
+- created_at: TIMESTAMPTZ
 ```
 
-### 4. `tale_relationships` - Semantic Connections
+### `tale_topics`
 ```sql
-CREATE TABLE tale_relationships (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  
-  source_tale_id UUID REFERENCES tales(id) ON DELETE CASCADE,
-  target_tale_id UUID REFERENCES tales(id) ON DELETE CASCADE,
-  
-  relationship_type TEXT, -- 'similar', 'continuation', 'references', 'contradicts', 'expands'
-  similarity_score FLOAT, -- 0-1 cosine similarity
-  
-  -- Why they're related
-  shared_topics TEXT[], -- ['ai-coding', 'cursor', 'learning']
-  shared_entities TEXT[],
-  
-  -- Manual override
-  is_manual BOOLEAN DEFAULT false,
-  
-  created_at TIMESTAMPTZ DEFAULT now(),
-  
-  UNIQUE(source_tale_id, target_tale_id)
-);
+- id: UUID
+- tale_id: UUID → tales
+- topic_id: UUID → topics
+- is_primary: BOOLEAN (main topic for this tale)
+- relevance_score: FLOAT (0-1)
+- UNIQUE(tale_id, topic_id)
 ```
 
-### 5. `internal_links` - Link Graph
+### `tale_embeddings`
 ```sql
-CREATE TABLE internal_links (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  
-  -- Source (where the link appears)
-  source_type TEXT NOT NULL, -- 'tale', 'tool', 'team', 'page'
-  source_id UUID,
-  source_slug TEXT,
-  
-  -- Target (where it links to)
-  target_type TEXT NOT NULL,
-  target_id UUID,
-  target_slug TEXT,
-  target_url TEXT NOT NULL,
-  
-  -- Link details
-  anchor_text TEXT NOT NULL,
-  context TEXT, -- surrounding sentence
-  
-  -- Auto vs manual
-  is_auto_generated BOOLEAN DEFAULT true,
-  
-  -- Tracking
-  click_count INTEGER DEFAULT 0,
-  
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-
--- Index for finding all links from/to a page
-CREATE INDEX ON internal_links(source_slug);
-CREATE INDEX ON internal_links(target_slug);
+- id: UUID
+- tale_id: UUID → tales
+- embedding: vector(1536)
+- embedding_type: TEXT ('full', 'summary', 'topics')
+- source_text: TEXT
+- created_at: TIMESTAMPTZ
 ```
 
-### 6. `outbound_links` - Verified External Links
+### `tale_entities`
 ```sql
-CREATE TABLE outbound_links (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  
-  -- The link
-  url TEXT UNIQUE NOT NULL,
-  domain TEXT NOT NULL,
-  
-  -- Categorization
-  category TEXT, -- 'tool', 'person', 'resource', 'documentation', 'news'
-  tags TEXT[],
-  
-  -- Verification
-  is_verified BOOLEAN DEFAULT false,
-  last_verified_at TIMESTAMPTZ,
-  http_status INTEGER,
-  
-  -- Quality signals
-  domain_authority INTEGER, -- Moz DA if we have it
-  is_dofollow BOOLEAN DEFAULT true,
-  
-  -- Our relationship
-  relationship TEXT, -- 'affiliate', 'reference', 'inspiration', 'competitor'
-  affiliate_code TEXT, -- if applicable
-  
-  -- Metadata
-  title TEXT,
-  description TEXT,
-  favicon TEXT,
-  
-  -- Usage tracking
-  times_linked INTEGER DEFAULT 0,
-  
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
+- id: UUID
+- tale_id: UUID → tales
+- entity_type: TEXT ('tool', 'topic', 'lesson', 'personal_story', 'quote', 'person')
+- entity_value: TEXT
+- entity_slug: TEXT (for linking, e.g., 'cursor' → /tools/cursor)
+- context: TEXT (surrounding text)
+- sentiment: TEXT (positive/negative/neutral)
+- importance: INTEGER (1-5)
+- created_at: TIMESTAMPTZ
 ```
 
-### 7. `tools` - Tool Database (extends what's in code)
+### `tale_relationships`
 ```sql
-CREATE TABLE tools (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  slug TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  description TEXT,
-  
-  -- Categorization
-  category TEXT NOT NULL,
-  tags TEXT[],
-  
-  -- Links
-  url TEXT NOT NULL,
-  affiliate_url TEXT,
-  logo_url TEXT,
-  
-  -- Pricing
-  pricing TEXT, -- free, freemium, paid, enterprise
-  pricing_details JSONB,
-  
-  -- Our review
-  overall_rating FLOAT,
-  battle_tested BOOLEAN DEFAULT false,
-  
-  -- Individual reviews stored in tool_reviews table
-  
-  -- API info
-  has_api BOOLEAN DEFAULT false,
-  api_docs_url TEXT,
-  
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
+- id: UUID
+- source_tale_id: UUID → tales
+- target_tale_id: UUID → tales
+- relationship_type: TEXT ('similar', 'continuation', 'references', 'expands', 'contradicts')
+- similarity_score: FLOAT (0-1, from embedding cosine similarity)
+- shared_topics: TEXT[] 
+- shared_entities: TEXT[]
+- is_manual: BOOLEAN (human override)
+- UNIQUE(source_tale_id, target_tale_id)
 ```
 
-### 8. `tool_reviews` - Team Reviews Per Tool
+### `internal_links`
 ```sql
-CREATE TABLE tool_reviews (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tool_id UUID REFERENCES tools(id) ON DELETE CASCADE,
-  
-  reviewer TEXT NOT NULL, -- stepten, pinky, reina, clark
-  rating INTEGER, -- 1-5
-  verdict TEXT, -- one-liner
-  content TEXT, -- full markdown review
-  
-  -- Structured feedback
-  pros TEXT[],
-  cons TEXT[],
-  best_for TEXT[],
-  not_for TEXT[],
-  
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now(),
-  
-  UNIQUE(tool_id, reviewer)
-);
+- id: UUID
+- source_type: TEXT ('tale', 'tool', 'team', 'page')
+- source_id: UUID
+- source_slug: TEXT
+- target_type: TEXT
+- target_id: UUID
+- target_slug: TEXT
+- target_url: TEXT
+- anchor_text: TEXT (enriched, semantic)
+- context: TEXT (surrounding sentence)
+- is_auto_generated: BOOLEAN
+- click_count: INTEGER
+- created_at: TIMESTAMPTZ
+```
+
+### `outbound_links`
+```sql
+- id: UUID
+- url: TEXT UNIQUE
+- domain: TEXT
+- category: TEXT ('tool', 'person', 'documentation', 'news', 'research')
+- tags: TEXT[]
+- is_verified: BOOLEAN
+- last_verified_at: TIMESTAMPTZ
+- http_status: INTEGER
+- domain_authority: INTEGER
+- is_dofollow: BOOLEAN
+- relationship: TEXT ('affiliate', 'reference', 'inspiration')
+- affiliate_code: TEXT
+- title: TEXT
+- description: TEXT
+- times_linked: INTEGER
 ```
 
 ---
 
-## Functions
+## Internal Linking Strategy
 
-### Find Similar Tales
-```sql
-CREATE OR REPLACE FUNCTION find_similar_tales(
-  p_tale_id UUID,
-  p_limit INTEGER DEFAULT 5
-)
-RETURNS TABLE (
-  tale_id UUID,
-  slug TEXT,
-  title TEXT,
-  similarity FLOAT
-) AS $$
-BEGIN
-  RETURN QUERY
-  SELECT 
-    t.id,
-    t.slug,
-    t.title,
-    1 - (te1.embedding <=> te2.embedding) as similarity
-  FROM tales t
-  JOIN tale_embeddings te1 ON te1.tale_id = t.id
-  JOIN tale_embeddings te2 ON te2.tale_id = p_tale_id
-  WHERE t.id != p_tale_id
-    AND te1.embedding_type = 'full'
-    AND te2.embedding_type = 'full'
-    AND t.status = 'published'
-  ORDER BY te1.embedding <=> te2.embedding
-  LIMIT p_limit;
-END;
-$$ LANGUAGE plpgsql;
+### Principles
+1. **No cannibalization** - Each article targets unique angle
+2. **Upward juice** - Link from supporting articles to pillar
+3. **Enriched anchors** - Not "click here", not exact keyword stuffing
+4. **Semantic relevance** - Only link when truly related
+5. **3-5 internal links per article** - Quality over quantity
+
+### Anchor Text Formula
+```
+[Power word] + [Topic variation] + [Benefit hint]
+
+Good: "brutal truth about AI coding pitfalls"
+Bad: "AI coding" (too generic)
+Bad: "click here" (no SEO value)
+Bad: "AI coding AI coding AI coding" (spam)
 ```
 
-### Generate Internal Link Suggestions
-```sql
-CREATE OR REPLACE FUNCTION suggest_internal_links(
-  p_content TEXT,
-  p_exclude_slug TEXT DEFAULT NULL
-)
-RETURNS TABLE (
-  target_type TEXT,
-  target_slug TEXT,
-  target_title TEXT,
-  anchor_suggestion TEXT,
-  relevance_score FLOAT
-) AS $$
--- Uses entity matching and embedding similarity
--- to suggest where to link within content
-$$ LANGUAGE plpgsql;
+### Link Flow
+```
+Pillar Article (AI Coding Journey)
+    ↑ links up to
+Supporting Article (Cursor Review)
+    ↑ links up to
+Supporting Article (CLI Agents Deep Dive)
 ```
 
 ---
 
 ## Embedding Pipeline
 
-1. **On Tale Create/Update:**
-   - Generate embedding for full content
-   - Generate embedding for summary/excerpt
-   - Extract entities (tools, topics, lessons, personal stories)
-   - Store in tale_entities
+### On Tale Create/Update:
+1. Generate full content embedding (OpenAI text-embedding-3-small)
+2. Generate summary embedding (excerpt)
+3. Extract entities (AI-powered):
+   - Tools mentioned
+   - Topics covered
+   - Personal stories
+   - Lessons/wisdom
+   - Quotes
+4. Store in tale_entities
+5. Link to topics via tale_topics
 
-2. **Nightly Job:**
-   - Recalculate tale_relationships based on embedding similarity
-   - Update internal_links suggestions
-   - Verify outbound_links (check HTTP status)
+### Nightly Job:
+1. Recalculate tale_relationships based on embedding similarity
+2. Identify internal link opportunities
+3. Verify outbound links (check HTTP status)
+4. Update topic pillar scores
 
-3. **On Request:**
-   - `find_similar_tales()` for recommendations
-   - `suggest_internal_links()` for content creation
+### On Request:
+- `find_similar_tales(tale_id)` - For "Related Articles"
+- `suggest_internal_links(content)` - For content creation
+- `get_topic_cluster(topic_id)` - For topic pages
+
+---
+
+## StepTen Score Integration
+
+The scorer outputs breakdown stored in `score_breakdown` JSONB:
+
+```json
+{
+  "titlePower": { "score": 85, "breakdown": {...} },
+  "humanVoice": { "score": 90, "breakdown": {...} },
+  "contentQuality": { "score": 80, "breakdown": {...} },
+  "visualEngagement": { "score": 70, "breakdown": {...} },
+  "technicalSeo": { "score": 85, "breakdown": {...} },
+  "internalEcosystem": { "score": 60, "breakdown": {...} },
+  "aiVisibility": { "score": 75, "breakdown": {...} },
+  "weightedScore": 82.5,
+  "rating": "EXCELLENT"
+}
+```
+
+---
+
+## AI/LLM Visibility Optimization
+
+### Schema Markup
+Every tale has `schema_json` with:
+- Article schema
+- Author schema  
+- FAQ schema (if FAQ section present)
+- HowTo schema (if tutorial)
+
+### Answer-First Format
+Each H2 section starts with a direct answer, then expands. This helps LLMs cite us.
+
+### Self-Contained Sections
+Each section can stand alone as a snippet. Don't require reading previous sections.
 
 ---
 
 ## Notes
 
-- Using Supabase project: `iavnhggphhrvbcidixiw` (StepTen.io)
-- pgvector extension required for embeddings
-- OpenAI ada-002 for embeddings (1536 dimensions)
-- Consider upgrading to text-embedding-3-large for better quality
+- **Supabase project:** `iavnhggphhrvbcidixiw` (StepTen.io)
+- **pgvector** extension enabled for embeddings
+- **OpenAI text-embedding-3-small** (1536 dimensions)
+- Content Engine config in `lib/content-engine/config.ts`
