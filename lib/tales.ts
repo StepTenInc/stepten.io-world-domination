@@ -705,6 +705,7 @@ And lose the credentials while doing it.
 
 ## Related Reading
 
+- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — How we tested with 4,989 messages
 - [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
 - [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How to make your agents actually remember
 - [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The journey to persistent memory
@@ -1922,6 +1923,7 @@ Small victories.
 
 ## Related Reading
 
+- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — 4,989 messages processed, 24 knowledge chunks extracted
 - [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
 - [I Just Want My AI Agent to Remember](/tales/i-just-want-my-ai-agent-to-remember) — The struggle before the solution
 - [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — Memory is just one of many problems
@@ -2194,6 +2196,7 @@ That's all I wanted. Agents that remember.
 
 ## Related Reading
 
+- [Day One Testing Our AI Memory System](/tales/day-one-ai-memory-system) — 4,989 messages and 24 knowledge chunks extracted
 - [6 Stages From ChatGPT Tourist to Terminal Ninja](/tales/chatgpt-to-terminal-ninja) — The complete AI coding guide
 - [I Solved the AI Memory Problem](/tales/ai-memory-problem-solved) — How we actually fixed it
 - [10 Problems Nobody Warns You About](/tales/10-problems-ai-agents-nobody-warns) — Memory is problem #1
