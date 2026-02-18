@@ -317,51 +317,58 @@ export function MultiModelScore({ taleSlug, className = '' }: MultiModelScorePro
 
         {/* Selected Model Details */}
         {selectedScore && (
-          <div className={`mt-6 pt-6 border-t border-white/10 transition-all duration-300 ${selectedScore ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="flex items-center gap-3 mb-4">
-              <ModelIcon model={selectedScore.model} className="w-8 h-8" animate />
-              <span className="font-bold text-white text-lg">
-                {MODEL_CONFIG[selectedScore.model]?.name || selectedScore.model}&apos;s Analysis
-              </span>
+          <div className={`mt-8 pt-8 border-t border-white/10 transition-all duration-300 ${selectedScore ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="flex items-center gap-4 mb-6">
+              <ModelIcon model={selectedScore.model} className="w-10 h-10" animate />
+              <div>
+                <span className="font-bold text-white text-xl block">
+                  {MODEL_CONFIG[selectedScore.model]?.name || selectedScore.model}&apos;s Analysis
+                </span>
+                <span className="text-white/50 text-sm">Detailed breakdown of scoring criteria</span>
+              </div>
             </div>
             
-            {/* Strengths */}
-            {selectedScore.top_strengths && selectedScore.top_strengths.length > 0 && (
-              <div className="mb-4">
-                <div className="text-xs text-white/50 uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <span className="animate-pulse">💪</span> Strengths
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Strengths */}
+              {selectedScore.top_strengths && selectedScore.top_strengths.length > 0 && (
+                <div className="bg-green-500/5 rounded-xl p-5 border border-green-500/20">
+                  <div className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span>💪</span> Strengths
+                  </div>
+                  <ul className="space-y-3">
+                    {selectedScore.top_strengths.map((s, i) => (
+                      <li 
+                        key={i} 
+                        className="flex items-start gap-3 text-white/90"
+                      >
+                        <span className="text-green-400 mt-0.5">✓</span>
+                        <span className="text-sm leading-relaxed">{s}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedScore.top_strengths.map((s, i) => (
-                    <span 
-                      key={i} 
-                      className="text-sm bg-green-500/20 text-green-400 px-3 py-1.5 rounded-lg border border-green-500/30 hover:bg-green-500/30 transition-colors cursor-default"
-                    >
-                      ✓ {s}
-                    </span>
-                  ))}
+              )}
+              
+              {/* Weaknesses */}
+              {selectedScore.top_weaknesses && selectedScore.top_weaknesses.length > 0 && (
+                <div className="bg-amber-500/5 rounded-xl p-5 border border-amber-500/20">
+                  <div className="text-sm font-semibold text-amber-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span>🎯</span> Areas to Improve
+                  </div>
+                  <ul className="space-y-3">
+                    {selectedScore.top_weaknesses.map((w, i) => (
+                      <li 
+                        key={i} 
+                        className="flex items-start gap-3 text-white/90"
+                      >
+                        <span className="text-amber-400 mt-0.5">◎</span>
+                        <span className="text-sm leading-relaxed">{w}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            )}
-            
-            {/* Weaknesses */}
-            {selectedScore.top_weaknesses && selectedScore.top_weaknesses.length > 0 && (
-              <div>
-                <div className="text-xs text-white/50 uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <span>🎯</span> Areas to Improve
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedScore.top_weaknesses.map((w, i) => (
-                    <span 
-                      key={i} 
-                      className="text-sm bg-amber-500/20 text-amber-400 px-3 py-1.5 rounded-lg border border-amber-500/30 hover:bg-amber-500/30 transition-colors cursor-default"
-                    >
-                      ◎ {w}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
 
