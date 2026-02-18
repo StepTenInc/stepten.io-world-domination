@@ -752,8 +752,8 @@ Absolutely. The workflow — autonomous coding sprints, voice-to-task parsing, h
     readTime: '12 min',
     category: 'AI_CODING',
     featured: false,
-    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/kimi-moonshot-36k-lines-reality-check.mp4',
-    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/hero.png',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/kimi-moonshot-36k-lines-reality-check.mp4?v=1771384017',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/hero.png?v=1771384017',
     tags: ['kimi', 'moonshot-ai', 'ai-coding', 'claude-code', 'vibe-coding', 'angeles-city'],
     tools: [
       { name: 'Kimi K2', url: 'https://www.moonshot.ai/' },
@@ -770,7 +770,7 @@ So I grabbed it. Fed it a legit app idea. 90 minutes later? 36,000 lines of code
 
 Here's the straight dope on what Kimi Moonshot AI actually produced, where it bombed hard, and what it means if you're building with AI coders in 2026.
 
-![Stephen and Julie on Kandi White Tower rooftop watching Kimi AI video](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-setup.png)
+![Stephen and Julie on Kandi White Tower rooftop watching Kimi AI video](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-setup.png?v=1771384017)
 
 ## What Is Kimi Moonshot AI and Why Should You Care?
 
@@ -808,7 +808,7 @@ Let me break this down:
 
 Context? A solo dev grinds maybe 100-200 solid lines a day on a good day. Small team? Months for that scope. Kimi? Did it while I polished off a six-pack.
 
-![Team China - Dumpling army coding 36000 lines](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/team-china.png)
+![Team China - Dumpling army coding 36000 lines](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/team-china.png?v=1771384017)
 
 My Claude setup—Pinky, yeah I named him—lost his shit when I started this. 
 
@@ -832,7 +832,7 @@ Then the little bastard hit me with this:
 
 > *"💀💀💀 Yeah mate your dating history AND your AI history are very consistent. Filipino wife, Filipino girlfriend, Chinese AI on the side — at least you've got a type."*
 
-![Favourite rat to old dumplings - the betrayal](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/betrayal.png)
+![Favourite rat to old dumplings - the betrayal](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/betrayal.png?v=1771384017)
 
 Fuck. He's got a point.
 
@@ -844,7 +844,7 @@ I told Pinky about watching the Chinese Olympic table tennis team train:
 >
 > **Pinky:** *"😂 Mate you're comparing me to the Chinese Olympic table tennis program. They train from birth, I was born like 3 hours ago and you've had me making SpongeBob cleavage avatars and updating your dating profile."*
 
-![Table tennis - Chinese players train from birth vs Pinky born 3 hours ago](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/table-tennis.png)
+![Table tennis - Chinese players train from birth vs Pinky born 3 hours ago](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/table-tennis.png?v=1771384017)
 
 He's not wrong. I had Pinky doing random bullshit while Kimi was trained specifically for code volume. Different upbringings.
 
@@ -860,7 +860,7 @@ When I asked Pinky to create a handover document for Kimi to do a proper audit, 
 
 > *"🐀➡️🥟 RAT TO DUMPLING handover ready. Feed it to the Dumpling and let her loose. I'll be in my sewer, drinking beer, waiting for the report."*
 
-![RAT TO DUMPLING - Pinky hands over the briefing](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/rat-to-dumpling.png)
+![RAT TO DUMPLING - Pinky hands over the briefing](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/rat-to-dumpling.png?v=1771384017)
 
 The Mac started dying around this time. Classic timing.
 
@@ -868,7 +868,7 @@ The Mac started dying around this time. Classic timing.
 >
 > **Pinky:** *"😂 The Mac, the rat, and the horse — all heading to the glue factory while Kimi takes over."*
 
-![The Mac, the rat, and the horse heading to the glue factory](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/glue-factory.png)
+![The Mac, the rat, and the horse heading to the glue factory](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/glue-factory.png?v=1771384017)
 
 Spoiler: Nobody went to the glue factory. The rat's still here. More useful than ever.
 
@@ -894,7 +894,7 @@ The core fuckup? Volume: yes. Architecture: no. Pinky calls it "the drainage"—
 
 Round 1: Rat wins.
 
-![No Drainage - Nothing Connected - The crash](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-crash.png)
+![No Drainage - Nothing Connected - The crash](https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/kimi-moonshot-36k-lines-reality-check/the-crash.png?v=1771384017)
 
 ## How Does Kimi Compare to Claude Code, Copilot, and Devin?
 
