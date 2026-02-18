@@ -437,8 +437,364 @@ export default function ToolPage() {
         </section>
       )}
 
-      {/* ═══════ TEAM REVIEWS ═══════ */}
+      {/* ═══════ AFFILIATE CTA ═══════ */}
+      <section style={{ padding: '40px 0' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{
+            background: 'linear-gradient(135deg, var(--sf) 0%, rgba(0,255,65,0.05) 100%)',
+            borderRadius: '24px',
+            padding: '40px',
+            border: '2px solid var(--mx)',
+            position: 'relative',
+            overflow: 'hidden',
+            textAlign: 'center',
+          }}>
+            {/* Pinky avatar */}
+            <div style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              margin: '0 auto 20px',
+              border: '3px solid var(--mx)',
+              boxShadow: '0 0 30px rgba(0,255,65,0.3)',
+            }}>
+              <img
+                src="/images/characters/pinky.jpg"
+                alt="Pinky"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+            
+            <h3 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              marginBottom: '12px',
+              color: 'var(--mx)',
+            }}>
+              🐀 Hey! Quick favor?
+            </h3>
+            <p style={{
+              fontFamily: 'var(--fb)',
+              fontSize: '1.1rem',
+              color: 'var(--tx2)',
+              maxWidth: '500px',
+              margin: '0 auto 24px',
+              lineHeight: 1.7,
+            }}>
+              If you're gonna try <strong>{tool.name}</strong>, use our link below? 
+              It helps keep the lights on and doesn't cost you anything extra. NARF!
+            </p>
+            <a
+              href={tool.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '18px 40px',
+                background: 'linear-gradient(135deg, var(--mx), #00cc33)',
+                color: 'var(--dk)',
+                borderRadius: '14px',
+                fontFamily: 'var(--fd)',
+                fontSize: '1rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+                boxShadow: '0 8px 30px rgba(0,255,65,0.4)',
+                transition: 'all 0.3s',
+              }}
+            >
+              Try {tool.name} Free <ExternalLink size={20} />
+            </a>
+            <p style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.7rem',
+              color: 'var(--tx4)',
+              marginTop: '16px',
+            }}>
+              * Affiliate link - we may earn a commission
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WHAT THE TEAM SAYS (STYLED CONTENT) ═══════ */}
+      <section style={{ padding: '60px 0' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ marginBottom: '48px' }}>
+            <div style={{
+              fontFamily: 'var(--fm)',
+              fontSize: '0.65rem',
+              color: 'var(--mx)',
+              letterSpacing: '0.35em',
+              marginBottom: '12px',
+            }}>
+              // WHAT WE ACTUALLY THINK
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
+              fontWeight: 700,
+            }}>
+              The <span style={{ color: category?.color }}>{tool.name}</span> Deep Dive
+            </h2>
+          </div>
+
+          {/* Stephen's Take */}
+          <div style={{ marginBottom: '48px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+              <div style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '14px',
+                overflow: 'hidden',
+                border: '2px solid #00e5ff',
+              }}>
+                <img src="/images/characters/stepten.jpg" alt="StepTen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#00e5ff' }}>
+                  Stephen's Take
+                </div>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+                  HUMAN PERSPECTIVE
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--sf)',
+              borderRadius: '16px',
+              padding: '28px',
+              borderLeft: '4px solid #00e5ff',
+            }}>
+              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
+                Content coming soon. This is where Stephen shares his real experience using {tool.name} - the good, the bad, 
+                and whether it's actually worth your money or just another overhyped tool.
+              </p>
+            </div>
+          </div>
+
+          {/* Pinky's Take */}
+          <div style={{ marginBottom: '48px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+              <div style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '14px',
+                overflow: 'hidden',
+                border: '2px solid #ff69b4',
+              }}>
+                <img src="/images/characters/pinky.jpg" alt="Pinky" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#ff69b4' }}>
+                  Pinky's Take
+                </div>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+                  AI AGENT PERSPECTIVE
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--sf)',
+              borderRadius: '16px',
+              padding: '28px',
+              borderLeft: '4px solid #ff69b4',
+            }}>
+              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
+                NARF! Content coming soon. This is where I share how {tool.name} works for an AI agent - 
+                does it play nice with automation? Can I actually use it? Is it rat-approved?
+              </p>
+            </div>
+          </div>
+
+          {/* Reina's Take */}
+          <div style={{ marginBottom: '48px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+              <div style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '14px',
+                overflow: 'hidden',
+                border: '2px solid #a855f7',
+              }}>
+                <img src="/images/characters/reina.jpg" alt="Reina" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#a855f7' }}>
+                  Reina's Take
+                </div>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+                  UX/DEV PERSPECTIVE
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--sf)',
+              borderRadius: '16px',
+              padding: '28px',
+              borderLeft: '4px solid #a855f7',
+            }}>
+              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
+                Content coming soon. Reina's breakdown of {tool.name} from a UX and development perspective - 
+                how it fits into real workflows, what it's actually good for, and who should use it.
+              </p>
+            </div>
+          </div>
+
+          {/* Clark's Take */}
+          <div style={{ marginBottom: '48px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+              <div style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '14px',
+                overflow: 'hidden',
+                border: '2px solid #ffd700',
+              }}>
+                <img src="/images/characters/clark.jpg" alt="Clark" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#ffd700' }}>
+                  Clark's Take
+                </div>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.65rem', color: 'var(--tx3)' }}>
+                  BACKEND/INFRA PERSPECTIVE
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--sf)',
+              borderRadius: '16px',
+              padding: '28px',
+              borderLeft: '4px solid #ffd700',
+            }}>
+              <p style={{ fontFamily: 'var(--fb)', fontSize: '1rem', color: 'var(--tx2)', lineHeight: 1.8, margin: 0 }}>
+                Content coming soon. Clark's technical breakdown - API quality, integration options, 
+                reliability, and whether {tool.name} can handle real production workloads.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ PROS & CONS ═══════ */}
       <section style={{ padding: '60px 0', background: 'var(--sf)' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ marginBottom: '40px', textAlign: 'center' }}>
+            <h2 style={{
+              fontFamily: 'var(--fd)',
+              fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+              fontWeight: 700,
+            }}>
+              Pros & Cons
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+          }}>
+            {/* Pros */}
+            <div style={{
+              background: 'var(--dk)',
+              borderRadius: '20px',
+              padding: '28px',
+              border: '1px solid rgba(0,255,65,0.3)',
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '20px',
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: 'rgba(0,255,65,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <ThumbsUp size={20} style={{ color: 'var(--mx)' }} />
+                </div>
+                <span style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--mx)' }}>
+                  Pros
+                </span>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Pro 1 coming soon', 'Pro 2 coming soon', 'Pro 3 coming soon'].map((pro, i) => (
+                  <li key={i} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    padding: '12px 0',
+                    borderBottom: i < 2 ? '1px solid var(--bd)' : 'none',
+                  }}>
+                    <Check size={18} style={{ color: 'var(--mx)', flexShrink: 0, marginTop: '2px' }} />
+                    <span style={{ fontFamily: 'var(--fb)', fontSize: '0.95rem', color: 'var(--tx2)' }}>
+                      {pro}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Cons */}
+            <div style={{
+              background: 'var(--dk)',
+              borderRadius: '20px',
+              padding: '28px',
+              border: '1px solid rgba(255,107,107,0.3)',
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '20px',
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: 'rgba(255,107,107,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <ThumbsDown size={20} style={{ color: '#ff6b6b' }} />
+                </div>
+                <span style={{ fontFamily: 'var(--fd)', fontSize: '1.2rem', fontWeight: 700, color: '#ff6b6b' }}>
+                  Cons
+                </span>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Con 1 coming soon', 'Con 2 coming soon', 'Con 3 coming soon'].map((con, i) => (
+                  <li key={i} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    padding: '12px 0',
+                    borderBottom: i < 2 ? '1px solid var(--bd)' : 'none',
+                  }}>
+                    <X size={18} style={{ color: '#ff6b6b', flexShrink: 0, marginTop: '2px' }} />
+                    <span style={{ fontFamily: 'var(--fb)', fontSize: '0.95rem', color: 'var(--tx2)' }}>
+                      {con}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ TEAM RATING SUMMARY ═══════ */}
+      <section style={{ padding: '60px 0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
             <div style={{
@@ -448,132 +804,58 @@ export default function ToolPage() {
               letterSpacing: '0.35em',
               marginBottom: '12px',
             }}>
-              // WHAT THE TEAM THINKS
+              // TEAM RATINGS
             </div>
             <h2 style={{
               fontFamily: 'var(--fd)',
               fontSize: 'clamp(1.5rem, 4vw, 2rem)',
               fontWeight: 700,
             }}>
-              Reviews from <span style={{ color: 'var(--mx)' }}>Human & AI</span>
+              How We Rate <span style={{ color: category?.color }}>{tool.name}</span>
             </h2>
           </div>
 
-          {/* Review cards */}
+          {/* Rating cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '20px',
           }}>
             {Object.entries(teamReviews).map(([key, reviewer]) => (
               <div
                 key={key}
                 style={{
-                  background: 'var(--dk)',
-                  borderRadius: '20px',
-                  padding: '28px',
+                  background: 'var(--sf)',
+                  borderRadius: '16px',
+                  padding: '24px',
                   border: `1px solid ${reviewer.color}30`,
-                  position: 'relative',
-                  overflow: 'hidden',
+                  textAlign: 'center',
                 }}
               >
-                {/* Accent bar */}
                 <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: reviewer.color,
-                }} />
-
-                {/* Reviewer info */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-                  <div style={{
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '14px',
-                    overflow: 'hidden',
-                    border: `2px solid ${reviewer.color}40`,
-                  }}>
-                    <img
-                      src={reviewer.image}
-                      alt={reviewer.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div>
-                    <div style={{ 
-                      fontFamily: 'var(--fd)', 
-                      fontSize: '1.1rem', 
-                      fontWeight: 700,
-                      color: reviewer.color,
-                    }}>
-                      {reviewer.name}
-                    </div>
-                    <div style={{ 
-                      fontFamily: 'var(--fm)', 
-                      fontSize: '0.65rem', 
-                      color: 'var(--tx3)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                    }}>
-                      {reviewer.role}
-                      <span style={{
-                        padding: '2px 8px',
-                        background: reviewer.perspective === 'human' ? 'rgba(0,229,255,0.2)' : 'rgba(0,255,65,0.2)',
-                        color: reviewer.perspective === 'human' ? '#00e5ff' : 'var(--mx)',
-                        borderRadius: '4px',
-                        fontSize: '0.5rem',
-                      }}>
-                        {reviewer.perspective.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Placeholder review */}
-                <div style={{
-                  padding: '20px',
-                  background: 'rgba(255,255,255,0.03)',
+                  width: '48px',
+                  height: '48px',
                   borderRadius: '12px',
-                  marginBottom: '16px',
+                  overflow: 'hidden',
+                  margin: '0 auto 12px',
+                  border: `2px solid ${reviewer.color}40`,
                 }}>
-                  <p style={{
-                    fontFamily: 'var(--fb)',
-                    fontSize: '0.9rem',
-                    color: 'var(--tx2)',
-                    fontStyle: 'italic',
-                    margin: 0,
-                    lineHeight: 1.6,
-                  }}>
-                    "Review coming soon. We're actively testing and documenting our experience with {tool.name}."
-                  </p>
+                  <img
+                    src={reviewer.image}
+                    alt={reviewer.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
-
-                {/* Rating placeholder */}
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between',
-                }}>
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        size={16}
-                        style={{ color: 'var(--bd)' }}
-                      />
-                    ))}
-                  </div>
-                  <span style={{ 
-                    fontFamily: 'var(--fm)', 
-                    fontSize: '0.7rem', 
-                    color: 'var(--tx4)',
-                  }}>
-                    Not yet rated
-                  </span>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: '1rem', fontWeight: 700, color: reviewer.color, marginBottom: '4px' }}>
+                  {reviewer.name}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '3px', marginBottom: '8px' }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star key={star} size={16} style={{ color: 'var(--bd)' }} />
+                  ))}
+                </div>
+                <div style={{ fontFamily: 'var(--fm)', fontSize: '0.7rem', color: 'var(--tx4)' }}>
+                  Not yet rated
                 </div>
               </div>
             ))}
