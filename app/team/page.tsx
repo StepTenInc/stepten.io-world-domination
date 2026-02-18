@@ -302,157 +302,206 @@ export default function TeamPage() {
                 📁 /agents/pinky/
               </div>
 
-              {/* File list with descriptions */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* File list - compact grid */}
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                gap: '12px',
+              }}>
                 
-                {/* SOUL.md */}
+                {/* brain/ folder */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
-                  background: 'var(--dk)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--bd)',
+                  display: 'flex',
                   alignItems: 'center',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Heart size={20} style={{ color: 'var(--ac-pink)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--ac-pink)' }}>SOUL.md</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      Identity & Personality
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      Who they are. Voice, values, vibe. "Be genuinely helpful, not performatively helpful."
-                    </div>
-                  </div>
-                </div>
-
-                {/* USER.md */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
+                  gap: '12px',
+                  padding: '16px',
                   background: 'var(--dk)',
-                  borderRadius: '12px',
+                  borderRadius: '10px',
                   border: '1px solid var(--bd)',
-                  alignItems: 'center',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <User size={20} style={{ color: 'var(--ac-step)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--ac-step)' }}>USER.md</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      About Their Human
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      Context about who they're helping. Preferences, timezone, communication style, goals.
-                    </div>
-                  </div>
+                  <span style={{ fontSize: '1.1rem' }}>📁</span>
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-clark)' }}>brain/</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Sub-agent configs</span>
                 </div>
 
                 {/* AGENTS.md */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
-                  background: 'var(--dk)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--bd)',
+                  display: 'flex',
                   alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Users size={20} style={{ color: 'var(--mx)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--mx)' }}>AGENTS.md</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      Operating Manual
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      How to behave. Rules for memory, safety, external actions. "Don't exfiltrate private data. Ever."
-                    </div>
-                  </div>
+                  <Users size={18} style={{ color: 'var(--mx)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--mx)' }}>AGENTS.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Operating manual & rules</span>
+                </div>
+
+                {/* CURRENT.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <Zap size={18} style={{ color: 'var(--ac-step)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-step)' }}>CURRENT.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Active projects & focus</span>
+                </div>
+
+                {/* DECISIONS.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <FileText size={18} style={{ color: 'var(--ac-reina)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-reina)' }}>DECISIONS.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Past choices & rationale</span>
+                </div>
+
+                {/* HEARTBEAT.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <Heart size={18} style={{ color: 'var(--ac-pink)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-pink)' }}>HEARTBEAT.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Periodic check tasks</span>
+                </div>
+
+                {/* IDENTITY.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <User size={18} style={{ color: 'var(--ac-step)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-step)' }}>IDENTITY.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Name, avatar, emoji</span>
                 </div>
 
                 {/* MEMORY.md */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
-                  background: 'var(--dk)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--bd)',
+                  display: 'flex',
                   alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Brain size={20} style={{ color: 'var(--ac-reina)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--ac-reina)' }}>MEMORY.md</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      Long-Term Memory
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      Curated knowledge that persists. Decisions made, lessons learned, things to remember.
-                    </div>
-                  </div>
+                  <Brain size={18} style={{ color: 'var(--ac-reina)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-reina)' }}>MEMORY.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Long-term curated memory</span>
                 </div>
 
-                {/* memory/ folder */}
+                {/* MODELS.md */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
-                  background: 'var(--dk)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--bd)',
+                  display: 'flex',
                   alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <FileText size={20} style={{ color: 'var(--ac-clark)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--ac-clark)' }}>memory/</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      Daily Notes
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      Raw logs by date (YYYY-MM-DD.md). What happened each day. Gets processed into MEMORY.md.
-                    </div>
-                  </div>
+                  <Bot size={18} style={{ color: 'var(--mx)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--mx)' }}>MODELS.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>AI model preferences</span>
+                </div>
+
+                {/* SOUL.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <Heart size={18} style={{ color: 'var(--ac-pink)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-pink)' }}>SOUL.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Personality & values</span>
+                </div>
+
+                {/* STORAGE.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <FileText size={18} style={{ color: 'var(--ac-clark)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-clark)' }}>STORAGE.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>File & data locations</span>
                 </div>
 
                 {/* TOOLS.md */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '180px 1fr',
-                  gap: '24px',
-                  padding: '20px',
-                  background: 'var(--dk)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--bd)',
+                  display: 'flex',
                   alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Wrench size={20} style={{ color: 'var(--tx3)' }} />
-                    <span style={{ fontFamily: 'var(--fm)', fontSize: '0.95rem', color: 'var(--tx3)' }}>TOOLS.md</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--fd)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '4px' }}>
-                      Local Environment Notes
-                    </div>
-                    <div style={{ fontFamily: 'var(--fb)', fontSize: '0.85rem', color: 'var(--tx2)' }}>
-                      Environment-specific stuff. API keys locations, SSH hosts, device names. Their cheat sheet.
-                    </div>
-                  </div>
+                  <Wrench size={18} style={{ color: 'var(--tx3)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--tx3)' }}>TOOLS.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Local environment notes</span>
+                </div>
+
+                {/* USER.md */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <User size={18} style={{ color: 'var(--ac-step)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--ac-step)' }}>USER.md</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>About their human</span>
+                </div>
+
+                {/* config.json */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'var(--dk)',
+                  borderRadius: '10px',
+                  border: '1px solid var(--bd)',
+                }}>
+                  <Cog size={18} style={{ color: 'var(--tx3)' }} />
+                  <span style={{ fontFamily: 'var(--fm)', fontSize: '0.85rem', color: 'var(--tx3)' }}>config.json</span>
+                  <span style={{ fontFamily: 'var(--fb)', fontSize: '0.8rem', color: 'var(--tx3)', marginLeft: 'auto' }}>Model & runtime settings</span>
                 </div>
 
               </div>
