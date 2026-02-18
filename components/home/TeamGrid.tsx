@@ -86,16 +86,16 @@ export function TeamGrid() {
           </p>
         </div>
 
-        {/* Grid - 4 columns on desktop */}
+        {/* Grid - responsive, wider cards */}
         <div
           className="team-grid-container"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px',
-            maxWidth: '1000px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+            maxWidth: '1200px',
             margin: '0 auto',
-            padding: '0 16px',
+            padding: '0 24px',
           }}
         >
           {characters.map((char) => (
@@ -263,14 +263,10 @@ export function TeamGrid() {
         .team-card:hover .arrow {
           transform: translateX(4px);
         }
-        @media (max-width: 900px) {
-          .team-grid-container {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-        }
-        @media (max-width: 500px) {
+        @media (max-width: 640px) {
           .team-grid-container {
             grid-template-columns: 1fr !important;
+            padding: 0 16px !important;
           }
         }
       `}</style>
