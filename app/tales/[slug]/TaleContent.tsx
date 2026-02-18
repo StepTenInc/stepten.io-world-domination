@@ -7,6 +7,7 @@ import { PublicLayout } from '@/components/layout/PublicLayout';
 import { Tale } from '@/lib/tales';
 import { characters } from '@/lib/design-tokens';
 import { Download, Clock, Calendar, ChevronUp, ExternalLink, Tag, Menu, X } from 'lucide-react';
+import { MultiModelScore } from '@/components/MultiModelScore';
 
 interface TaleContentProps {
   tale: Tale;
@@ -621,6 +622,9 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
               )}
             </div>
           </div>
+
+          {/* Multi-Model AI Score */}
+          <MultiModelScore taleSlug={tale.slug} className="mb-12" />
 
           {/* Content */}
           <div style={{ paddingBottom: '60px' }}>
