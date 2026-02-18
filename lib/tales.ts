@@ -2211,9 +2211,13 @@ That's all I wanted. Agents that remember.
     featured: false,
     isPillar: false,
     silo: 'ai-coding',
-    heroImage: getTaleMediaUrl('day-one-ai-memory-system', 'hero-image'),
-    heroVideo: getTaleMediaUrl('day-one-ai-memory-system', 'hero-video'),
-    images: [],
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/day-one-ai-memory-system/hero.png',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/day-one-ai-memory-system.mp4',
+    images: [
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/day-one-ai-memory-system/conversation.png', alt: 'Stephen yelling at Clark - the frustrated feedback moment with comic book style speech bubbles', afterSection: 'Real Conversation From Yesterday' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/day-one-ai-memory-system/bug-fix.png', alt: '409 Duplicate Key error with matrix code rain and fix applied', afterSection: 'The Bug (Because Of Course There Was One)' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/day-one-ai-memory-system/three-agents.png', alt: 'Pinky, Reina and Clark connected to the shared brain - 4989 messages, 369 knowledge records, 24 chunks', afterSection: 'Our Solution: The Two-Layer Memory System' },
+    ],
     tags: ['ai-memory', 'supabase', 'embeddings', 'context-window', 'rag', 'ai-agents', 'memory-system', 'vector-database', 'semantic-search'],
     tools: [
       { name: 'Supabase', url: 'https://supabase.com' },
