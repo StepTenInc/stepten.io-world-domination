@@ -33,7 +33,16 @@ const agentUUIDs: Record<string, string> = {
   '924cbb87-5e0d-4f86-90a5-7e0ab1373e0f': 'clark',
 };
 
-type Tab = 'overview' | 'marketing' | 'tasks';
+type Tab = 'overview' | 'marketing' | 'tasks' | 'agents' | 'logs';
+
+// Tab config with hotkeys
+const tabs = [
+  { id: 'overview', label: 'OVERVIEW', key: '1', icon: '◉', color: '#00FF41' },
+  { id: 'marketing', label: 'TALES', key: '2', icon: '📖', color: '#00E5FF' },
+  { id: 'tasks', label: 'TASKS', key: '3', icon: '⚡', color: '#FF00FF' },
+  { id: 'agents', label: 'AGENTS', key: '4', icon: '🤖', color: '#FFD700' },
+  { id: 'logs', label: 'LOGS', key: '5', icon: '▤', color: '#FF4444' },
+];
 
 interface Task {
   id: string;
@@ -68,7 +77,24 @@ export default function EnginePage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tales, setTales] = useState<Tale[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dockHovered, setDockHovered] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      
+      const tab = tabs.find(t => t.key === e.key);
+      if (tab) {
+        setActiveTab(tab.id as Tab);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Fetch real data
   useEffect(() => {
@@ -200,47 +226,10 @@ export default function EnginePage() {
         </div>
       </header>
 
-      {/* Tab Navigation */}
-      <nav style={{ padding: '0 32px', borderBottom: '1px solid rgba(255,255,255,0.1)', position: 'relative', zIndex: 10, background: 'rgba(10,10,10,0.9)' }}>
-        <div style={{ display: 'flex', gap: '0' }}>
-          {[
-            { id: 'overview', label: 'OVERVIEW', icon: Activity },
-            { id: 'marketing', label: 'MARKETING', icon: BookOpen },
-            { id: 'tasks', label: 'TASKS', icon: Sparkles },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as Tab)}
-                style={{
-                  padding: '16px 24px',
-                  background: isActive ? 'rgba(0,255,65,0.1)' : 'transparent',
-                  border: 'none',
-                  borderBottom: isActive ? '2px solid #00FF41' : '2px solid transparent',
-                  color: isActive ? '#00FF41' : '#666',
-                  fontFamily: '"Orbitron", monospace',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                <Icon size={16} />
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-      </nav>
+      {/* Navigation moved to bottom dock */}
 
       {/* Main Content */}
-      <main style={{ padding: '24px 32px', maxWidth: '1800px', margin: '0 auto', position: 'relative', zIndex: 10, paddingBottom: '80px' }}>
+      <main style={{ padding: '24px 32px', maxWidth: '1800px', margin: '0 auto', position: 'relative', zIndex: 10, paddingBottom: '150px' }}>
         
         {loading ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', gap: '12px' }}>
@@ -396,6 +385,103 @@ export default function EnginePage() {
               </div>
             )}
 
+            {/* ═══════ AGENTS TAB ═══════ */}
+            {activeTab === 'agents' && (
+              <div>
+                <h2 style={{ fontFamily: '"Orbitron", monospace', fontSize: '1rem', fontWeight: 700, color: '#FFD700', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Bot size={20} /> THE ARMY
+                </h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+                  {team.map((agent) => {
+                    const agentTasks = tasks.filter(t => agentUUIDs[t.assigned_to] === agent.slug);
+                    const completedCount = agentTasks.filter(t => t.status === 'completed').length;
+                    const activeCount = agentTasks.filter(t => t.status === 'in_progress').length;
+                    const isWorking = activeCount > 0;
+                    return (
+                      <div key={agent.id} style={{
+                        background: 'rgba(10,10,10,0.85)',
+                        border: `1px solid ${agent.color}40`,
+                        borderRadius: '16px',
+                        padding: '24px',
+                        textAlign: 'center',
+                        boxShadow: isWorking ? `0 0 40px ${agent.color}20` : 'none',
+                      }}>
+                        <div style={{
+                          width: '80px',
+                          height: '80px',
+                          borderRadius: '50%',
+                          border: `3px solid ${agent.color}`,
+                          boxShadow: `0 0 30px ${agent.color}50`,
+                          margin: '0 auto 16px',
+                          overflow: 'hidden',
+                          position: 'relative',
+                        }}>
+                          <Image src={agent.image} alt={agent.name} fill style={{ objectFit: 'cover' }} />
+                        </div>
+                        <div style={{ fontFamily: '"Orbitron", monospace', fontSize: '1rem', fontWeight: 700, color: agent.color, textShadow: `0 0 15px ${agent.color}50`, marginBottom: '4px' }}>
+                          {agent.name.toUpperCase()}
+                        </div>
+                        <div style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: agent.type === 'human' ? '#00E5FF' : '#00FF41', marginBottom: '8px' }}>
+                          {agent.type === 'human' ? '👤 HUMAN' : '🤖 AI AGENT'}
+                        </div>
+                        <div style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#888', marginBottom: '16px' }}>
+                          {agent.role}
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                          <div style={{ background: 'rgba(0,0,0,0.3)', padding: '10px', borderRadius: '8px' }}>
+                            <div style={{ fontFamily: '"Orbitron", monospace', fontSize: '1.2rem', color: '#00FF41' }}>{completedCount}</div>
+                            <div style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: '#666' }}>DONE</div>
+                          </div>
+                          <div style={{ background: 'rgba(0,0,0,0.3)', padding: '10px', borderRadius: '8px' }}>
+                            <div style={{ fontFamily: '"Orbitron", monospace', fontSize: '1.2rem', color: '#00E5FF' }}>{activeCount}</div>
+                            <div style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: '#666' }}>ACTIVE</div>
+                          </div>
+                        </div>
+                        <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                          {isWorking ? (
+                            <><Loader2 size={12} style={{ color: '#00FF41', animation: 'spin 1s linear infinite' }} /><span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: '#00FF41' }}>WORKING</span></>
+                          ) : (
+                            <><Circle size={8} fill="#444" style={{ color: '#444' }} /><span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: '#444' }}>IDLE</span></>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* ═══════ LOGS TAB ═══════ */}
+            {activeTab === 'logs' && (
+              <div>
+                <h2 style={{ fontFamily: '"Orbitron", monospace', fontSize: '1rem', fontWeight: 700, color: '#FF4444', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Activity size={20} /> SYSTEM LOGS
+                </h2>
+                <div style={{
+                  background: 'rgba(5,5,5,0.9)',
+                  border: '1px solid rgba(255,68,68,0.2)',
+                  borderRadius: '8px',
+                  padding: '20px',
+                  fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+                  fontSize: '0.75rem',
+                  maxHeight: '600px',
+                  overflowY: 'auto',
+                }}>
+                  {tasks.map((task, i) => {
+                    const agent = getAgentById(task.assigned_to);
+                    return (
+                      <div key={task.id} style={{ padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.03)', display: 'flex', gap: '16px' }}>
+                        <span style={{ color: '#333', whiteSpace: 'nowrap' }}>{formatDate(task.created_at)}</span>
+                        <span style={{ color: agent.color, minWidth: '60px' }}>[{agent.name.toUpperCase().slice(0,5)}]</span>
+                        <span style={{ color: getStatusColor(task.status) }}>{task.status?.toUpperCase()}</span>
+                        <span style={{ color: '#777', flex: 1 }}>{task.title}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* ═══════ TASKS TAB ═══════ */}
             {activeTab === 'tasks' && (
               <div>
@@ -459,12 +545,185 @@ export default function EnginePage() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '12px 32px', background: 'rgba(10,10,10,0.95)', borderTop: '1px solid rgba(0,255,65,0.2)', display: 'flex', justifyContent: 'center', gap: '40px', fontFamily: 'monospace', fontSize: '0.7rem', zIndex: 20 }}>
-        <span>TALES: <span style={{ color: '#00FF41' }}>{publishedTales} LIVE</span></span>
-        <span>TASKS: <span style={{ color: '#00E5FF' }}>{inProgressTasks} ACTIVE</span></span>
-        <span>AGENTS: <span style={{ color: '#FF00FF' }}>{team.filter(t => t.type === 'ai').length} ONLINE</span></span>
-      </footer>
+      {/* ═══════ BOTTOM COMMAND DOCK ═══════ */}
+      <div
+        onMouseEnter={() => setDockHovered(true)}
+        onMouseLeave={() => setDockHovered(false)}
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
+        {/* Collapsed indicator bar */}
+        <div style={{
+          position: 'absolute',
+          bottom: '8px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '200px',
+          height: '4px',
+          background: 'linear-gradient(90deg, transparent, #00FF41, transparent)',
+          borderRadius: '2px',
+          opacity: dockHovered ? 0 : 0.6,
+          transition: 'opacity 0.3s',
+          boxShadow: '0 0 20px rgba(0,255,65,0.5)',
+        }} />
+
+        {/* Main Dock */}
+        <div style={{
+          background: 'rgba(5,5,5,0.95)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(0,255,65,0.3)',
+          borderBottom: 'none',
+          borderRadius: '20px 20px 0 0',
+          padding: dockHovered ? '20px 32px 24px' : '8px 32px 12px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '12px',
+          boxShadow: '0 -10px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,255,65,0.1)',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: dockHovered ? 'translateY(0)' : 'translateY(60px)',
+        }}>
+          {/* Dock Handle */}
+          <div style={{
+            width: '60px',
+            height: '4px',
+            background: 'linear-gradient(90deg, #00FF41, #00E5FF)',
+            borderRadius: '2px',
+            opacity: 0.5,
+          }} />
+
+          {/* Hotkey hint */}
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.55rem',
+            color: '#444',
+            letterSpacing: '0.2em',
+            opacity: dockHovered ? 1 : 0,
+            transition: 'opacity 0.2s',
+          }}>
+            PRESS 1-5 FOR QUICK NAV
+          </div>
+
+          {/* Tab Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            opacity: dockHovered ? 1 : 0,
+            transition: 'opacity 0.2s',
+          }}>
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as Tab)}
+                  style={{
+                    position: 'relative',
+                    padding: '12px 20px',
+                    background: isActive 
+                      ? `linear-gradient(180deg, ${tab.color}30, ${tab.color}10)`
+                      : 'rgba(20,20,20,0.8)',
+                    border: isActive 
+                      ? `1px solid ${tab.color}60`
+                      : '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '6px',
+                    minWidth: '80px',
+                    transition: 'all 0.2s',
+                    boxShadow: isActive 
+                      ? `0 0 30px ${tab.color}40, inset 0 0 20px ${tab.color}10`
+                      : 'none',
+                  }}
+                >
+                  {/* Active indicator */}
+                  {isActive && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '-1px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '40px',
+                      height: '3px',
+                      background: tab.color,
+                      borderRadius: '0 0 3px 3px',
+                      boxShadow: `0 0 15px ${tab.color}`,
+                    }} />
+                  )}
+                  
+                  {/* Icon */}
+                  <span style={{
+                    fontSize: '1.2rem',
+                    filter: isActive ? `drop-shadow(0 0 10px ${tab.color})` : 'none',
+                  }}>
+                    {tab.icon}
+                  </span>
+                  
+                  {/* Label */}
+                  <span style={{
+                    fontFamily: '"Orbitron", monospace',
+                    fontSize: '0.6rem',
+                    fontWeight: 600,
+                    color: isActive ? tab.color : '#666',
+                    letterSpacing: '0.05em',
+                    textShadow: isActive ? `0 0 10px ${tab.color}` : 'none',
+                  }}>
+                    {tab.label}
+                  </span>
+                  
+                  {/* Hotkey badge */}
+                  <span style={{
+                    position: 'absolute',
+                    top: '6px',
+                    right: '6px',
+                    fontFamily: 'monospace',
+                    fontSize: '0.5rem',
+                    color: isActive ? tab.color : '#444',
+                    background: 'rgba(0,0,0,0.5)',
+                    padding: '2px 4px',
+                    borderRadius: '3px',
+                    border: `1px solid ${isActive ? tab.color + '40' : '#333'}`,
+                  }}>
+                    {tab.key}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Status bar */}
+          <div style={{
+            display: 'flex',
+            gap: '24px',
+            fontFamily: 'monospace',
+            fontSize: '0.6rem',
+            opacity: dockHovered ? 1 : 0,
+            transition: 'opacity 0.2s',
+          }}>
+            <span style={{ color: '#666' }}>
+              TALES <span style={{ color: '#00FF41' }}>{publishedTales}</span>
+            </span>
+            <span style={{ color: '#666' }}>
+              TASKS <span style={{ color: '#00E5FF' }}>{inProgressTasks}</span>
+            </span>
+            <span style={{ color: '#666' }}>
+              AGENTS <span style={{ color: '#FF00FF' }}>{team.filter(t => t.type === 'ai').length}</span>
+            </span>
+            <span style={{ color: '#666' }}>
+              {currentTime}
+            </span>
+          </div>
+        </div>
+      </div>
 
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&display=swap');
