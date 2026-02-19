@@ -149,23 +149,35 @@ const MODELS: ModelConfig[] = [
 ];
 
 async function scoreWithGemini(title: string, content: string, apiKey: string): Promise<any> {
-  const prompt = SCORER_PROMPT.replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
+  // Truncate content to avoid token limits
+  const truncatedContent = content.length > 6000 ? content.substring(0, 6000) + '...[truncated]' : content;
+  const prompt = SCORER_PROMPT.replace('{{TITLE}}', title).replace('{{CONTENT}}', truncatedContent);
   
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
         temperature: 0.2,
-        maxOutputTokens: 4000,
+        maxOutputTokens: 8192,
       },
     }),
   });
   
   const data = await response.json();
+  if (data.error) {
+    console.log(`    Gemini error: ${JSON.stringify(data.error)}`);
+  }
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  return { raw: text, parsed: parseJson(text) };
+  const finishReason = data.candidates?.[0]?.finishReason;
+  if (!text) {
+    console.log(`    Gemini empty response. Full data: ${JSON.stringify(data).substring(0, 500)}`);
+  }
+  const parsed = parseJson(text);
+  if (!parsed && text) {
+  }
+  return { raw: text, parsed };
 }
 
 async function scoreWithClaude(title: string, content: string, apiKey: string): Promise<any> {
@@ -239,19 +251,32 @@ function parseJson(text: string): any {
     // Try direct parse
     return JSON.parse(text);
   } catch {
-    // Try to extract JSON from markdown code block
-    const match = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (match) {
+    // Try to extract JSON from markdown code block (greedy match)
+    const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (codeBlockMatch) {
       try {
-        return JSON.parse(match[1].trim());
-      } catch {}
+        return JSON.parse(codeBlockMatch[1].trim());
+      } catch (e) {
+        // Try to find the last complete JSON object in the code block
+        const jsonInBlock = codeBlockMatch[1].match(/\{[\s\S]*\}/);
+        if (jsonInBlock) {
+          try { return JSON.parse(jsonInBlock[0]); } catch {}
+        }
+      }
     }
-    // Try to find JSON object in text
+    // Try to find JSON object in text (greedy)
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       try {
         return JSON.parse(jsonMatch[0]);
-      } catch {}
+      } catch {
+        // Try to repair common JSON issues
+        let fixed = jsonMatch[0]
+          .replace(/,\s*}/g, '}')  // trailing commas
+          .replace(/,\s*]/g, ']')  // trailing commas in arrays
+          .replace(/(['"])?([a-zA-Z_][a-zA-Z0-9_]*)\1\s*:/g, '"$2":'); // unquoted keys
+        try { return JSON.parse(fixed); } catch {}
+      }
     }
     return null;
   }
@@ -275,7 +300,7 @@ async function scoreTale(tale: { id: string; slug: string; title: string; conten
   
   // Score with each model
   const scorers = [
-    { name: 'gemini-2.5-flash', provider: 'google', fn: scoreWithGemini, key: keys.google },
+    { name: 'gemini-3-flash', provider: 'google', fn: scoreWithGemini, key: keys.google },
     { name: 'claude-sonnet-4', provider: 'anthropic', fn: scoreWithClaude, key: keys.anthropic },
     { name: 'gpt-4o', provider: 'openai', fn: scoreWithGPT, key: keys.openai },
     { name: 'grok-3', provider: 'xai', fn: scoreWithGrok, key: keys.grok },
