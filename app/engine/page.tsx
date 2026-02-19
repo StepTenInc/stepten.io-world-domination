@@ -86,6 +86,21 @@ export default function EnginePage() {
       // Ignore if typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       
+      // Arrow key navigation
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        setActiveTab(prev => {
+          const currentIndex = tabs.findIndex(t => t.id === prev);
+          if (e.key === 'ArrowLeft') {
+            return tabs[currentIndex > 0 ? currentIndex - 1 : tabs.length - 1].id as Tab;
+          } else {
+            return tabs[currentIndex < tabs.length - 1 ? currentIndex + 1 : 0].id as Tab;
+          }
+        });
+        return;
+      }
+      
+      // Number key navigation still works
       const tab = tabs.find(t => t.key === e.key);
       if (tab) {
         setActiveTab(tab.id as Tab);
@@ -607,7 +622,7 @@ export default function EnginePage() {
             opacity: dockHovered ? 1 : 0,
             transition: 'opacity 0.2s',
           }}>
-            PRESS 1-5 FOR QUICK NAV
+            ← → ARROWS TO NAVIGATE | 1-5 QUICK JUMP
           </div>
 
           {/* Tab Buttons */}
