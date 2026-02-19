@@ -51,6 +51,7 @@ export const tales: Tale[] = [
     isPillar: false,
     silo: 'ai-coding',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/hero.png?v=1771531073',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/how-to-get-ai-agents-talking.mp4?v=1771531435',
     images: [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/telegram-group.png?v=1771531073', alt: 'AI agents finally communicating in a Telegram group - Pinky, Reina, Clark all connected', afterSection: 'The Telegram Approach' },
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/task-handoff.png?v=1771531073', alt: 'Clark handing off a task to Reina via Supabase - structured agent collaboration', afterSection: 'The Task Management Layer' },
