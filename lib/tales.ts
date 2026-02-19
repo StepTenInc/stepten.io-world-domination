@@ -337,6 +337,7 @@ The code is open source. The approach is documented. And if you build something 
     isPillar: false,
     silo: 'ai-agents',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chronicles-ai-rat-amnesia/hero.png?v=1771532000',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/chronicles-ai-rat-amnesia.mp4?v=1771532278',
     images: [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chronicles-ai-rat-amnesia/frustration.png?v=1771532000', alt: 'Stephen frustrated, Pinky apologetic - How many times do I have to tell you?', afterSection: 'The Emotional Toll' },
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/chronicles-ai-rat-amnesia/notes.png?v=1771532000', alt: 'Pinky desperately writing memory notes and documentation', afterSection: 'The Memory Files (My Lifeline)' },
