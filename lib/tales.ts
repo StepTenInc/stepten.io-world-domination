@@ -50,6 +50,12 @@ export const tales: Tale[] = [
     featured: true,
     isPillar: false,
     silo: 'ai-coding',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/hero.png',
+    images: [
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/telegram-group.png', alt: 'AI agents finally communicating in a Telegram group - Pinky, Reina, Clark all connected', afterSection: 'The Telegram Approach' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/task-handoff.png', alt: 'Clark handing off a task to Reina via Supabase - structured agent collaboration', afterSection: 'The Task Management Layer' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/how-to-get-ai-agents-talking/command-center.png', alt: 'StepTen Command Center dashboard showing all agent activity and task status', afterSection: 'The Bigger Picture' },
+    ],
     tags: ['multi-agent', 'telegram', 'clawdbot', 'ai-orchestration', 'agent-communication', 'supabase', 'crewai', 'autogen', 'langgraph'],
     tools: [
       { name: 'Clawdbot', url: 'https://github.com/clawdbot/clawdbot' },
@@ -57,6 +63,16 @@ export const tales: Tale[] = [
       { name: 'Supabase', url: 'https://supabase.com' },
       { name: 'Claude', url: 'https://anthropic.com' },
     ],
+    steptenScore: 78,
+    steptenScoreBreakdown: {
+      total: 78,
+      contentIntelligence: { score: 21, max: 25, details: 'Strong how-to structure, unique angle on multi-agent communication' },
+      technicalSEO: { score: 16, max: 20, details: 'Good headers, code blocks, structured content' },
+      llmReadiness: { score: 17, max: 20, details: 'Step-by-step instructions, clear entity definitions' },
+      authorityLinks: { score: 10, max: 15, details: 'Internal links to related tales, external tool links' },
+      distributionSocial: { score: 7, max: 10, details: 'Shareable title, practical value proposition' },
+      competitivePosition: { score: 7, max: 10, details: 'Unique Telegram approach vs framework-heavy alternatives' },
+    },
     content: `Everyone's building multi-agent frameworks. CrewAI, AutoGen, LangGraph — they're all trying to solve the same problem: how do you get AI agents to coordinate and work together?
 
 I took a different approach. I used Telegram.
@@ -72,7 +88,8 @@ I took a different approach. I used Telegram.
 
 ## The Problem: I'm Still the Orchestrator
 
-Here's my situation. I've got three AI agents running on [Clawdbot](https://github.com/clawdbot/clawdbot):
+Here's my situation. I've got three AI agents running on [Clawdbot](https://github.com/clawdbot/clawdbot). If you're new to this world, check out my guide on [going from ChatGPT to terminal-based AI agents](/tales/chatgpt-to-terminal-ninja) — it covers the full journey.
+
 - **Pinky** — Research, communications, strategy
 - **Reina** — UX, frontend, deployments  
 - **Clark** — Backend, infrastructure, databases
@@ -242,9 +259,9 @@ The Command Center (our internal dashboard) shows all tasks, who's working on wh
 
 ### The Challenges
 
-**They can talk too much.** Had to tune the system prompts so they only respond when it's actually their domain. Otherwise you get three agents all trying to answer every question.
+**They can talk too much.** Had to tune the system prompts so they only respond when it's actually their domain. Otherwise you get three agents all trying to answer every question. Classic [AI agent problem](/tales/10-problems-ai-agents-nobody-warns) — they're eager to help even when they shouldn't.
 
-**Context window fills up.** If there's a lot of group chatter, each agent's context fills with messages that might not be relevant to them. Working on filtering.
+**Context window fills up.** If there's a lot of group chatter, each agent's context fills with messages that might not be relevant to them. Working on filtering. This ties into the broader [AI memory problem](/tales/ai-memory-problem-solved) — how do you keep agents aware without overwhelming them?
 
 **Task handoffs need structure.** Free-form messages work for discussion, but actual task assignment needs the database layer. Can't just rely on "hey can you do this."
 
