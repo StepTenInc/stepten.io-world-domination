@@ -86,9 +86,22 @@ export default function EnginePage() {
       // Ignore if typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       
-      // Arrow key navigation
+      // Up/Down to show/hide dock
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setDockHovered(true);
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setDockHovered(false);
+        return;
+      }
+      
+      // Left/Right to navigate tabs
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
+        setDockHovered(true); // Show dock when navigating
         setActiveTab(prev => {
           const currentIndex = tabs.findIndex(t => t.id === prev);
           if (e.key === 'ArrowLeft') {
@@ -104,6 +117,7 @@ export default function EnginePage() {
       const tab = tabs.find(t => t.key === e.key);
       if (tab) {
         setActiveTab(tab.id as Tab);
+        setDockHovered(true);
       }
     };
     
@@ -622,7 +636,7 @@ export default function EnginePage() {
             opacity: dockHovered ? 1 : 0,
             transition: 'opacity 0.2s',
           }}>
-            ← → ARROWS TO NAVIGATE | 1-5 QUICK JUMP
+            ↑ SHOW | ↓ HIDE | ← → NAVIGATE | 1-5 JUMP
           </div>
 
           {/* Tab Buttons */}
