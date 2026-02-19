@@ -1,13 +1,33 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Bot, Zap, FileText, MessageSquare, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image, BarChart3, Send, Sparkles } from 'lucide-react';
+import { Bot, Zap, FileText, MessageSquare, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { characters, colors } from '@/lib/design-tokens';
 
-// Agent data
+// Agent data - using design tokens
 const agents = [
-  { id: 'pinky', name: 'Pinky', role: 'Research & Comms', color: '#FF2D6A', emoji: '🐀' },
-  { id: 'reina', name: 'Reina', role: 'UX & Frontend', color: '#A855F7', emoji: '👑' },
-  { id: 'clark', name: 'Clark', role: 'Backend & Data', color: '#F97316', emoji: '⚙️' },
+  { 
+    id: 'pinky', 
+    name: characters.pinky.name, 
+    role: characters.pinky.role, 
+    color: characters.pinky.color, 
+    image: characters.pinky.image,
+  },
+  { 
+    id: 'reina', 
+    name: characters.reina.name, 
+    role: characters.reina.role, 
+    color: characters.reina.color, 
+    image: characters.reina.image,
+  },
+  { 
+    id: 'clark', 
+    name: characters.clark.name, 
+    role: characters.clark.role, 
+    color: characters.clark.color, 
+    image: characters.clark.image,
+  },
 ];
 
 // SEO Pipeline stages
@@ -15,7 +35,7 @@ const pipelineStages = [
   { id: 'research', name: 'Research', icon: Search, status: 'complete' },
   { id: 'outline', name: 'Outline', icon: Target, status: 'complete' },
   { id: 'draft', name: 'Draft', icon: PenTool, status: 'running' },
-  { id: 'images', name: 'Images', icon: Image, status: 'pending' },
+  { id: 'images', name: 'Images', icon: ImageIcon, status: 'pending' },
   { id: 'seo', name: 'SEO', icon: BarChart3, status: 'pending' },
   { id: 'publish', name: 'Publish', icon: Send, status: 'pending' },
 ];
@@ -147,8 +167,8 @@ export default function EnginePage() {
     return agents.find(a => a.id === id)?.color || '#888';
   };
 
-  const getAgentEmoji = (id: string) => {
-    return agents.find(a => a.id === id)?.emoji || '🤖';
+  const getAgentImage = (id: string) => {
+    return agents.find(a => a.id === id)?.image || '/images/characters/pinky.jpg';
   };
 
   return (
@@ -491,36 +511,40 @@ export default function EnginePage() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                   {/* From Agent */}
                   <div style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
-                    background: `${getAgentColor(task.from)}20`,
                     border: `2px solid ${getAgentColor(task.from)}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.8rem',
                     boxShadow: `0 0 10px ${getAgentColor(task.from)}40`,
+                    overflow: 'hidden',
+                    position: 'relative',
                   }}>
-                    {getAgentEmoji(task.from)}
+                    <Image 
+                      src={getAgentImage(task.from)} 
+                      alt={task.from} 
+                      fill 
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   
                   <ArrowRight size={14} style={{ color: '#444' }} />
                   
                   {/* To Agent */}
                   <div style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
-                    background: `${getAgentColor(task.to)}20`,
                     border: `2px solid ${getAgentColor(task.to)}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.8rem',
                     boxShadow: task.status === 'in_progress' ? `0 0 15px ${getAgentColor(task.to)}60` : `0 0 10px ${getAgentColor(task.to)}40`,
+                    overflow: 'hidden',
+                    position: 'relative',
                   }}>
-                    {getAgentEmoji(task.to)}
+                    <Image 
+                      src={getAgentImage(task.to)} 
+                      alt={task.to} 
+                      fill 
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
 
                   {/* Status */}
@@ -619,20 +643,29 @@ export default function EnginePage() {
                   transition: 'all 0.3s ease',
                 }}>
                   <div style={{
-                    width: '56px',
-                    height: '56px',
+                    width: '64px',
+                    height: '64px',
                     borderRadius: '50%',
-                    background: `${agent.color}15`,
-                    border: `2px solid ${agent.color}`,
-                    boxShadow: isWorking ? `0 0 25px ${agent.color}60` : `0 0 15px ${agent.color}30`,
+                    border: `3px solid ${agent.color}`,
+                    boxShadow: isWorking ? `0 0 25px ${agent.color}60, 0 0 50px ${agent.color}30` : `0 0 15px ${agent.color}30`,
                     margin: '0 auto 10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
+                    overflow: 'hidden',
+                    position: 'relative',
                     animation: isWorking ? 'glow 2s infinite' : 'none',
                   }}>
-                    {agent.emoji}
+                    <Image 
+                      src={agent.image} 
+                      alt={agent.name} 
+                      fill 
+                      style={{ objectFit: 'cover' }} 
+                    />
+                    {isWorking && (
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: `linear-gradient(180deg, transparent 60%, ${agent.color}40 100%)`,
+                      }} />
+                    )}
                   </div>
                   <div style={{ 
                     fontFamily: '"Orbitron", monospace', 
