@@ -3,69 +3,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal } from 'lucide-react';
 
-// Custom Matrix Icons as SVG components
-const MatrixIcons = {
-  // Overview - Radar/Targeting reticle
-  overview: ({ color, size = 24 }: { color: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="1" opacity="0.3" />
-      <circle cx="12" cy="12" r="6" stroke={color} strokeWidth="1.5" opacity="0.6" />
-      <circle cx="12" cy="12" r="2" fill={color} />
-      <line x1="12" y1="0" x2="12" y2="6" stroke={color} strokeWidth="1.5" />
-      <line x1="12" y1="18" x2="12" y2="24" stroke={color} strokeWidth="1.5" />
-      <line x1="0" y1="12" x2="6" y2="12" stroke={color} strokeWidth="1.5" />
-      <line x1="18" y1="12" x2="24" y2="12" stroke={color} strokeWidth="1.5" />
-    </svg>
-  ),
-  
-  // Tales - Data document with code lines
-  tales: ({ color, size = 24 }: { color: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M4 4h12l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" stroke={color} strokeWidth="1.5" fill="none" />
-      <path d="M14 4v4h4" stroke={color} strokeWidth="1.5" />
-      <line x1="7" y1="10" x2="13" y2="10" stroke={color} strokeWidth="2" opacity="0.8" />
-      <line x1="7" y1="13" x2="15" y2="13" stroke={color} strokeWidth="2" opacity="0.6" />
-      <line x1="7" y1="16" x2="11" y2="16" stroke={color} strokeWidth="2" opacity="0.4" />
-    </svg>
-  ),
-  
-  // Tasks - Lightning bolt / power
-  tasks: ({ color, size = 24 }: { color: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <polygon points="13,2 3,14 11,14 9,22 21,10 13,10" fill={color} opacity="0.2" />
-      <polygon points="13,2 3,14 11,14 9,22 21,10 13,10" stroke={color} strokeWidth="1.5" fill="none" />
-      <line x1="12" y1="8" x2="12" y2="12" stroke={color} strokeWidth="2" />
-    </svg>
-  ),
-  
-  // Agents - Circuit head
-  agents: ({ color, size = 24 }: { color: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="5" y="4" width="14" height="12" rx="2" stroke={color} strokeWidth="1.5" />
-      <circle cx="9" cy="10" r="1.5" fill={color} />
-      <circle cx="15" cy="10" r="1.5" fill={color} />
-      <line x1="9" y1="16" x2="9" y2="20" stroke={color} strokeWidth="1.5" />
-      <line x1="15" y1="16" x2="15" y2="20" stroke={color} strokeWidth="1.5" />
-      <line x1="12" y1="16" x2="12" y2="22" stroke={color} strokeWidth="1.5" />
-      <line x1="3" y1="10" x2="5" y2="10" stroke={color} strokeWidth="1.5" />
-      <line x1="19" y1="10" x2="21" y2="10" stroke={color} strokeWidth="1.5" />
-      <rect x="8" y="6" width="8" height="2" fill={color} opacity="0.3" />
-    </svg>
-  ),
-  
-  // Logs - Terminal/Matrix code
-  logs: ({ color, size = 24 }: { color: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="2" y="3" width="20" height="18" rx="2" stroke={color} strokeWidth="1.5" />
-      <line x1="2" y1="7" x2="22" y2="7" stroke={color} strokeWidth="1" opacity="0.5" />
-      <text x="5" y="12" fill={color} fontSize="6" fontFamily="monospace" opacity="0.8">&gt;_</text>
-      <line x1="5" y1="15" x2="12" y2="15" stroke={color} strokeWidth="1.5" opacity="0.6" />
-      <line x1="5" y1="18" x2="17" y2="18" stroke={color} strokeWidth="1.5" opacity="0.4" />
-      <circle cx="5" cy="5" r="1" fill={color} opacity="0.5" />
-      <circle cx="8" cy="5" r="1" fill={color} opacity="0.5" />
-      <circle cx="11" cy="5" r="1" fill={color} opacity="0.5" />
-    </svg>
-  ),
+// Custom generated icons paths
+const iconPaths: Record<string, string> = {
+  overview: '/icons/icon-overview.png',
+  tales: '/icons/icon-tales.png',
+  tasks: '/icons/icon-tasks.png',
+  agents: '/icons/icon-agents.png',
+  logs: '/icons/icon-logs.png',
 };
 import Image from 'next/image';
 import { characters } from '@/lib/design-tokens';
@@ -754,15 +698,20 @@ export default function EnginePage() {
                     }} />
                   )}
                   
-                  {/* Custom Matrix Icon */}
+                  {/* Custom Generated Icon */}
                   <div style={{
-                    filter: isActive ? `drop-shadow(0 0 8px ${tab.color}) drop-shadow(0 0 15px ${tab.color})` : 'none',
+                    width: '32px',
+                    height: '32px',
+                    position: 'relative',
+                    filter: isActive ? `drop-shadow(0 0 8px ${tab.color}) drop-shadow(0 0 15px ${tab.color})` : 'grayscale(100%) brightness(0.4)',
                     transition: 'filter 0.2s',
                   }}>
-                    {MatrixIcons[tab.icon as keyof typeof MatrixIcons]?.({ 
-                      color: isActive ? tab.color : '#555',
-                      size: 26,
-                    })}
+                    <Image 
+                      src={iconPaths[tab.icon]} 
+                      alt={tab.label}
+                      fill
+                      style={{ objectFit: 'contain' }}
+                    />
                   </div>
                   
                   {/* Label */}
