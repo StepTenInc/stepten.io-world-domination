@@ -5,14 +5,23 @@ import { Bot, Zap, FileText, MessageSquare, Activity, CheckCircle, Circle, Loade
 import Image from 'next/image';
 import { characters, colors } from '@/lib/design-tokens';
 
-// Agent data - using design tokens
+// Team data - using design tokens (Stephen + AI Agents)
 const agents = [
+  { 
+    id: 'stepten', 
+    name: 'Stephen', 
+    role: 'The Brain', 
+    color: characters.stepten.color, 
+    image: characters.stepten.image,
+    type: 'human',
+  },
   { 
     id: 'pinky', 
     name: characters.pinky.name, 
     role: characters.pinky.role, 
     color: characters.pinky.color, 
     image: characters.pinky.image,
+    type: 'ai',
   },
   { 
     id: 'reina', 
@@ -20,6 +29,7 @@ const agents = [
     role: characters.reina.role, 
     color: characters.reina.color, 
     image: characters.reina.image,
+    type: 'ai',
   },
   { 
     id: 'clark', 
@@ -27,6 +37,7 @@ const agents = [
     role: characters.clark.role, 
     color: characters.clark.color, 
     image: characters.clark.image,
+    type: 'ai',
   },
 ];
 
@@ -42,6 +53,15 @@ const pipelineStages = [
 
 // Task flow - showing the real handoff
 const taskFlow = [
+  {
+    id: '1808a1ca-59b4-4413-b3f4-0bf1e61997b9',
+    title: 'Build StepTen Command Center UI',
+    from: 'stepten',
+    to: 'pinky',
+    status: 'in_progress',
+    startedAt: '11:40',
+    completedAt: null,
+  },
   { 
     id: 'd482e56b-a43c-4bfb-8a77-d06b7cd1f466',
     title: 'Set Up Telegram Group Orchestration',
@@ -58,15 +78,6 @@ const taskFlow = [
     to: 'clark',
     status: 'pending',
     startedAt: '10:33',
-    completedAt: null,
-  },
-  {
-    id: '1808a1ca-59b4-4413-b3f4-0bf1e61997b9',
-    title: 'Build StepTen Command Center UI',
-    from: 'pinky',
-    to: 'pinky',
-    status: 'in_progress',
-    startedAt: '11:40',
     completedAt: null,
   },
 ];
@@ -676,6 +687,15 @@ export default function EnginePage() {
                     marginBottom: '4px',
                   }}>
                     {agent.name.toUpperCase()}
+                  </div>
+                  <div style={{ 
+                    fontFamily: 'monospace', 
+                    fontSize: '0.55rem', 
+                    color: agent.type === 'human' ? '#00E5FF' : '#00FF41',
+                    marginBottom: '4px',
+                    letterSpacing: '0.1em',
+                  }}>
+                    {agent.type === 'human' ? '👤 HUMAN' : '🤖 AI'}
                   </div>
                   <div style={{ 
                     fontFamily: 'monospace', 
