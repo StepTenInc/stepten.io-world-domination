@@ -1,7 +1,16 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle } from 'lucide-react';
+import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal } from 'lucide-react';
+
+// Icon map for tabs
+const iconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
+  Crosshair,
+  FileText,
+  Zap,
+  Bot,
+  Terminal,
+};
 import Image from 'next/image';
 import { characters } from '@/lib/design-tokens';
 import { createClient } from '@supabase/supabase-js';
@@ -35,14 +44,17 @@ const agentUUIDs: Record<string, string> = {
 
 type Tab = 'overview' | 'marketing' | 'tasks' | 'agents' | 'logs';
 
-// Tab config with hotkeys
-const tabs = [
-  { id: 'overview', label: 'OVERVIEW', key: '1', icon: '◉', color: '#00FF41' },
-  { id: 'marketing', label: 'TALES', key: '2', icon: '📖', color: '#00E5FF' },
-  { id: 'tasks', label: 'TASKS', key: '3', icon: '⚡', color: '#FF00FF' },
-  { id: 'agents', label: 'AGENTS', key: '4', icon: '🤖', color: '#FFD700' },
-  { id: 'logs', label: 'LOGS', key: '5', icon: '▤', color: '#FF4444' },
+// Tab config with hotkeys - using Lucide icon names
+const tabConfig = [
+  { id: 'overview', label: 'OVERVIEW', key: '1', iconName: 'Crosshair', color: '#00FF41' },
+  { id: 'marketing', label: 'TALES', key: '2', iconName: 'FileText', color: '#00E5FF' },
+  { id: 'tasks', label: 'TASKS', key: '3', iconName: 'Zap', color: '#FF00FF' },
+  { id: 'agents', label: 'AGENTS', key: '4', iconName: 'Bot', color: '#FFD700' },
+  { id: 'logs', label: 'LOGS', key: '5', iconName: 'Terminal', color: '#FF4444' },
 ];
+
+// Use tabConfig for tabs variable (keeping compatibility)
+const tabs = tabConfig;
 
 interface Task {
   id: string;
@@ -690,12 +702,18 @@ export default function EnginePage() {
                   )}
                   
                   {/* Icon */}
-                  <span style={{
-                    fontSize: '1.2rem',
-                    filter: isActive ? `drop-shadow(0 0 10px ${tab.color})` : 'none',
-                  }}>
-                    {tab.icon}
-                  </span>
+                  {(() => {
+                    const IconComponent = iconMap[tab.iconName];
+                    return IconComponent ? (
+                      <IconComponent 
+                        size={22} 
+                        style={{ 
+                          color: isActive ? tab.color : '#666',
+                          filter: isActive ? `drop-shadow(0 0 10px ${tab.color})` : 'none',
+                        }} 
+                      />
+                    ) : null;
+                  })()}
                   
                   {/* Label */}
                   <span style={{
