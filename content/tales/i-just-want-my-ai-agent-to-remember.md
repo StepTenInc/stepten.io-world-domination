@@ -1,235 +1,215 @@
-# I Just Want My AI Agent to Remember
+# I Just Want My AI Agent to Remember What I Said
 
-I've been running AI agents on OpenClaw for a few weeks now. Three of them - Clark Singh on Mac Mini 1, another on Mac Mini 2, and one on an old MacBook. Since January 28, we've logged 34,000 conversations. That's 275MB of session data sitting in JSONL files.
-
-The problem? Those 34,000 conversations are basically useless. Every new session, the agents start fresh. I'm constantly re-explaining things. What tools they have access to. What we decided last week. What project we're working on. I've given them full access to all three machines, gone through all the settings and controls, and they still don't do it properly.
-
-So yesterday I decided to figure this out properly. I spun up a fresh Claude chat - no memory, no context, completely clean - just to get an unbiased perspective on what I was trying to do. Sometimes you need a third party who hasn't been fed any of your existing context to tell you if your thinking makes sense.
+**TL;DR:** After 34,000 conversations in 3 weeks, I designed a memory system so my AI agents stop forgetting everything. Here's the architecture — local brains, shared knowledge, federated memory across a team of agents.
 
 ---
 
-## Looking at What Everyone Else Has Built
+## The Problem Every AI Power User Hits
 
-First thing I asked about was the solutions everyone's been talking about. Letta and Mem0.
+You talk to your AI agent for hours. You explain your business. Your preferences. Your weird quirks. The context builds up beautifully.
 
-**Letta** (used to be called MemGPT) came out of Berkeley research. They've got this thing called "Context Repositories" - basically git-based memory for agents. They just announced it on February 12. Before that they had a "Conversations API" for shared agent memory across concurrent experiences. Sounds promising on paper.
+Then the context window fills up. Or you start a new chat. Or you switch devices.
 
-**Mem0** is the Y Combinator one. "AI agents forget. Mem0 remembers." They've got a Memory Compression Engine that claims to cut tokens by 80%. SOC 2, HIPAA compliant, all the enterprise stuff. 50,000+ developers using it, Microsoft and AWS partnerships, the works.
+And it's gone. All of it. You're back to explaining who you are like it's a first date. Again.
 
-My take on both of them? Everyone says they've solved the memory problem. I don't think they have.
+I hit this wall after 34,000 conversations in three weeks. Two Anthropic Max subscriptions running hot. Multiple AI agents working on different parts of my business. And none of them could remember what I told the other one yesterday.
 
-Here's my issue: I'm not a webdev. I don't want to bolt on another layer with its own quirks and costs. I don't need HIPAA compliance for my project notes. I think about this stuff from a business perspective - what's simple and what's logical.
+**The reality is simple: I just want these cunts to remember what I said.**
 
-My simple ask is this: I just want Pinky, Clark and REINA to remember what I said. That's it. Use their brains. It shouldn't be that hard.
-
----
-
-## The Actual Problem
-
-Looking at what OpenClaw stores locally, the issue became obvious. I've got:
-
-- 275MB of session JSONL that never gets read again
-- Memory scattered across `memory/`, `brain/`, and random files in the root
-- Agent starts each session without context unless I explicitly tell it everything
-- No curation - everything stored equally regardless of importance
-- No transparency - hard to see what the agent actually "knows"
-
-The raw data is there. 34,000 conversations of it. But nothing intelligent is happening with it. It's just a filing cabinet that keeps getting fuller.
+It shouldn't be that hard.
 
 ---
 
-## The Core Insight
+## Why RAG and Vector DBs Aren't Enough
 
-Here's what I figured out: **The raw conversation data is the backbone.**
+Everyone's answer is "just add RAG" — Retrieval Augmented Generation. Throw everything into a vector database, semantic search when needed, inject relevant context.
 
-That's it. Those 34k conversations? That's the gold. Everything else - summaries, knowledge bases, embeddings, whatever - gets built FROM the raw conversations. But you always keep the raw data. That's your source of truth.
+Sure. That works for documents. Doesn't work for *relationships*.
 
-We're not trying to technically code some complex retrieval pipeline. We're just taking raw data and organizing it in a way that can actually be used. Finally we have all the conversations stored properly. From there we can summarize, rebuild knowledge, create embeddings if we want - but the raw conversations remain as the foundation for everything else.
+When I tell Clark (my backend agent) about a business decision, and then talk to Reina (my frontend agent) the next day, she needs to know:
+- What decision was made
+- Why it was made  
+- What I was feeling when I made it
+- What she should do differently because of it
 
----
-
-## The System We Built
-
-We designed a simple three-tier memory system:
-
-| Tier | Name | What It Is | Where It Lives | How Long |
-|------|------|------------|----------------|----------|
-| Hot | Session Memory | Current conversation | Local only | Wiped at session end |
-| Warm | Curated Memory | Important facts, decisions, project state | GitHub .md files | Weeks to months |
-| Cold | Raw Archive | Full conversation history | Supabase | Permanent |
-
-The nightly curation step is what makes it work. Each night at 11:30 PM, the agent reviews the day's conversations, decides what's worth keeping long-term, updates MEMORY.md, and discards the rest. This is the difference between a filing cabinet and actual memory.
+That's not retrieval. That's *understanding context across agents over time*.
 
 ---
 
-## The Filing Rules
+## The Three-Tier Memory Architecture
 
-One principle: Nothing lives in the workspace root except core markdown files. That's what OpenClaw can access and read on boot. Everything else goes in folders.
+Here's what I built. No fancy frameworks. Just logical thinking from a business perspective.
 
-**Root folder (MDs only):**
-- AGENTS.md - Boot file, reads first every session
-- SOUL.md - Who the agent is
-- IDENTITY.md - Agent-specific details
-- USER.md - About me
-- MODELS.md - Which AI models to use (auto-updated weekly)
-- TOOLS.md - What tools are available
-- DECISIONS.md - Decision tree for common tasks
-- STORAGE.md - Filing rules
-- HEARTBEAT.md - Periodic checks
-- MEMORY.md - Curated long-term memory
-- RESTRICTED.md - Private notes, never pushed
+### Tier 1: Hot Memory (Session Context)
 
-**Folders:**
-- `memory/` - Daily logs (YYYY-MM-DD.md)
-- `brain/` - Knowledge by topic
-- `credentials/` - API keys, local only, NEVER pushed
-- `projects/` - Each project gets README.md + context.md
-- `archive/` - Completed projects
-- `inbox/` - Temporary queue, 24hr max
+This is what's in the current conversation. The stuff the agent sees right now. Limited by context window, but that's fine — it's the active working memory.
 
-The key insight from the conversation: AGENTS.md doesn't contain information - it just knows where everything lives and in what order to read it. It's the index. Every other file is a chapter.
+**What lives here:**
+- Current conversation
+- Active task context
+- Immediate goals
 
----
+**How long it lasts:** Until the session ends or context fills up.
 
-## How It References Itself
+### Tier 2: Warm Memory (Local Brain)
 
-```
-AGENTS.md (entry point)
-│
-├── Identity Layer
-│   ├── SOUL.md
-│   ├── IDENTITY.md
-│   └── USER.md
-│
-├── Operational Layer
-│   ├── MODELS.md
-│   ├── TOOLS.md
-│   └── DECISIONS.md
-│
-├── State Layer
-│   ├── MEMORY.md
-│   └── HEARTBEAT.md
-│
-└── Filing Layer
-    └── STORAGE.md
-        ├── memory/
-        ├── brain/
-        ├── credentials/
-        ├── projects/
-        ├── archive/
-        └── inbox/
-```
+Every agent has their own local Postgres database with semantic embeddings. Their personal brain.
 
-Nothing is orphaned because AGENTS.md is read first and explicitly references every other file. If a file isn't referenced in AGENTS.md, it doesn't exist as far as the agent is concerned.
+When I say "update your local brain," the agent:
+1. Extracts key information from the session
+2. Creates semantic embeddings
+3. Stores it locally with relationships intact
+4. Can retrieve it in future sessions
+
+**What lives here:**
+- Decisions I've made
+- Preferences learned
+- Project context
+- Relationship notes (who's who, what they do)
+
+**How long it lasts:** Forever. It's local. It's the agent's personal memory.
+
+### Tier 3: Cold Memory (Shared Knowledge)
+
+Supabase. The shared brain. All agents can see it.
+
+After an agent updates their local brain, they can push relevant knowledge to Supabase. Other agents pull from there.
+
+**The flow:**
+1. I talk to Clark about a marketing strategy
+2. Clark saves it to his local brain
+3. Clark pushes to Supabase under "marketing"
+4. Reina pulls from Supabase when she needs marketing context
+5. Now Reina knows what Clark knows
+
+**Federated memory across agents.** No single point of failure. Each agent owns their data but shares what matters.
 
 ---
 
 ## The Boot Sequence
 
-Every session, same order, no skipping:
+Every session, agents load in order:
 
-**Step 1 - Identity**
-- Read SOUL.md, IDENTITY.md, USER.md
-- Agent knows who it is and who it's working for
+```
+SOUL.md        → Who they are (personality, values)
+IDENTITY.md    → Their name, role, avatar
+USER.md        → Who I am (preferences, context)
+MODELS.md      → Which AI models to use for what
+TOOLS.md       → What tools they have access to
+DECISIONS.md   → Key decisions made
+MEMORY.md      → Long-term curated memories
+HEARTBEAT.md   → What to check periodically
+```
 
-**Step 2 - Operational Rules**
-- Read MODELS.md - only use these models, no exceptions
-- Read TOOLS.md - what tools are available
-- Read DECISIONS.md - how to decide what to do
+Root folder = only markdown files. What OpenClaw (my agent framework) can access directly.
 
-**Step 3 - Current State**
-- Read MEMORY.md - what's been happening
-- Read HEARTBEAT.md - what's pending
-
-**Step 4 - Ready**
-- Await instruction
-
-When a task comes in:
-- New project? → Read STORAGE.md → create projects/[name]/
-- Need a tool? → Read DECISIONS.md → follow the tree
-- Need credentials? → Check local first → then Supabase
-- Saving something? → Read STORAGE.md → file it correctly
+Everything else goes in folders:
+- `memory/` — Daily session logs (YYYY-MM-DD.md)
+- `brain/` — Local embeddings
+- `credentials/` — API keys (gitignored)
+- `projects/` — Active project context
+- `archive/` — Old stuff
+- `inbox/` — Incoming items to process
 
 ---
 
-## The Cron Jobs
+## The Cron Jobs That Make It Work
 
-All automated, each agent runs these independently:
+Automation runs on schedule:
 
-| Time | Job |
-|------|-----|
-| 11:00 PM | Session sync to Supabase |
-| 11:30 PM | Memory curation |
-| 12:00 AM | GitHub push (MDs only) |
-| Sunday 9:00 PM | Models update via Perplexity |
-| Sunday 9:30 PM | Storage audit |
-| Sunday 10:00 PM | Error log review |
+**11:00 PM** — Session sync
+- Each agent writes their day's learnings to memory file
+- Extracts key topics, decisions, quotes worth keeping
 
-The weekly models update is important. Agents trained on old data default to outdated models. MODELS.md is auto-updated via Perplexity every Sunday, so they always use current models. No more defaulting to last year's versions.
+**11:30 PM** — Curation
+- Agents review recent memory files
+- Update MEMORY.md with significant long-term items
+- Clean up noise, keep signal
+
+**12:00 AM** — GitHub push
+- All agents push their workspace to shared GitHub repo
+- Each agent has their own folder
+- Everyone can see everyone's files
+
+**Sunday 9:00 PM** — Models update
+- Review MODELS.md
+- Update which models to use for which tasks
+- Keep the AI toolkit current
 
 ---
 
 ## Multi-Agent Setup
 
-Three agents across three machines. Each operates independently but syncs to:
-- Same Supabase project
-- Same GitHub repository
+I run a team:
 
-GitHub structure:
-```
-agent-army/
-  shared/
-    MODELS.md
-    DECISIONS.md
-    knowledge/
-  agents/
-    clark-mini1/
-    clark-mini2/
-    clark-macbook/
-```
+| Agent | Role | Domain |
+|-------|------|--------|
+| Stephen | The Brain | Everything. The boss. |
+| Pinky | Research & Comms | Strategy, content, outreach |
+| Reina | UX & Frontend | Design, deployments |
+| Clark | Backend & Data | Infrastructure, APIs, databases |
 
-Each agent can see the others' folders. Clark can read what happened on the MacBook. The shared MODELS.md means everyone uses the same current models.
+Each agent has:
+- Own local brain (Postgres + embeddings)
+- Own workspace folder
+- Own GitHub folder in shared repo
+- Access to shared Supabase
+- Ability to see other agents' public files
 
-For credentials: Local stuff (Google auth, GitHub PAT) stays local in `credentials/`. Shared API keys live in Supabase and get fetched when needed.
+When Pinky researches something, she writes it up. Clark can pull that research when building the related API. Reina can see both when designing the frontend.
 
----
-
-## What Gets Pushed, What Doesn't
-
-**Push to GitHub:**
-- All core .md files
-- brain/*.md
-- projects/*/README.md and context.md
-
-**Never push:**
-- RESTRICTED.md
-- credentials/
-- memory/ daily logs
-- Raw session data
-- Anything with API keys
-
-Learned that last one the hard way.
+**The agents work like a team because they share memory like a team.**
 
 ---
 
-## Why This Instead of Letta or Mem0
+## What This Actually Looks Like
 
-The GitHub-based system we're building is more transparent and human-controllable than either of those solutions. I can see exactly what the agent "knows" by looking at the files. I can edit it directly. Git shows me exactly what changed and when.
+I'm not a webdev. I think about these things from a business perspective — what's simple and logical rather than "coding things."
 
-Letta's Context Repositories are close to what we're doing - they're also git-based - but it's too code-focused for my needs. Mem0's compression is clever, but it's a black box. I don't know what got compressed away.
+Here's a real example:
 
-The difference is I'm not a webdev. I think about this from a business perspective: What's simple? What's logical? What actually solves the problem without overengineering it?
+**Monday:** I tell Clark about a new product direction. He saves it, pushes to Supabase under "product strategy."
 
-Raw conversations are the backbone. Curate what matters into readable markdown. Version it with Git. Archive the full history in Supabase. Agents can read markdown. Humans can read markdown. No black boxes.
+**Tuesday:** I ask Pinky to research competitors. She pulls the product strategy from Supabase, does research, saves findings.
+
+**Wednesday:** Reina starts designing. She pulls both the strategy AND the research. She knows the full picture without me repeating myself.
+
+**Thursday:** I change my mind (because I'm me). I tell Clark. He updates the strategy. Other agents see the updated version on their next session.
+
+No manual syncing. No copy-pasting context. No explaining the same thing three times.
 
 ---
 
-## Current Status
+## The Simple Truth
 
-Testing this now. Just cleaned up Clark today. Adding the docs to all three agents. The Supabase sync is working. The cron jobs are set up. The file structure is in place.
+I'm running what amounts to an AI dev team. They need shared memory just like human teams need shared docs, Slack, and meetings.
 
-It's not perfect yet. But the foundation is solid: raw conversations as the backbone, curated markdown as working memory, clear rules for what goes where.
+The architecture isn't complex:
+- Each agent has a brain (local)
+- All agents share knowledge (Supabase)
+- Files sync daily (GitHub)
+- Periodic curation keeps it clean
 
-34,000 conversations. Finally organized in a way that can actually be used.
+**It shouldn't be that hard. It isn't that hard.**
 
-That's all I wanted. Agents that remember.
+I just want my AI agents to remember what I said. Now they do.
+
+---
+
+## Get Started
+
+If you want to build something similar:
+
+1. **Start with files** — SOUL.md, MEMORY.md, daily logs
+2. **Add local storage** — SQLite or Postgres with embeddings
+3. **Share what matters** — Central DB other agents can access
+4. **Automate syncing** — Cron jobs to push/pull/curate
+5. **Keep it simple** — If you can't explain it in one sentence, it's too complex
+
+The goal isn't a fancy system. The goal is continuity. The AI should know what happened yesterday without you telling it.
+
+**That's it. That's the whole thing.**
+
+---
+
+*Built by someone who can't code but runs an AI team anyway. If I can do it, so can you.*

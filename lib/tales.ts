@@ -1883,7 +1883,7 @@ Small victories.
     featured: false,
     isPillar: false,
     silo: 'ai-coding',
-    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/hero.jpg',
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/hero.png',
     heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/i-just-want-my-ai-agent-to-remember.mp4',
     images: [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/i-just-want-my-ai-agent-to-remember/confused-technical.png', alt: 'Stephen confused by Letta and Mem0 technical documentation', afterSection: 'Looking at What Everyone Else Has Built' },
