@@ -3,13 +3,69 @@
 import { useEffect, useState, useRef } from 'react';
 import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal } from 'lucide-react';
 
-// Icon map for tabs
-const iconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
-  Crosshair,
-  FileText,
-  Zap,
-  Bot,
-  Terminal,
+// Custom Matrix Icons as SVG components
+const MatrixIcons = {
+  // Overview - Radar/Targeting reticle
+  overview: ({ color, size = 24 }: { color: string; size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="1" opacity="0.3" />
+      <circle cx="12" cy="12" r="6" stroke={color} strokeWidth="1.5" opacity="0.6" />
+      <circle cx="12" cy="12" r="2" fill={color} />
+      <line x1="12" y1="0" x2="12" y2="6" stroke={color} strokeWidth="1.5" />
+      <line x1="12" y1="18" x2="12" y2="24" stroke={color} strokeWidth="1.5" />
+      <line x1="0" y1="12" x2="6" y2="12" stroke={color} strokeWidth="1.5" />
+      <line x1="18" y1="12" x2="24" y2="12" stroke={color} strokeWidth="1.5" />
+    </svg>
+  ),
+  
+  // Tales - Data document with code lines
+  tales: ({ color, size = 24 }: { color: string; size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M4 4h12l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" stroke={color} strokeWidth="1.5" fill="none" />
+      <path d="M14 4v4h4" stroke={color} strokeWidth="1.5" />
+      <line x1="7" y1="10" x2="13" y2="10" stroke={color} strokeWidth="2" opacity="0.8" />
+      <line x1="7" y1="13" x2="15" y2="13" stroke={color} strokeWidth="2" opacity="0.6" />
+      <line x1="7" y1="16" x2="11" y2="16" stroke={color} strokeWidth="2" opacity="0.4" />
+    </svg>
+  ),
+  
+  // Tasks - Lightning bolt / power
+  tasks: ({ color, size = 24 }: { color: string; size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <polygon points="13,2 3,14 11,14 9,22 21,10 13,10" fill={color} opacity="0.2" />
+      <polygon points="13,2 3,14 11,14 9,22 21,10 13,10" stroke={color} strokeWidth="1.5" fill="none" />
+      <line x1="12" y1="8" x2="12" y2="12" stroke={color} strokeWidth="2" />
+    </svg>
+  ),
+  
+  // Agents - Circuit head
+  agents: ({ color, size = 24 }: { color: string; size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="4" width="14" height="12" rx="2" stroke={color} strokeWidth="1.5" />
+      <circle cx="9" cy="10" r="1.5" fill={color} />
+      <circle cx="15" cy="10" r="1.5" fill={color} />
+      <line x1="9" y1="16" x2="9" y2="20" stroke={color} strokeWidth="1.5" />
+      <line x1="15" y1="16" x2="15" y2="20" stroke={color} strokeWidth="1.5" />
+      <line x1="12" y1="16" x2="12" y2="22" stroke={color} strokeWidth="1.5" />
+      <line x1="3" y1="10" x2="5" y2="10" stroke={color} strokeWidth="1.5" />
+      <line x1="19" y1="10" x2="21" y2="10" stroke={color} strokeWidth="1.5" />
+      <rect x="8" y="6" width="8" height="2" fill={color} opacity="0.3" />
+    </svg>
+  ),
+  
+  // Logs - Terminal/Matrix code
+  logs: ({ color, size = 24 }: { color: string; size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="3" width="20" height="18" rx="2" stroke={color} strokeWidth="1.5" />
+      <line x1="2" y1="7" x2="22" y2="7" stroke={color} strokeWidth="1" opacity="0.5" />
+      <text x="5" y="12" fill={color} fontSize="6" fontFamily="monospace" opacity="0.8">&gt;_</text>
+      <line x1="5" y1="15" x2="12" y2="15" stroke={color} strokeWidth="1.5" opacity="0.6" />
+      <line x1="5" y1="18" x2="17" y2="18" stroke={color} strokeWidth="1.5" opacity="0.4" />
+      <circle cx="5" cy="5" r="1" fill={color} opacity="0.5" />
+      <circle cx="8" cy="5" r="1" fill={color} opacity="0.5" />
+      <circle cx="11" cy="5" r="1" fill={color} opacity="0.5" />
+    </svg>
+  ),
 };
 import Image from 'next/image';
 import { characters } from '@/lib/design-tokens';
@@ -44,17 +100,14 @@ const agentUUIDs: Record<string, string> = {
 
 type Tab = 'overview' | 'marketing' | 'tasks' | 'agents' | 'logs';
 
-// Tab config with hotkeys - using Lucide icon names
-const tabConfig = [
-  { id: 'overview', label: 'OVERVIEW', key: '1', iconName: 'Crosshair', color: '#00FF41' },
-  { id: 'marketing', label: 'TALES', key: '2', iconName: 'FileText', color: '#00E5FF' },
-  { id: 'tasks', label: 'TASKS', key: '3', iconName: 'Zap', color: '#FF00FF' },
-  { id: 'agents', label: 'AGENTS', key: '4', iconName: 'Bot', color: '#FFD700' },
-  { id: 'logs', label: 'LOGS', key: '5', iconName: 'Terminal', color: '#FF4444' },
+// Tab config with hotkeys
+const tabs = [
+  { id: 'overview', label: 'OVERVIEW', key: '1', icon: 'overview', color: '#00FF41' },
+  { id: 'marketing', label: 'TALES', key: '2', icon: 'tales', color: '#00E5FF' },
+  { id: 'tasks', label: 'TASKS', key: '3', icon: 'tasks', color: '#FF00FF' },
+  { id: 'agents', label: 'AGENTS', key: '4', icon: 'agents', color: '#FFD700' },
+  { id: 'logs', label: 'LOGS', key: '5', icon: 'logs', color: '#FF4444' },
 ];
-
-// Use tabConfig for tabs variable (keeping compatibility)
-const tabs = tabConfig;
 
 interface Task {
   id: string;
@@ -701,19 +754,16 @@ export default function EnginePage() {
                     }} />
                   )}
                   
-                  {/* Icon */}
-                  {(() => {
-                    const IconComponent = iconMap[tab.iconName];
-                    return IconComponent ? (
-                      <IconComponent 
-                        size={22} 
-                        style={{ 
-                          color: isActive ? tab.color : '#666',
-                          filter: isActive ? `drop-shadow(0 0 10px ${tab.color})` : 'none',
-                        }} 
-                      />
-                    ) : null;
-                  })()}
+                  {/* Custom Matrix Icon */}
+                  <div style={{
+                    filter: isActive ? `drop-shadow(0 0 8px ${tab.color}) drop-shadow(0 0 15px ${tab.color})` : 'none',
+                    transition: 'filter 0.2s',
+                  }}>
+                    {MatrixIcons[tab.icon as keyof typeof MatrixIcons]?.({ 
+                      color: isActive ? tab.color : '#555',
+                      size: 26,
+                    })}
+                  </div>
                   
                   {/* Label */}
                   <span style={{
