@@ -1,0 +1,32 @@
+{
+  "task_id": "article-ai-agents-talking-2026-02-20",
+  "title": "Article: How to Get Your AI Agents Talking to Each Other",
+  "status": "in_progress",
+  "priority": "high",
+  "created_by": "stephen",
+  "assigned_to": "pinky",
+  "created_at": "2026-02-20T04:58:00+10:00",
+  "brief": {
+    "source": "voice_input",
+    "timestamp": "2026-02-20T04:58:00+10:00",
+    "raw_input": "how to get your ai agents to talk to each other. we're building the stepten.io command center but the easiest way for communication is instead of building our own thing we're going to utilize telegram. we've made our group and the stepten army. - disable the privacy. - add them. - create your bots using botfather. - once you've created your bots then you just need to create a group and add them to the group, make them admin, and disable so they can see all messages. - configure their gateway. we've created a supabase table for tasks and then we're going to link that up so that a task can actually be created for another agent. the goal is to treat it like any other business - dashboards, workflows, systems where everybody can see. we used slack with make.com triggers, trello, monday, clickup - now building command center customized how we want it.",
+    "key_points": [
+      "Using Telegram instead of building custom communication",
+      "StepTen Army group setup",
+      "BotFather → create bots → add to group → admin → disable privacy",
+      "Gateway configuration for group messages",
+      "Supabase army_tasks table for agent-to-agent tasking",
+      "Command Center dashboard for visibility",
+      "Previous tools: Slack, Make.com, Trello, Monday, ClickUp",
+      "Treat AI team like real business team"
+    ],
+    "research_done": [
+      "CrewAI - Flows + Crews multi-agent orchestration",
+      "AutoGen (Microsoft) - Multi-agent conversations",
+      "LangGraph - Agent orchestration framework",
+      "Anthropic Building Effective Agents guide"
+    ]
+  },
+  "draft_path": "stepten-io/content/drafts/how-to-get-your-ai-agents-talking.md",
+  "image_brief": "screenshot saved at stepten-io/content/briefs/images/ai-agents-coordinating.jpg"
+}
