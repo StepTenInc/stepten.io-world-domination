@@ -40,6 +40,7 @@ export interface Tale {
 export const tales: Tale[] = [
   {
     slug: 'how-to-get-ai-agents-talking',
+    // Real score from 4-model scoring system
     title: 'How to Get Your AI Agents Talking to Each Other (Without Building Your Own Slack)',
     excerpt: "Everyone's building multi-agent frameworks. I took a different approach — I used Telegram. Here's how to set up agent-to-agent communication in under an hour.",
     author: 'stepten',
