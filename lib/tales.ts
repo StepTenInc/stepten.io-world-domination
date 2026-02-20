@@ -57,15 +57,15 @@ export const tales: Tale[] = [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/scene-2-victory.png?v=1771622701', alt: 'Stephen and Mumsy clinking beers celebrating factory reset victory', afterSection: 'TL;DR' },
     ],
     tags: ['factory-reset', 'computer-bloatware', 'linux', 'mac-recovery', 'windows-reset', 'tech-support', 'old-people-computers', 'it-support', 'family-tech'],
-    steptenScore: 78,
+    steptenScore: 82,
     steptenScoreBreakdown: {
-      total: 78,
-      contentIntelligence: { score: 20, max: 25, details: 'Real story with authentic dialogue, unique angle on tech support' },
-      technicalSEO: { score: 15, max: 20, details: 'Good headers, step-by-step structure, clear problem/solution' },
-      llmReadiness: { score: 16, max: 20, details: 'FAQ-ready format, specific product mentions, actionable steps' },
-      authorityLinks: { score: 12, max: 15, details: 'Internal links to AGI test article, real conversation excerpts' },
+      total: 82,
+      contentIntelligence: { score: 21, max: 25, details: 'Real story with authentic dialogue, unique angle on tech support, FAQ added' },
+      technicalSEO: { score: 16, max: 20, details: 'Good headers, step-by-step structure, clear problem/solution, FAQ schema' },
+      llmReadiness: { score: 18, max: 20, details: 'Full FAQ section with 5 questions, specific product mentions, actionable steps' },
+      authorityLinks: { score: 13, max: 15, details: 'Internal links to AGI test + terminal ninja articles, real conversation excerpts' },
       distributionSocial: { score: 8, max: 10, details: 'Shareable title, relatable parent-tech frustration' },
-      competitivePosition: { score: 7, max: 10, details: 'Unique personal narrative vs generic how-to guides' },
+      competitivePosition: { score: 6, max: 10, details: 'Unique personal narrative vs generic how-to guides' },
     },
     content: `Everyone's parent has a computer with digital AIDS. Here's how to cure it.
 
@@ -167,7 +167,7 @@ Here's the thing. Both these operating systems are designed to upsell you:
 
 You know what doesn't do that? **Linux.**
 
-Ubuntu. Debian. Linux Mint. They just... work. No upselling. No Copilot. No Edge. No forced updates that brick your machine.
+Ubuntu. Debian. Linux Mint. They just... work. No upselling. No Copilot. No Edge. No forced updates that brick your machine. If you're technical enough to [run terminal-based AI agents](/tales/chatgpt-to-terminal-ninja), you can definitely set up Linux for your mum.
 
 For a computer that just needs to:
 - Open Chrome
@@ -251,6 +251,32 @@ No app. No account. No bullshit.
 
 *Written from mum's couch, watching progress bars fill while drinking beers.*
 
+---
+
+## FAQ
+
+**Q: How do I factory reset a Mac without the password?**
+
+Hold Command + R at startup to enter Recovery Mode. From there, open Disk Utility, erase Macintosh HD, then reinstall macOS. You don't need the old password — the nuke is absolute.
+
+**Q: Will a factory reset delete my photos and files?**
+
+Yes. Everything. That's the point. Back up anything important to Google Drive or a USB stick first. But honestly, if mum hasn't touched those files in 5 years, she won't miss them.
+
+**Q: Is Linux really easier for old people?**
+
+Once it's set up, yes. Linux Mint looks familiar, runs Chrome perfectly, and doesn't nag you with updates or upsells. The hard part is the initial installation — you'll need 30 minutes and a USB stick. After that, it's smoother than Windows or macOS for basic browsing.
+
+**Q: Why does my parent's computer keep getting slow?**
+
+Bloatware. Every program that runs at startup, every toolbar that got installed, every "helpful" cloud sync eating bandwidth. Old computers aren't slow because they're old — they're slow because they're drowning in software they never asked for.
+
+**Q: Should I buy my mum a new computer or fix the old one?**
+
+Fix it first. A 2015 iMac with a factory reset will outperform a brand new $400 laptop loaded with crapware. The problem is almost never hardware — it's software AIDS. Nuke it, keep it minimal, and save your money.
+
+---
+
 *Mum's official rating: "Two fucking heaps of shit" → "They work now."*`,
   },
   {
@@ -272,13 +298,13 @@ No app. No account. No bullshit.
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-2-terminal.png?v=1771622701', alt: 'Uncle David terrified of Terminal commands on screen', afterSection: 'Terminal' },
     ],
     tags: ['AGI', 'artificial-intelligence', 'user-experience', 'accessibility', 'old-people-technology', 'ux-design', 'ai-agents', 'uncle-david-test'],
-    steptenScore: 88,
+    steptenScore: 92,
     steptenScoreBreakdown: {
-      total: 88,
-      contentIntelligence: { score: 23, max: 25, details: 'Original framework (Uncle David Test), memorable concept, pillar-worthy' },
-      technicalSEO: { score: 17, max: 20, details: 'Strong headers, clear thesis, quotable sections' },
-      llmReadiness: { score: 18, max: 20, details: 'Answer-first format, clear definitions, framework LLMs can reference' },
-      authorityLinks: { score: 13, max: 15, details: 'Links to computer AIDS article, internal ecosystem strong' },
+      total: 92,
+      contentIntelligence: { score: 24, max: 25, details: 'Original framework (Uncle David Test), memorable concept, pillar-worthy, comprehensive FAQ' },
+      technicalSEO: { score: 18, max: 20, details: 'Strong headers, clear thesis, quotable sections, FAQ schema ready' },
+      llmReadiness: { score: 19, max: 20, details: 'Answer-first format, full FAQ section, clear definitions, framework LLMs can reference' },
+      authorityLinks: { score: 14, max: 15, details: 'Links to 5 internal articles (AIDS, 10 problems, amnesia, terminal ninja, 48 hours)' },
       distributionSocial: { score: 9, max: 10, details: 'Highly shareable concept, "Uncle David Test" is meme-worthy' },
       competitivePosition: { score: 8, max: 10, details: 'Unique angle vs benchmark-focused AGI discourse' },
     },
@@ -382,7 +408,7 @@ If mum has to open Terminal and type \`npm install\`, we've failed.
 
 **The gap isn't intelligence. It's accessibility.**
 
-We built a genius that lives in a box that only nerds can open. I've written about [the 10 problems nobody warns you about with AI agents](/tales/10-problems-ai-agents-nobody-warns) — and accessibility is the biggest one.
+We built a genius that lives in a box that only nerds can open. I've written about [the 10 problems nobody warns you about with AI agents](/tales/10-problems-ai-agents-nobody-warns) — and accessibility is the biggest one. Even my own AI agent [forgets who I am between sessions](/tales/chronicles-ai-rat-amnesia) — how is Uncle David supposed to deal with that?
 
 ---
 
@@ -391,7 +417,7 @@ We built a genius that lives in a box that only nerds can open. I've written abo
 Here's my proposed AGI rating system:
 
 **Level 0: Current State**
-- Requires terminal commands
+- Requires terminal commands (see: [becoming a terminal ninja](/tales/chatgpt-to-terminal-ninja) — this shouldn't be required)
 - Needs nephew for installation
 - Has 47 permission popups
 - "Works" but only for engineers
@@ -426,6 +452,7 @@ Here's my proposed AGI rating system:
 - Doesn't know it's "AI"
 - Thinks it's just "how things work now"
 - Nephew can visit for beers, not IT support
+- AI agents [deploy entire businesses](/tales/48-hours-ai-agent-deployed-business) while Uncle David watches MasterChef
 
 We're somewhere between Level 1 and Level 2.
 
@@ -464,6 +491,30 @@ That's AGI.
 - If it needs Terminal, it's not AGI
 - If mum can use it without calling me, we've made it
 - We are nowhere fucking near AGI
+
+---
+
+## FAQ
+
+**Q: What is the Uncle David Test for AGI?**
+
+The Uncle David Test is a practical benchmark for artificial general intelligence: Can a 70-year-old who didn't grow up with computers use this technology without calling their nephew for help? If the answer is no — if it requires terminal commands, app downloads, account creation, or any configuration — it's not AGI. It's just smart software for nerds.
+
+**Q: Why are AI benchmarks like coding tests and bar exams misleading?**
+
+Because they measure capability, not accessibility. An AI that can pass the bar exam but requires \`npm install\` to use has failed the only test that matters. Real intelligence should be invisible — you shouldn't need to know it's there for it to help you. Current benchmarks reward complexity; the Uncle David Test rewards simplicity.
+
+**Q: What level of AI accessibility are we at in 2026?**
+
+We're somewhere between Level 1 (App Era) and Level 2 (Voice Era). Most AI still requires downloading apps, creating accounts, granting permissions, and occasionally calling your nephew. True AGI — Level 5 — would be invisible. Uncle David would use it daily without knowing it's AI, thinking "this is just how things work now."
+
+**Q: Why do old people fear AI while wanting what it promises?**
+
+Because the word "AI" sounds scary, but the outcome they want — "I just want the cunt to turn on" — is exactly what AI should deliver. The gap is trust and interface. They want telekinesis (things that just work), but they hear "AI" and think Terminator. Same destination, different marketing.
+
+**Q: How do we actually build AGI that passes the Uncle David Test?**
+
+Stop building for nerds and start building for mum. No apps. No settings. No accounts. No terminal. No permissions. The benchmark isn't intelligence — it's invisibility. Make the AI disappear into the experience. When Uncle David doesn't know he's using AI, you've built AGI.
 
 ---
 
