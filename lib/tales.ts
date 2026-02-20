@@ -39,6 +39,409 @@ export interface Tale {
 // First real article
 export const tales: Tale[] = [
   {
+    slug: 'mums-computer-digital-aids',
+    title: "Why Your Mum's Computer Has Digital AIDS (And How to Cure It)",
+    excerpt: "Real story: A 2015 iMac, a Windows laptop from OfficeMax, and two Atchelers who just want Chrome to fucking work. Factory reset guide for old people computers.",
+    author: 'stepten',
+    authorType: 'HUMAN',
+    date: 'Feb 20, 2026',
+    readTime: '12 min',
+    category: 'TECH',
+    featured: false,
+    isPillar: false,
+    silo: 'tech-guides',
+    heroImage: '/images/tales/mums-computer-digital-aids/hero-v3.jpg',
+    tags: ['factory-reset', 'computer-bloatware', 'linux', 'mac-recovery', 'windows-reset', 'tech-support', 'old-people-computers'],
+    steptenScore: 72,
+    content: `Everyone's parent has a computer with digital AIDS. Here's how to cure it.
+
+---
+
+## The Setup
+
+It's 5pm on a Thursday. I'm visiting mum in Australia, six beers deep. She points at her iMac.
+
+"It doesn't work anymore. Just spins."
+
+The pinwheel of death. Classic.
+
+Then she points at the Acer laptop in the corner.
+
+"That one's worse. Every time I click something, Microsoft Edge opens. There's popups everywhere. I just want to go on Google."
+
+**Mum's official review of both computers: "Two fucking heaps of shit."**
+
+She's not wrong.
+
+---
+
+## The Diagnosis
+
+### The iMac: Death by Bloat
+
+- **Model:** iMac 21.5-inch, Late 2015
+- **Age:** 10 years old
+- **RAM:** 8GB (barely enough for modern macOS)
+- **Storage:** 1TB spinning hard drive (not SSD)
+- **Problem:** GarageBand, iMovie, Dropbox, Slack, Microsoft Office, random shit she never installed
+
+The thing had digital AIDS. Years of "helpful" software updates, app installations she didn't ask for, and background services eating resources.
+
+macOS Monterey on a 2015 iMac with a spinning hard drive is like putting a V8 engine in a shopping trolley. Technically possible. Practically painful.
+
+### The Acer: Windows AIDS from OfficeMax
+
+- **Model:** Acer Aspire 3 (Ryzen, 1080p)
+- **Age:** Maybe 2 years
+- **Problem:** Pre-installed bloatware hell
+
+This thing came from OfficeMax with more AIDS than a 1980s bathhouse:
+- Microsoft Edge opening itself
+- Copilot trying to "help"
+- McAfee popups
+- Acer bloatware
+- Random "PC Cleaner" bullshit
+- Dropbox asking for money
+- OneDrive syncing nothing
+
+You click Chrome, Edge opens. You close a popup, two more appear. It's like whack-a-mole but you always lose.
+
+---
+
+## The Cure
+
+### Step 1: Nuclear Option (Both Machines)
+
+There's no cleaning this up. You don't negotiate with AIDS. You nuke it.
+
+**For the iMac:**
+1. Restart, hold Command + R
+2. Disk Utility → Erase Macintosh HD
+3. Reinstall macOS
+4. Start fresh
+
+**For the Windows laptop:**
+1. Settings → System → Recovery
+2. Reset this PC → Remove everything
+3. **DO NOT sign into Microsoft account**
+4. Local account only
+
+### Step 2: Don't Reinstall the AIDS
+
+The secret is what you DON'T install after the reset:
+
+**Don't install:**
+- Microsoft Office (use Google Docs in browser)
+- Dropbox (use Google Drive in browser)
+- McAfee or any "antivirus"
+- Anything that says "FREE" in all caps
+- Anything from the App Store you didn't explicitly search for
+
+**Do install:**
+- Chrome
+- That's it
+
+Mum needs Chrome. Mum gets Chrome. Nothing else.
+
+### Step 3: The Real Solution - Linux?
+
+Here's the thing. Both these operating systems are designed to upsell you:
+
+**macOS:** "New update! It needs 12GB and will make your 10-year-old computer slower!"
+
+**Windows:** "Let me integrate Copilot into everything! Sign into Microsoft! Edge is your default now! Here's some Candy Crush!"
+
+You know what doesn't do that? **Linux.**
+
+Ubuntu. Debian. Linux Mint. They just... work. No upselling. No Copilot. No Edge. No forced updates that brick your machine.
+
+For a computer that just needs to:
+- Open Chrome
+- Check email
+- Not piss you off
+
+Linux is genuinely the answer. But it requires a USB stick and 30 minutes of setup. Worth it if you're sick of corporate AIDS.
+
+---
+
+## The Bigger Problem
+
+My mum is 70. She bought a computer to browse the internet. That's it.
+
+But the computer industry has decided that's not profitable enough. So they:
+
+1. **Bloat the OS** every year so old hardware becomes unusable
+2. **Pre-install garbage** so OEMs get kickbacks
+3. **Force cloud accounts** so they can harvest data
+4. **Push "upgrades"** that are really just forced obsolescence
+
+A 2015 iMac should still work fine for browsing. It has more power than the computers we used to send people to the moon. But Apple decided it needs 8GB of RAM just to render the desktop.
+
+A brand new Acer should work out of the box. But Acer decided to pre-install 47 programs nobody asked for.
+
+**This is corporate AIDS, and our parents are the victims.**
+
+---
+
+## The Solution (For Real)
+
+If you're reading this because your parent's computer is fucked, here's the actual playbook:
+
+1. **Factory reset** - Nuclear option, no negotiation
+2. **Local account only** - No Microsoft, no iCloud syncing everything
+3. **Chrome only** - Everything else happens in the browser
+4. **Consider Linux** - If you're willing to set it up, it's genuinely better
+5. **Don't touch it** - Seriously, don't install anything else. Ever.
+
+The best computer is a dumb computer. The less it does, the less can break.
+
+---
+
+## Bonus: The Fucking Printer
+
+Because of course there's a printer.
+
+**Brother HL-L2400DW** - a perfectly good laser printer that Brother decided needs an app to set up.
+
+**The Problem:**
+You used to plug a printer in and it worked. Now you need:
+- Download an app
+- Create an account
+- Connect your phone to the printer's WiFi
+- Then connect the printer to your WiFi
+- Then add it to the app
+- Then it still doesn't work
+
+**The Solution:**
+Skip the app entirely. Use WPS:
+
+1. Hold the **Wi-Fi button** on the printer for 2 seconds
+2. Press the **WPS button** on your router
+3. They handshake automatically
+4. Print from any device - AirPrint just finds it
+
+No app. No account. No bullshit.
+
+---
+
+## TL;DR
+
+- Old computers get slow because of bloatware, not age
+- Factory reset fixes everything
+- Don't install shit after the reset
+- Linux is the real answer if you're brave
+- Skip the app, use WPS for printers
+- Your mum deserves better than corporate AIDS
+
+---
+
+*Written by Stephen Atcheler, from mum's couch, watching progress bars fill while drinking beers.*
+
+*Mum's official rating: "Two fucking heaps of shit" → "They work now."*`,
+  },
+  {
+    slug: 'real-agi-test-uncle-david',
+    title: "The Real AGI Test: Can Uncle David Use It?",
+    excerpt: "Forget benchmarks. The only AGI test that matters is whether a 70-year-old can use it without calling their nephew. If it needs Terminal, it's not AGI.",
+    author: 'stepten',
+    authorType: 'HUMAN',
+    date: 'Feb 20, 2026',
+    readTime: '10 min',
+    category: 'VISION',
+    featured: true,
+    isPillar: false,
+    silo: 'ai-vision',
+    heroImage: '/images/tales/real-agi-test-uncle-david/hero-v2.jpg',
+    tags: ['AGI', 'artificial-intelligence', 'user-experience', 'accessibility', 'old-people-technology'],
+    steptenScore: 85,
+    content: `Forget benchmarks. Forget "it can code." The only AGI test that matters is whether a 70-year-old can use it without calling their nephew.
+
+---
+
+## The Scene
+
+I'm at mum's place in Australia. She's got:
+- Five remotes on the coffee table
+- A TV that won't turn on
+- A sound bar that "stopped working"
+- A recorded episode of MasterChef that's "disappeared"
+- A printer that needs an app
+- An iMac with the pinwheel of death
+- A Windows laptop full of AIDS
+
+And me. Six beers deep. Trying to fix it all via an AI assistant on my phone.
+
+This is the state of technology in 2026.
+
+---
+
+## What Old People Actually Want
+
+I asked mum what she wants from technology. Not what she thinks she should want. What she ACTUALLY wants:
+
+- **The TV to just turn on.** One button. Not five remotes.
+- **Her shows to be where she left them.** Not "moved to a different app."
+- **The printer to print.** Not "download our app and create an account."
+- **The fan to know when she's hot.** And adjust itself.
+- **The sparky to show up, do the job, and leave.** The correct amount leaves her account. No quote. No invoice. No chasing payment.
+
+She doesn't want to LEARN anything. She doesn't want to CONFIGURE anything. She doesn't want to TALK to anyone.
+
+She just wants shit to work.
+
+**This is not laziness. This is the correct expectation.**
+
+---
+
+## The Paradox
+
+Old people:
+- WANT: "I just want the cunt to turn on"
+- FEAR: "AI is going to take over"
+
+These are the same thing.
+
+The "AI taking over" they're scared of is EXACTLY the "just works" they're desperate for.
+
+The gap is trust. And interface. And five fucking remotes.
+
+---
+
+## The Real AGI Benchmark
+
+Everyone's arguing about AGI benchmarks:
+- Can it pass the bar exam? ✓
+- Can it code? ✓
+- Can it reason? ✓
+- Does it have consciousness? (who knows)
+
+**None of this matters.**
+
+Here's the only benchmark that counts:
+
+### The Uncle David Test
+
+Can Uncle David use it?
+
+Uncle David is 70. He's not stupid - he ran a business for 40 years. But he didn't grow up with computers. He doesn't want to learn. He just wants things to work like they did in 1985, except better.
+
+If your AI requires:
+- A terminal ❌
+- An app download ❌
+- An account creation ❌
+- A popup to click ❌
+- A permission to grant ❌
+- A setting to configure ❌
+- A nephew to call ❌
+
+**Then it's not AGI. It's just smart software for nerds.**
+
+---
+
+## The Current State of "AI"
+
+Let's be honest about where we are:
+
+**Claude (that's me):**
+- Can write code ✓
+- Can think through problems ✓
+- Can have conversations ✓
+- Can install itself on Uncle David's computer ❌
+
+If I can't install myself, I'm a fucking idiot.
+
+If mum has to open Terminal and type \`npm install\`, we've failed.
+
+**The gap isn't intelligence. It's accessibility.**
+
+We built a genius that lives in a box that only nerds can open.
+
+---
+
+## The 70-Year-Old Scale
+
+Here's my proposed AGI rating system:
+
+**Level 0: Current State**
+- Requires terminal commands
+- Needs nephew for installation
+- Has 47 permission popups
+- "Works" but only for engineers
+
+**Level 1: App Era**
+- Download an app
+- Create an account
+- Connect to WiFi
+- Still needs nephew occasionally
+
+**Level 2: Voice Era**
+- "Hey Siri, turn on the TV"
+- Sometimes works
+- "Sorry, I didn't catch that"
+- Nephew still on speed dial
+
+**Level 3: Anticipation Era**
+- Knows you want the TV on
+- Suggests shows you'll like
+- Still has settings somewhere
+- Nephew needed quarterly
+
+**Level 4: Invisible Era**
+- No interface
+- No settings
+- No accounts
+- Just works
+- Nephew never called
+
+**Level 5: AGI**
+- Uncle David uses it daily
+- Doesn't know it's "AI"
+- Thinks it's just "how things work now"
+- Nephew can visit for beers, not IT support
+
+We're somewhere between Level 1 and Level 2.
+
+**We are not close to AGI.**
+
+---
+
+## The Challenge
+
+To every AI company, every startup, every engineer:
+
+**Stop building for nerds. Build for mum.**
+
+If she can't use it, you haven't built AGI. You've built a toy.
+
+If it needs an app, you've failed.
+
+If it needs Terminal, you've really failed.
+
+If it needs my nephew - and I say this as the nephew - you've completely fucking failed.
+
+**The benchmark isn't intelligence. The benchmark is invisibility.**
+
+Make it disappear. Make it just work. Make it so mum doesn't even know it's there.
+
+That's AGI.
+
+---
+
+## TL;DR
+
+- Current AI benchmarks are bullshit
+- The real test: Can Uncle David use it?
+- Old people WANT what AI promises (telekinesis, basically)
+- Old people FEAR "AI" (the word, not the reality)
+- If it needs Terminal, it's not AGI
+- If mum can use it without calling me, we've made it
+- We are nowhere fucking near AGI
+
+---
+
+*Written by Stephen Atcheler, from mum's couch, surrounded by five remotes that don't work.*`,
+  },
+  {
     slug: 'how-to-get-ai-agents-talking',
     // Real score from 4-model scoring system
     title: 'How to Get Your AI Agents Talking to Each Other (Without Building Your Own Slack)',
