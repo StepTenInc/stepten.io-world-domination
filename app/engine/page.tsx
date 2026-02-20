@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal } from 'lucide-react';
+import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal, RefreshCw } from 'lucide-react';
 
 // Custom generated icons paths
 const iconPaths: Record<string, string> = {
@@ -87,6 +87,37 @@ export default function EnginePage() {
   const [tales, setTales] = useState<Tale[]>([]);
   const [loading, setLoading] = useState(true);
   const [dockHovered, setDockHovered] = useState(false);
+  const [contentQueue, setContentQueue] = useState<any[]>([]);
+
+  // Load content queue
+  async function loadContentQueue() {
+    const { data } = await steptenSupabase
+      .from('content_queue')
+      .select('*')
+      .in('status', ['idea', 'queued', 'researched', 'writing'])
+      .order('priority', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(10);
+    if (data) setContentQueue(data);
+  }
+
+  // Approve idea for auto-generation
+  async function approveIdea(id: string) {
+    await steptenSupabase
+      .from('content_queue')
+      .update({ status: 'approved' })
+      .eq('id', id);
+    loadContentQueue();
+  }
+
+  // Skip idea
+  async function skipIdea(id: string) {
+    await steptenSupabase
+      .from('content_queue')
+      .update({ status: 'skipped' })
+      .eq('id', id);
+    loadContentQueue();
+  }
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Keyboard navigation
@@ -156,6 +187,17 @@ export default function EnginePage() {
         .limit(50);
       
       if (talesData) setTales(talesData);
+
+      // Fetch content queue
+      const { data: queueData } = await steptenSupabase
+        .from('content_queue')
+        .select('*')
+        .in('status', ['idea', 'queued', 'researched', 'writing'])
+        .order('priority', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(10);
+      
+      if (queueData) setContentQueue(queueData);
       
       setLoading(false);
     };
@@ -356,6 +398,47 @@ export default function EnginePage() {
             {/* ═══════ MARKETING TAB (TALES) ═══════ */}
             {activeTab === 'marketing' && (
               <div>
+                {/* Content Queue Section */}
+                <div style={{ marginBottom: '30px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <h2 style={{ fontFamily: '"Orbitron", monospace', fontSize: '1rem', fontWeight: 700, color: '#A78BFA', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      📝 CONTENT QUEUE ({contentQueue.length})
+                    </h2>
+                    <button onClick={loadContentQueue} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
+                      <RefreshCw size={14} style={{ color: '#666' }} />
+                    </button>
+                  </div>
+                  
+                  {contentQueue.length > 0 ? (
+                    <div style={{ background: 'rgba(139,92,246,0.05)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: '8px', overflow: 'hidden' }}>
+                      {contentQueue.slice(0, 5).map((idea: any) => (
+                        <div key={idea.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid rgba(139,92,246,0.1)' }}>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#E5E5E5', marginBottom: '4px' }}>{idea.title}</div>
+                            <div style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: '#666' }}>
+                              <span style={{ color: idea.status === 'idea' ? '#EAB308' : idea.status === 'queued' ? '#3B82F6' : '#A78BFA', marginRight: '12px' }}>● {idea.status.toUpperCase()}</span>
+                              Priority: {idea.priority}
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button onClick={() => approveIdea(idea.id)} style={{ padding: '6px 12px', background: '#00FF41', color: '#000', fontFamily: 'monospace', fontSize: '0.65rem', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>
+                              ✓ AUTO
+                            </button>
+                            <button onClick={() => skipIdea(idea.id)} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.1)', color: '#888', fontFamily: 'monospace', fontSize: '0.65rem', borderRadius: '4px', border: 'none', cursor: 'pointer' }}>
+                              ✕ SKIP
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ padding: '20px', textAlign: 'center', color: '#666', fontFamily: 'monospace', fontSize: '0.75rem', background: 'rgba(139,92,246,0.05)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: '8px' }}>
+                      No ideas in queue. Ideas are generated daily from your conversations.
+                    </div>
+                  )}
+                </div>
+
+                {/* Published Tales Section */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                   <h2 style={{ fontFamily: '"Orbitron", monospace', fontSize: '1rem', fontWeight: 700, color: '#00FF41', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <BookOpen size={20} /> TALES ({tales.length})
