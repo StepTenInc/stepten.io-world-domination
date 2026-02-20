@@ -117,12 +117,13 @@ interface ModelConfig {
   apiKeyEnv: string;
 }
 
+// LATEST MODELS - Updated Feb 2026
 const MODELS: ModelConfig[] = [
   {
-    name: 'gemini-2.5-flash',
+    name: 'gemini-2.5-pro',
     provider: 'google',
-    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
-    model: 'gemini-2.5-flash',
+    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent',
+    model: 'gemini-2.5-pro-preview-05-06',
     apiKeyEnv: 'GOOGLE_API_KEY',
   },
   {
@@ -133,10 +134,10 @@ const MODELS: ModelConfig[] = [
     apiKeyEnv: 'ANTHROPIC_API_KEY',
   },
   {
-    name: 'gpt-4o',
+    name: 'gpt-4.1',
     provider: 'openai',
     endpoint: 'https://api.openai.com/v1/chat/completions',
-    model: 'gpt-4o',
+    model: 'gpt-4.1',
     apiKeyEnv: 'OPENAI_API_KEY',
   },
   {
@@ -153,7 +154,7 @@ async function scoreWithGemini(title: string, content: string, apiKey: string): 
   const truncatedContent = content.length > 6000 ? content.substring(0, 6000) + '...[truncated]' : content;
   const prompt = SCORER_PROMPT.replace('{{TITLE}}', title).replace('{{CONTENT}}', truncatedContent);
   
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -212,7 +213,7 @@ async function scoreWithGPT(title: string, content: string, apiKey: string): Pro
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: 'gpt-4.1',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.2,
       max_tokens: 4000,
@@ -300,9 +301,9 @@ async function scoreTale(tale: { id: string; slug: string; title: string; conten
   
   // Score with each model
   const scorers = [
-    { name: 'gemini-3-flash', provider: 'google', fn: scoreWithGemini, key: keys.google },
+    { name: 'gemini-2.5-pro', provider: 'google', fn: scoreWithGemini, key: keys.google },
     { name: 'claude-sonnet-4', provider: 'anthropic', fn: scoreWithClaude, key: keys.anthropic },
-    { name: 'gpt-4o', provider: 'openai', fn: scoreWithGPT, key: keys.openai },
+    { name: 'gpt-4.1', provider: 'openai', fn: scoreWithGPT, key: keys.openai },
     { name: 'grok-3', provider: 'xai', fn: scoreWithGrok, key: keys.grok },
   ];
   
