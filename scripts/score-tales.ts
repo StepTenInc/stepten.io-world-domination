@@ -117,34 +117,34 @@ interface ModelConfig {
   apiKeyEnv: string;
 }
 
-// LATEST MODELS - Updated Feb 2026
+// LATEST MODELS - Updated Feb 20, 2026 (Perplexity researched)
 const MODELS: ModelConfig[] = [
   {
-    name: 'gemini-2.5-pro',
+    name: 'gemini-3.1-pro',
     provider: 'google',
-    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent',
-    model: 'gemini-2.5-pro-preview-05-06',
+    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent',
+    model: 'gemini-3.1-pro-preview',
     apiKeyEnv: 'GOOGLE_API_KEY',
   },
   {
-    name: 'claude-sonnet-4',
+    name: 'claude-opus-4.6',
     provider: 'anthropic',
     endpoint: 'https://api.anthropic.com/v1/messages',
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-opus-4-6',
     apiKeyEnv: 'ANTHROPIC_API_KEY',
   },
   {
-    name: 'gpt-4.1',
+    name: 'gpt-5.2',
     provider: 'openai',
     endpoint: 'https://api.openai.com/v1/chat/completions',
-    model: 'gpt-4.1',
+    model: 'gpt-5.2',
     apiKeyEnv: 'OPENAI_API_KEY',
   },
   {
-    name: 'grok-3',
+    name: 'grok-4.1-fast',
     provider: 'xai',
     endpoint: 'https://api.x.ai/v1/chat/completions',
-    model: 'grok-3',
+    model: 'grok-4-1-fast',
     apiKeyEnv: 'GROK_API_KEY',
   },
 ];
@@ -154,7 +154,7 @@ async function scoreWithGemini(title: string, content: string, apiKey: string): 
   const truncatedContent = content.length > 6000 ? content.substring(0, 6000) + '...[truncated]' : content;
   const prompt = SCORER_PROMPT.replace('{{TITLE}}', title).replace('{{CONTENT}}', truncatedContent);
   
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -192,7 +192,7 @@ async function scoreWithClaude(title: string, content: string, apiKey: string): 
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-opus-4-6',
       max_tokens: 4000,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -213,7 +213,7 @@ async function scoreWithGPT(title: string, content: string, apiKey: string): Pro
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4.1',
+      model: 'gpt-5.2',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.2,
       max_tokens: 4000,
@@ -235,7 +235,7 @@ async function scoreWithGrok(title: string, content: string, apiKey: string): Pr
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'grok-3',
+      model: 'grok-4-1-fast',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.2,
       max_tokens: 4000,
@@ -301,10 +301,10 @@ async function scoreTale(tale: { id: string; slug: string; title: string; conten
   
   // Score with each model
   const scorers = [
-    { name: 'gemini-2.5-pro', provider: 'google', fn: scoreWithGemini, key: keys.google },
-    { name: 'claude-sonnet-4', provider: 'anthropic', fn: scoreWithClaude, key: keys.anthropic },
-    { name: 'gpt-4.1', provider: 'openai', fn: scoreWithGPT, key: keys.openai },
-    { name: 'grok-3', provider: 'xai', fn: scoreWithGrok, key: keys.grok },
+    { name: 'gemini-3.1-pro', provider: 'google', fn: scoreWithGemini, key: keys.google },
+    { name: 'claude-opus-4.6', provider: 'anthropic', fn: scoreWithClaude, key: keys.anthropic },
+    { name: 'gpt-5.2', provider: 'openai', fn: scoreWithGPT, key: keys.openai },
+    { name: 'grok-4.1-fast', provider: 'xai', fn: scoreWithGrok, key: keys.grok },
   ];
   
   for (const scorer of scorers) {
