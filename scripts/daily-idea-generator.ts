@@ -51,7 +51,7 @@ async function getRecentConversations(authorId?: string): Promise<string[]> {
     .filter(c => c.content?.includes('[Telegram'))
     .map(c => {
       // Extract just the message content
-      const match = c.content?.match(/\] (.+?)(?:\[message_id|$)/s);
+      const match = c.content?.match(/\] ([\s\S]+?)(?:\[message_id|$)/);
       return match ? match[1].trim() : c.content;
     })
     .filter(c => c && c.length > 50);
