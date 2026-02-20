@@ -802,8 +802,8 @@ export function TaleContent({ tale, allTales }: TaleContentProps) {
             </div>
           </div>
 
-          {/* Multi-Model AI Score */}
-          <MultiModelScore taleSlug={tale.slug} className="mb-12" />
+          {/* Multi-Model AI Score - DISABLED: Old stale scores, need re-scoring system */}
+          {/* <MultiModelScore taleSlug={tale.slug} className="mb-12" /> */}
 
           {/* Content */}
           <div style={{ paddingBottom: '60px' }}>
