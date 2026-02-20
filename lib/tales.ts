@@ -51,7 +51,7 @@ export const tales: Tale[] = [
     isPillar: false,
     silo: 'tech-guides',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/hero.png?v=1771622701',
-    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/mums-computer-digital-aids.mp4?v=1771622701',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/mums-computer-digital-aids.mp4?v=1771627505',
     images: [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/scene-1-cmdr.png?v=1771622701', alt: 'Stephen confused about Command+R keyboard shortcut while Mumsy watches', afterSection: 'The Cure' },
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/scene-2-victory.png?v=1771622701', alt: 'Stephen and Mumsy clinking beers celebrating factory reset victory', afterSection: 'TL;DR' },
@@ -292,7 +292,7 @@ Fix it first. A 2015 iMac with a factory reset will outperform a brand new $400 
     isPillar: true,
     silo: 'ai-vision',
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/hero.jpg?v=1771622701',
-    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/real-agi-test-uncle-david.mp4?v=1771622701',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/real-agi-test-uncle-david.mp4?v=1771627505',
     images: [
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-1-remotes.png?v=1771624199', alt: 'Uncle David confused by five different TV remotes, scratching head', afterSection: 'What Old People Actually Want' },
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-2-terminal.png?v=1771622701', alt: 'Uncle David terrified of Terminal commands on screen', afterSection: 'Terminal' },
