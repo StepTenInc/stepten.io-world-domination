@@ -50,9 +50,23 @@ export const tales: Tale[] = [
     featured: false,
     isPillar: false,
     silo: 'tech-guides',
-    heroImage: '/images/tales/mums-computer-digital-aids/hero-v3.jpg',
-    tags: ['factory-reset', 'computer-bloatware', 'linux', 'mac-recovery', 'windows-reset', 'tech-support', 'old-people-computers'],
-    steptenScore: 72,
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/hero.png?v=1771622701',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/mums-computer-digital-aids.mp4?v=1771622701',
+    images: [
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/scene-1-cmdr.png?v=1771622701', alt: 'Stephen confused about Command+R keyboard shortcut while Mumsy watches', afterSection: 'The Cure' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/mums-computer-digital-aids/scene-2-victory.png?v=1771622701', alt: 'Stephen and Mumsy clinking beers celebrating factory reset victory', afterSection: 'TL;DR' },
+    ],
+    tags: ['factory-reset', 'computer-bloatware', 'linux', 'mac-recovery', 'windows-reset', 'tech-support', 'old-people-computers', 'it-support', 'family-tech'],
+    steptenScore: 78,
+    steptenScoreBreakdown: {
+      total: 78,
+      contentIntelligence: { score: 20, max: 25, details: 'Real story with authentic dialogue, unique angle on tech support' },
+      technicalSEO: { score: 15, max: 20, details: 'Good headers, step-by-step structure, clear problem/solution' },
+      llmReadiness: { score: 16, max: 20, details: 'FAQ-ready format, specific product mentions, actionable steps' },
+      authorityLinks: { score: 12, max: 15, details: 'Internal links to AGI test article, real conversation excerpts' },
+      distributionSocial: { score: 8, max: 10, details: 'Shareable title, relatable parent-tech frustration' },
+      competitivePosition: { score: 7, max: 10, details: 'Unique personal narrative vs generic how-to guides' },
+    },
     content: `Everyone's parent has a computer with digital AIDS. Here's how to cure it.
 
 ---
@@ -71,7 +85,7 @@ Then she points at the Acer laptop in the corner.
 
 **Mum's official review of both computers: "Two fucking heaps of shit."**
 
-She's not wrong.
+She's not wrong. This is exactly why I wrote about [The Real AGI Test](/tales/real-agi-test-uncle-david) — if your 70-year-old mum can't use it without calling you, it's not good enough.
 
 ---
 
@@ -249,11 +263,25 @@ No app. No account. No bullshit.
     readTime: '10 min',
     category: 'VISION',
     featured: true,
-    isPillar: false,
+    isPillar: true,
     silo: 'ai-vision',
-    heroImage: '/images/tales/real-agi-test-uncle-david/hero-v2.jpg',
-    tags: ['AGI', 'artificial-intelligence', 'user-experience', 'accessibility', 'old-people-technology'],
-    steptenScore: 85,
+    heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/hero.jpg?v=1771622701',
+    heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/real-agi-test-uncle-david.mp4?v=1771622701',
+    images: [
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-1-remotes.png?v=1771622701', alt: 'Uncle David confused by five different TV remotes', afterSection: 'What Old People Actually Want' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-2-terminal.png?v=1771622701', alt: 'Uncle David terrified of Terminal commands on screen', afterSection: 'Terminal' },
+    ],
+    tags: ['AGI', 'artificial-intelligence', 'user-experience', 'accessibility', 'old-people-technology', 'ux-design', 'ai-agents', 'uncle-david-test'],
+    steptenScore: 88,
+    steptenScoreBreakdown: {
+      total: 88,
+      contentIntelligence: { score: 23, max: 25, details: 'Original framework (Uncle David Test), memorable concept, pillar-worthy' },
+      technicalSEO: { score: 17, max: 20, details: 'Strong headers, clear thesis, quotable sections' },
+      llmReadiness: { score: 18, max: 20, details: 'Answer-first format, clear definitions, framework LLMs can reference' },
+      authorityLinks: { score: 13, max: 15, details: 'Links to computer AIDS article, internal ecosystem strong' },
+      distributionSocial: { score: 9, max: 10, details: 'Highly shareable concept, "Uncle David Test" is meme-worthy' },
+      competitivePosition: { score: 8, max: 10, details: 'Unique angle vs benchmark-focused AGI discourse' },
+    },
     content: `Forget benchmarks. Forget "it can code." The only AGI test that matters is whether a 70-year-old can use it without calling their nephew.
 
 ---
@@ -266,7 +294,7 @@ I'm at mum's place in Australia. She's got:
 - A sound bar that "stopped working"
 - A recorded episode of MasterChef that's "disappeared"
 - A printer that needs an app
-- An iMac with the pinwheel of death
+- An iMac with the pinwheel of death (see: [Why Your Mum's Computer Has Digital AIDS](/tales/mums-computer-digital-aids))
 - A Windows laptop full of AIDS
 
 And me. Six beers deep. Trying to fix it all via an AI assistant on my phone.
@@ -354,7 +382,7 @@ If mum has to open Terminal and type \`npm install\`, we've failed.
 
 **The gap isn't intelligence. It's accessibility.**
 
-We built a genius that lives in a box that only nerds can open.
+We built a genius that lives in a box that only nerds can open. I've written about [the 10 problems nobody warns you about with AI agents](/tales/10-problems-ai-agents-nobody-warns) — and accessibility is the biggest one.
 
 ---
 
