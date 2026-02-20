@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import { Bot, Zap, FileText, Activity, CheckCircle, Circle, Loader2, ArrowRight, Clock, Target, Search, PenTool, Image as ImageIcon, BarChart3, Send, Sparkles, BookOpen, Link as LinkIcon, ExternalLink, TrendingUp, AlertCircle, Crosshair, Terminal, RefreshCw } from 'lucide-react';
 
 // Custom generated icons paths
 const iconPaths: Record<string, string> = {
@@ -479,10 +480,10 @@ export default function EnginePage() {
                       return (
                         <div key={tale.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 100px 120px 80px', gap: '16px', padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.03)', alignItems: 'center' }}>
                           <div>
-                            <a href={`https://stepten.io/tales/${tale.slug}`} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#E5E5E5', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <Link href={`/engine/tale/${tale.slug}`} style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#E5E5E5', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
                               {tale.title}
-                              <ExternalLink size={12} style={{ color: '#444' }} />
-                            </a>
+                              <span style={{ color: '#00FF41', fontSize: '0.6rem' }}>▶</span>
+                            </Link>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: `1px solid ${author.color}`, overflow: 'hidden', position: 'relative' }}>
