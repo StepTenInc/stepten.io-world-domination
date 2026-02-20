@@ -676,6 +676,19 @@ export default function EnginePage() {
       </main>
 
       {/* ═══════ BOTTOM COMMAND DOCK ═══════ */}
+      {/* Hover trigger zone - extends higher than dock */}
+      <div
+        onMouseEnter={() => setDockHovered(true)}
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: dockHovered ? '200px' : '40px',
+          zIndex: 99,
+          pointerEvents: dockHovered ? 'none' : 'auto',
+        }}
+      />
       <div
         onMouseEnter={() => setDockHovered(true)}
         onMouseLeave={() => setDockHovered(false)}
@@ -717,7 +730,7 @@ export default function EnginePage() {
           gap: '12px',
           boxShadow: '0 -10px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,255,65,0.1)',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          transform: dockHovered ? 'translateY(0)' : 'translateY(60px)',
+          transform: dockHovered ? 'translateY(0)' : 'translateY(calc(100% - 12px))',
         }}>
           {/* Dock Handle */}
           <div style={{
