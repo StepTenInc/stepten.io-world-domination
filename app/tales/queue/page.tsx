@@ -8,7 +8,7 @@ import { PublicLayout } from '@/components/layout/PublicLayout';
 
 const supabase = createClient(
   'https://iavnhggphhrvbcidixiw.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhdm5oZ2dwaGhydmJjaWRpeGl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUxODU1NjksImV4cCI6MjA1MDc2MTU2OX0.Yd--FG2xF9ofEIdqQ7HX7zCFJmFFpyhgXGE0HqMy8yY'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhdm5oZ2dwaGhydmJjaWRpeGl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgwMDUwMzgsImV4cCI6MjA4MzU4MTAzOH0.o6-WnuWzunOS637ihjfsVMyag9EHMscm5A0ywtJYu2I'
 );
 
 interface Idea {

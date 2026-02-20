@@ -18,12 +18,12 @@ import { createClient } from '@supabase/supabase-js';
 // Supabase clients
 const armySupabase = createClient(
   'https://ebqourqkrxalatubbapw.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVicW91cnFrcnhhbGF0dWJiYXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3MjA2NzIsImV4cCI6MjA1NTI5NjY3Mn0.2sPXnPmqwnfGJQP1J_Hm7j-n7v4GX9JKqQPSo3tOCbc'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVicW91cnFrcnhhbGF0dWJiYXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjk5NTMsImV4cCI6MjA4Njg0NTk1M30.0Mi_ENZCDo4YDG6jiuPS1gJKuc-7Ok4bCJ7-cJcJTwg'
 );
 
 const steptenSupabase = createClient(
   'https://iavnhggphhrvbcidixiw.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhdm5oZ2dwaGhydmJjaWRpeGl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUxODU1NjksImV4cCI6MjA1MDc2MTU2OX0.Yd--FG2xF9ofEIdqQ7HX7zCFJmFFpyhgXGE0HqMy8yY'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhdm5oZ2dwaGhydmJjaWRpeGl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgwMDUwMzgsImV4cCI6MjA4MzU4MTAzOH0.o6-WnuWzunOS637ihjfsVMyag9EHMscm5A0ywtJYu2I'
 );
 
 // Team data
