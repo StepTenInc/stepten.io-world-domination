@@ -140,4 +140,33 @@ Endpoint: api.x.ai/v1
 API Key: Supabase credentials.anthropic_api_key
 Endpoint: api.anthropic.com/v1
 
-(Awaiting full model list)
+| Model ID | Context | Output | Price (in/out per M) | Use For |
+|----------|---------|--------|----------------------|---------|
+| claude-opus-4-6 | 1M (beta) | 128K | $5 / $25 | Long-form writing |
+| claude-sonnet-4-6 | 1M (beta) | - | TBD | Balanced |
+| claude-haiku-3-5 | 200K | - | $0.25 / $1.25 | Fast/cheap |
+
+---
+
+## 1.5 PERPLEXITY
+API Key: Supabase credentials.perplexity_api_key
+Endpoint: api.perplexity.ai
+
+| Model ID | Context | Use For |
+|----------|---------|---------|
+| sonar-pro | 200K | Research with citations |
+| sonar-deep-research | 128K | Exhaustive research |
+| sonar-reasoning-pro | 128K | Complex analysis |
+| sonar | 128K | Quick search |
+
+---
+
+## 1.6 OTHER KEYS (Supabase credentials table)
+
+| Key Name | Purpose |
+|----------|---------|
+| serper_api_key | Google search (link verification) |
+| runway_api_key | Runway Gen-4 video |
+| leonardo_api_key | Leonardo Phoenix images |
+| resend_api_key | Email sending |
+| github_pat | GitHub (PinkyClawd) |
