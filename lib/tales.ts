@@ -268,7 +268,7 @@ No app. No account. No bullshit.
     heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/hero.jpg?v=1771622701',
     heroVideo: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/hero-videos/real-agi-test-uncle-david.mp4?v=1771622701',
     images: [
-      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-1-remotes.png?v=1771622701', alt: 'Uncle David confused by five different TV remotes', afterSection: 'What Old People Actually Want' },
+      { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-1-remotes.png?v=1771624199', alt: 'Uncle David confused by five different TV remotes, scratching head', afterSection: 'What Old People Actually Want' },
       { url: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/real-agi-test-uncle-david/scene-2-terminal.png?v=1771622701', alt: 'Uncle David terrified of Terminal commands on screen', afterSection: 'Terminal' },
     ],
     tags: ['AGI', 'artificial-intelligence', 'user-experience', 'accessibility', 'old-people-technology', 'ux-design', 'ai-agents', 'uncle-david-test'],
