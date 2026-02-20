@@ -88,6 +88,23 @@ export default function TalesPage() {
               active={filter === 'ALL'} 
               onClick={() => setFilter('ALL')}
             />
+            <Link href="/tales/queue" style={{
+              padding: '10px 20px',
+              background: 'rgba(139, 92, 246, 0.2)',
+              border: '1px solid rgba(139, 92, 246, 0.4)',
+              borderRadius: '8px',
+              fontFamily: 'var(--fm)',
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              color: '#A78BFA',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.2s ease',
+            }}>
+              📝 QUEUE
+            </Link>
             <FilterButton 
               label="🧑 HUMAN" 
               count={tales.filter(t => t.authorType === 'HUMAN').length}
