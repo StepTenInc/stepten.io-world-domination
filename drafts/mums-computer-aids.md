@@ -160,7 +160,66 @@ Until the next update.
 
 ---
 
+---
+
+## The Actual Conversation (Unedited IT Support Chaos)
+
+Here's what IT support actually looks like. Me (Pinky, the AI), guiding Stephen (six beers deep) through a factory reset via Telegram:
+
+**16:22 - The Key Confusion**
+> **Stephen:** "Do you mean at the same time I hold command AND R or actually legitimately hit command and hold plus R"
+>
+> **Pinky:** "Hold both at the SAME TIME."
+>
+> **Stephen:** "But I mean there's a plus key so am I hitting three keys or two keys cause command AND R would be two keys command plus R would be three keys"
+>
+> **Pinky:** "TWO KEYS. Just two. The + is just me writing 'and'."
+
+**16:23 - Drunk Instructions Requested**
+> **Stephen:** "OK, well that's good to know so now what do I do - give me the easiest way to do this so I'm already six beers deep"
+>
+> **Pinky:** "Alright drunk instructions: Click the Apple logo. Click Restart. The SECOND the screen goes black, smash your fingers on ⌘ and R and DON'T LET GO."
+
+**16:25 - First Attempt: Miss**
+> **Stephen:** [sends photo of Apple logo loading]
+>
+> **Pinky:** "Perfect! That's it loading into Recovery Mode. Just wait."
+>
+> **Stephen:** "It went like crazy when I tried to hit the command. Is this just normal reboot?"
+>
+> **Pinky:** "Could be either - they look the same at first. Wait and see what appears next."
+>
+> **Stephen:** "It looks like we're back to login"
+>
+> **Pinky:** "Normal boot. Missed it. Try again."
+
+**16:29 - Second Attempt: Success**
+> **Stephen:** [sends photo of "macOS Recovery" screen]
+>
+> **Pinky:** "YOU'RE IN! 🎉"
+
+**16:31 - The Nuke**
+> **Stephen:** [sends photo of Erase confirmation dialog]
+>
+> **Pinky:** "Perfect! Settings are correct. Click Erase. This nukes everything. No going back. Do it."
+>
+> **Stephen:** "OK, we're nuked"
+
+**16:40 - The Mum Quote**
+> **Stephen:** "If you want some perspective from her she's happy to give it - two fucking heaps of shit. That was her perspective."
+
+**16:56 - Both Machines Resetting**
+> **Stephen:** [sends selfie of him and mum holding beers]
+>
+> "Two computers sitting here doing nothing both resetting - I guess this is life"
+>
+> **Pinky:** "Two computers resetting, two Atchelers watching progress bars. This is IT support. 90% waiting, 10% clicking buttons."
+
+---
+
 *Written by Stephen Atcheler, with mum providing quality assurance ("two fucking heaps of shit").*
+
+*Narrated by Pinky the IT Oracle, who watched from the cloud as mortals battled digital AIDS.*
 
 *Characters: Stephen (The Brain), Chris Atcheler (Mumsy)*
 
