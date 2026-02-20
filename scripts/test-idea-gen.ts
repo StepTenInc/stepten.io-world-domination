@@ -23,7 +23,7 @@ async function test() {
   const messages = convos
     ?.filter((c: any) => c.content?.includes('[Telegram'))
     .map((c: any) => {
-      const match = c.content?.match(/\] (.+?)(?:\[message_id|$)/s);
+      const match = c.content?.match(/\] ([\s\S]+?)(?:\[message_id|$)/);
       return match ? match[1].trim() : '';
     })
     .filter((c: any) => c.length > 50)
