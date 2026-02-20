@@ -20,7 +20,12 @@ interface Tale {
   author_id: string;
   status: string;
   stepten_score: number | null;
-  score_breakdown: Record<string, number> | null;
+  score_breakdown: {
+    models?: number;
+    average?: number;
+    scored_at?: string;
+    individual?: Record<string, number>;
+  } | null;
   word_count: number | null;
   hero_image_url: string | null;
   hero_video_url: string | null;
@@ -197,13 +202,22 @@ export default function TaleCommandCenter() {
               </span>
             </div>
             {tale.score_breakdown && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '0.65rem' }}>
-                {Object.entries(tale.score_breakdown).map(([key, value]) => (
-                  <div key={key} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)' }}>{key.replace(/_/g, ' ')}</span>
-                    <span style={{ color: value >= 8 ? '#00FF41' : value >= 5 ? '#FFD700' : '#FF4444' }}>{value}/10</span>
+              <div style={{ fontSize: '0.65rem' }}>
+                {tale.score_breakdown.individual && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+                    {Object.entries(tale.score_breakdown.individual as Record<string, number>).map(([model, score]) => (
+                      <div key={model} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'rgba(255,255,255,0.4)' }}>{model}</span>
+                        <span style={{ color: score >= 80 ? '#00FF41' : score >= 60 ? '#FFD700' : '#FF4444' }}>{score}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
+                {tale.score_breakdown.scored_at && (
+                  <div style={{ marginTop: '8px', color: 'rgba(255,255,255,0.3)', fontSize: '0.6rem' }}>
+                    Scored: {new Date(tale.score_breakdown.scored_at as string).toLocaleDateString()}
+                  </div>
+                )}
               </div>
             )}
           </div>
