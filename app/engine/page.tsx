@@ -34,6 +34,14 @@ const team = [
   { id: 'clark', slug: 'clark', name: 'Clark', role: 'Backend & Data', color: characters.clark.color, image: characters.clark.image, type: 'ai' },
 ];
 
+// Agent UUID mapping (author_id -> team slug)
+const authorUUIDs: Record<string, string> = {
+  'b3149e8b-257f-47db-b6bf-653e9ef5eb61': 'stepten',
+  '2b95884e-c7f1-403e-beef-c033c33796cc': 'pinky',
+  '5d8af016-4a36-44c8-bb2e-ac5e6f2edcdf': 'reina',
+  '4bebbeb3-7a82-44f2-bc5c-18e8e1fbd696': 'clark',
+};
+
 // Agent UUID mapping
 const agentUUIDs: Record<string, string> = {
   '4ff87193-d4bf-4628-a2cb-48501dc1e437': 'stepten',
@@ -464,7 +472,8 @@ export default function EnginePage() {
                   {/* Rows */}
                   <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
                     {tales.map((tale) => {
-                      const author = team.find(t => t.id === tale.author_id || t.slug === tale.author_id) || team[1];
+                      const authorSlug = authorUUIDs[tale.author_id] || tale.author_id;
+                      const author = team.find(t => t.id === authorSlug || t.slug === authorSlug) || team[1];
                       return (
                         <div key={tale.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 100px 100px 120px 80px', gap: '16px', padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.03)', alignItems: 'center' }}>
                           <div>
