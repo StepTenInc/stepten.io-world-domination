@@ -175,8 +175,9 @@ export default function EnginePage() {
 
   // Fetch real data
   useEffect(() => {
+    let isFirstLoad = true;
     const fetchData = async () => {
-      setLoading(true);
+      if (isFirstLoad) setLoading(true);
       
       // Fetch tasks from Army
       const { data: tasksData } = await armySupabase
@@ -208,11 +209,12 @@ export default function EnginePage() {
       if (queueData) setContentQueue(queueData);
       
       setLoading(false);
+      isFirstLoad = false;
     };
 
     fetchData();
     
-    // Refresh every 30 seconds
+    // Refresh data silently every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
   }, []);
