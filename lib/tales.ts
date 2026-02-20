@@ -235,7 +235,7 @@ No app. No account. No bullshit.
 
 ---
 
-*Written by Stephen Atcheler, from mum's couch, watching progress bars fill while drinking beers.*
+*Written from mum's couch, watching progress bars fill while drinking beers.*
 
 *Mum's official rating: "Two fucking heaps of shit" → "They work now."*`,
   },
@@ -439,7 +439,7 @@ That's AGI.
 
 ---
 
-*Written by Stephen Atcheler, from mum's couch, surrounded by five remotes that don't work.*`,
+*Written from mum's couch, surrounded by five remotes that don't work.*`,
   },
   {
     slug: 'how-to-get-ai-agents-talking',
