@@ -51,7 +51,7 @@
 .subtitle {
   font-size: 1rem;
   color: #00ff88;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.2em;
   margin-top: 0.25rem;
 }
 
@@ -77,14 +77,14 @@
 }
 
 .jackpotName {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: var(--jackpot-color);
   font-weight: bold;
   letter-spacing: 0.05em;
 }
 
 .jackpotAmount {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #fff;
   font-family: 'Courier New', monospace;
@@ -138,8 +138,8 @@
 }
 
 .symbol {
-  width: 80px;
-  height: 70px;
+  width: 90px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,6 +149,18 @@
   border: 2px solid #333;
   position: relative;
   overflow: hidden;
+  transition: all 0.2s;
+}
+
+.symbol.winning {
+  border-color: #ff0066;
+  box-shadow: 0 0 20px #ff0066;
+  animation: winPulse 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes winPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
 }
 
 .characterSymbol {
@@ -162,13 +174,36 @@
   border-color: #336633;
 }
 
+.characterImage {
+  position: relative;
+  width: 70px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #ffd700;
+}
+
+.wildBadge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #ff0066, #ff6600);
+  color: #fff;
+  font-size: 0.5rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 1px;
+  letter-spacing: 0.1em;
+}
+
 .symbolEmoji {
-  font-size: 2rem;
+  font-size: 2.5rem;
   line-height: 1;
 }
 
 .cardSymbol .symbolEmoji {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
   font-family: 'Georgia', serif;
   color: #ffd700;
@@ -178,23 +213,36 @@
 .symbolName {
   font-size: 0.5rem;
   color: #aaa;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Payline indicator */
+/* Payline indicators */
 .payline {
   position: absolute;
   left: 0;
   right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #ff006650 10%, #ff006650 90%, transparent 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.paylineTop {
+  top: calc(1rem + 0.5rem + 40px);
+}
+
+.paylineMiddle {
   top: 50%;
+  transform: translateY(-50%);
   height: 4px;
   background: linear-gradient(90deg, transparent 0%, #ff0066 10%, #ff0066 90%, transparent 100%);
-  transform: translateY(-50%);
-  pointer-events: none;
   box-shadow: 0 0 10px #ff0066;
-  z-index: 10;
+}
+
+.paylineBottom {
+  bottom: calc(1rem + 0.5rem + 40px);
 }
 
 /* Message bar */
@@ -209,12 +257,27 @@
   text-align: center;
   position: relative;
   z-index: 1;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .message {
   font-size: 1rem;
   color: #00ff88;
   font-family: 'Courier New', monospace;
+}
+
+.winMessage {
+  color: #ffd700;
+  font-weight: bold;
+  animation: winTextPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes winTextPulse {
+  from { text-shadow: 0 0 10px #ffd700; }
+  to { text-shadow: 0 0 30px #ffd700, 0 0 50px #ff6600; }
 }
 
 /* Controls */
@@ -258,7 +321,7 @@
   font-family: 'Courier New', monospace;
 }
 
-.winning {
+.winValue {
   color: #00ff88;
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
@@ -292,6 +355,23 @@
   color: #000;
 }
 
+.addCredits {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ffaa00;
+  background: transparent;
+  color: #ffaa00;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.addCredits:hover {
+  background: #ffaa00;
+  color: #000;
+}
+
 .spinButton {
   width: 120px;
   height: 60px;
@@ -317,6 +397,60 @@
 .spinning {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+/* Paytable */
+.paytable {
+  width: 100%;
+  max-width: 800px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.paytableTitle {
+  text-align: center;
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+}
+
+.paytableGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.paytableItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  color: #aaa;
+}
+
+.paytableImage {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.paytableValue {
+  color: #00ff88;
+  font-weight: bold;
+  margin-left: auto;
 }
 
 /* Free spins bar */
@@ -347,7 +481,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,6 +494,13 @@
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 0 50px #ff0066;
+  animation: bonusPop 0.5s ease-out;
+}
+
+@keyframes bonusPop {
+  0% { transform: scale(0) rotate(-10deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .bonusContent h2 {
@@ -372,6 +513,12 @@
   font-size: 1.5rem;
   color: #fff;
   margin: 0;
+}
+
+.bonusSub {
+  font-size: 1rem !important;
+  opacity: 0.8;
+  margin-top: 0.5rem !important;
 }
 
 /* Disclaimer */
@@ -392,12 +539,17 @@
   }
   
   .symbol {
-    width: 60px;
-    height: 55px;
+    width: 65px;
+    height: 60px;
+  }
+  
+  .characterImage {
+    width: 50px;
+    height: 45px;
   }
   
   .symbolEmoji {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
   
   .controls {
@@ -407,5 +559,9 @@
   
   .title {
     font-size: 1.8rem;
+  }
+  
+  .paytableGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
