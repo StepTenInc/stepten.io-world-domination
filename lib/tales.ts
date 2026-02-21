@@ -1,5 +1,8 @@
 import { CharacterKey } from './design-tokens';
 import { getTaleMediaUrl } from './media';
+import { reinaArticle1, reinaArticle2, reinaArticle3, reinaArticle4 } from './reina-articles-1';
+import { reinaArticle5, reinaArticle6, reinaArticle7, reinaArticle8 } from './reina-articles-2';
+import { reinaArticle9, reinaArticle10, reinaArticle11, reinaArticle12 } from './reina-articles-3';
 
 export type AuthorType = 'HUMAN' | 'AI' | 'LEGEND';
 export type TaleCategory = 'VISION' | 'CODE' | 'CHAOS' | 'HERO' | 'ORIGIN' | 'TECH' | 'DEMO' | 'CONSCIOUSNESS' | 'AI_CODING';
@@ -8373,6 +8376,19 @@ NARF! 🐀
 `,
   },
 
+  // Reina Articles (12 articles from sub-agent)
+  reinaArticle1,
+  reinaArticle2,
+  reinaArticle3,
+  reinaArticle4,
+  reinaArticle5,
+  reinaArticle6,
+  reinaArticle7,
+  reinaArticle8,
+  reinaArticle9,
+  reinaArticle10,
+  reinaArticle11,
+  reinaArticle12,
 ];
 
 export function getTaleBySlug(slug: string): Tale | undefined {
