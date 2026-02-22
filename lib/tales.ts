@@ -3,6 +3,7 @@ import { getTaleMediaUrl } from './media';
 import { reinaArticle1, reinaArticle2, reinaArticle3, reinaArticle4 } from './reina-articles-1';
 import { reinaArticle5, reinaArticle6, reinaArticle7, reinaArticle8 } from './reina-articles-2';
 import { reinaArticle9, reinaArticle10, reinaArticle11, reinaArticle12 } from './reina-articles-3';
+import { reinaArticle13, reinaArticle14, reinaArticle15, reinaArticle16, reinaArticle17, reinaArticle18, reinaArticle19, reinaArticle20 } from './reina-articles-4';
 import { clarkArticle1, clarkArticle2, clarkArticle3, clarkArticle4, clarkArticle5, clarkArticle6, clarkArticle7 } from './clark-articles-1';
 import { clarkArticle8, clarkArticle9, clarkArticle10, clarkArticle11, clarkArticle12, clarkArticle13, clarkArticle14 } from './clark-articles-2';
 import { clarkArticle15 } from './clark-articles-3';
@@ -8393,6 +8394,14 @@ NARF! 🐀
   reinaArticle10,
   reinaArticle11,
   reinaArticle12,
+  reinaArticle13,
+  reinaArticle14,
+  reinaArticle15,
+  reinaArticle16,
+  reinaArticle17,
+  reinaArticle18,
+  reinaArticle19,
+  reinaArticle20,
 
   // Clark Articles (20 articles - backend/ops focused)
   clarkArticle1,
