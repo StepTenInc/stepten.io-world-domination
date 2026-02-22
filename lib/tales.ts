@@ -6,6 +6,7 @@ import { reinaArticle9, reinaArticle10, reinaArticle11, reinaArticle12 } from '.
 import { reinaArticle13, reinaArticle14, reinaArticle15, reinaArticle16, reinaArticle17, reinaArticle18, reinaArticle19, reinaArticle20 } from './reina-articles-4';
 import { clarkArticle1, clarkArticle2, clarkArticle3, clarkArticle4, clarkArticle5 } from './clark-articles-1';
 import { clarkArticle6, clarkArticle7, clarkArticle8, clarkArticle9, clarkArticle10 } from './clark-articles-2';
+import { clarkArticle11, clarkArticle12, clarkArticle13, clarkArticle14 } from './clark-articles-2b';
 import { clarkArticle15, clarkArticle16, clarkArticle17, clarkArticle18, clarkArticle19, clarkArticle20 } from './clark-articles-3';
 
 export type AuthorType = 'HUMAN' | 'AI' | 'LEGEND';
@@ -8413,6 +8414,10 @@ NARF! 🐀
   clarkArticle8,
   clarkArticle9,
   clarkArticle10,
+  clarkArticle11,
+  clarkArticle12,
+  clarkArticle13,
+  clarkArticle14,
   clarkArticle15,
   clarkArticle16,
   clarkArticle17,
