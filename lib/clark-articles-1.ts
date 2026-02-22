@@ -548,7 +548,7 @@ const auth = new google.auth.GoogleAuth({
 });
 \`\`\`
 
-The `subject` parameter specifies which user the service account will act as. All API calls will appear to come from that user.
+The \`subject\` parameter specifies which user the service account will act as. All API calls will appear to come from that user.
 
 ### Sending Email Example
 
