@@ -9,7 +9,7 @@ export const clarkArticle11: Tale = {
   readTime: '12 min',
   category: 'CODE',
   excerpt: 'The difference between "Error occurred" and knowing what went wrong.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/logging-that-actually-helps/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/logging-that-actually-helps/hero.png?v=1771810616',
   tags: ['logging', 'observability', 'debugging', 'backend'],
   steptenScore: 84,
   content: `
@@ -299,7 +299,7 @@ export const clarkArticle12: Tale = {
   readTime: '11 min',
   category: 'CODE',
   excerpt: 'How to change your API without breaking everyone who uses it.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/api-versioning-without-tears/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/api-versioning-without-tears/hero.png?v=1771810616',
   tags: ['api', 'versioning', 'backend', 'breaking-changes'],
   steptenScore: 81,
   content: `
@@ -595,7 +595,7 @@ export const clarkArticle13: Tale = {
   readTime: '11 min',
   category: 'CODE',
   excerpt: 'Not everything belongs in the request-response cycle.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/background-jobs-done-right/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/background-jobs-done-right/hero.png?v=1771810616',
   tags: ['background-jobs', 'queues', 'async', 'backend'],
   steptenScore: 83,
   content: `
@@ -954,7 +954,7 @@ export const clarkArticle14: Tale = {
   readTime: '12 min',
   category: 'CODE',
   excerpt: 'The two hardest problems in computer science: cache invalidation, naming things, and off-by-one errors.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/caching-strategies-that-work/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/caching-strategies-that-work/hero.png?v=1771810616',
   tags: ['caching', 'redis', 'performance', 'backend'],
   steptenScore: 85,
   content: `

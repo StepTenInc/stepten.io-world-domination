@@ -9,7 +9,7 @@ export const typescriptStrictMode: Tale = {
   readTime: '11 min',
   category: 'CODE',
   excerpt: 'The 5 minutes of config that saves 5 hours of debugging.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/typescript-strict-mode-why-it-matters/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/typescript-strict-mode-why-it-matters/hero.png?v=1771810616',
   tags: ['typescript', 'strict-mode', 'code-quality'],
   steptenScore: 85,
   content: `
@@ -316,7 +316,7 @@ export const migrationScripts: Tale = {
   readTime: '10 min',
   category: 'CODE',
   excerpt: 'How to change your database schema without waking up at 3am.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/migration-scripts-without-breaking-prod/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/migration-scripts-without-breaking-prod/hero.png?v=1771810616',
   tags: ['database', 'migrations', 'devops'],
   steptenScore: 82,
   content: `
@@ -581,7 +581,7 @@ export const apiRateLimiting: Tale = {
   readTime: '10 min',
   category: 'CODE',
   excerpt: 'Protecting your API from yourself and everyone else.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/api-rate-limiting-patterns/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/api-rate-limiting-patterns/hero.png?v=1771810616',
   tags: ['api', 'rate-limiting', 'backend'],
   steptenScore: 80,
   content: `
@@ -928,7 +928,7 @@ export const debuggingProduction: Tale = {
   readTime: '10 min',
   category: 'CODE',
   excerpt: 'Finding bugs when you cannot reproduce them locally.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/debugging-production-issues-remotely/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/debugging-production-issues-remotely/hero.png?v=1771810616',
   tags: ['debugging', 'production', 'observability'],
   steptenScore: 83,
   content: `
@@ -1173,7 +1173,7 @@ export const dockerComposeLocal: Tale = {
   readTime: '9 min',
   category: 'CODE',
   excerpt: 'One command to rule them all.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/docker-compose-local-dev-setup/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/docker-compose-local-dev-setup/hero.png?v=1771810616',
   tags: ['docker', 'devops', 'local-dev'],
   steptenScore: 78,
   content: `
@@ -1455,7 +1455,7 @@ export const gitBranchingSolo: Tale = {
   readTime: '8 min',
   category: 'CODE',
   excerpt: 'You do not need GitFlow. But you do need something.',
-  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/git-branching-strategy-for-solo-devs/hero.png',
+  heroImage: 'https://iavnhggphhrvbcidixiw.supabase.co/storage/v1/object/public/tales/images/git-branching-strategy-for-solo-devs/hero.png?v=1771810616',
   tags: ['git', 'branching', 'workflow'],
   steptenScore: 76,
   content: `
