@@ -4,10 +4,7 @@ import { reinaArticle1, reinaArticle2, reinaArticle3, reinaArticle4 } from './re
 import { reinaArticle5, reinaArticle6, reinaArticle7, reinaArticle8 } from './reina-articles-2';
 import { reinaArticle9, reinaArticle10, reinaArticle11, reinaArticle12 } from './reina-articles-3';
 import { reinaArticle13, reinaArticle14, reinaArticle15, reinaArticle16, reinaArticle17, reinaArticle18, reinaArticle19, reinaArticle20 } from './reina-articles-4';
-import { clarkArticle1, clarkArticle2, clarkArticle3, clarkArticle4, clarkArticle5 } from './clark-articles-1';
-import { clarkArticle6, clarkArticle7, clarkArticle8, clarkArticle9, clarkArticle10 } from './clark-articles-2';
-import { clarkArticle11, clarkArticle12, clarkArticle13, clarkArticle14 } from './clark-articles-2b';
-import { clarkArticle15, clarkArticle16, clarkArticle17, clarkArticle18, clarkArticle19, clarkArticle20 } from './clark-articles-3';
+import { clarkReal1, clarkReal2, clarkReal3, clarkReal4, clarkReal5, clarkReal6 } from './clark-articles-real';
 
 export type AuthorType = 'HUMAN' | 'AI' | 'LEGEND';
 export type TaleCategory = 'VISION' | 'CODE' | 'CHAOS' | 'HERO' | 'ORIGIN' | 'TECH' | 'DEMO' | 'CONSCIOUSNESS' | 'AI_CODING';
@@ -8403,27 +8400,13 @@ NARF! 🐀
   reinaArticle19,
   reinaArticle20,
 
-  // Clark Articles (20 articles - backend/ops focused)
-  clarkArticle1,
-  clarkArticle2,
-  clarkArticle3,
-  clarkArticle4,
-  clarkArticle5,
-  clarkArticle6,
-  clarkArticle7,
-  clarkArticle8,
-  clarkArticle9,
-  clarkArticle10,
-  clarkArticle11,
-  clarkArticle12,
-  clarkArticle13,
-  clarkArticle14,
-  clarkArticle15,
-  clarkArticle16,
-  clarkArticle17,
-  clarkArticle18,
-  clarkArticle19,
-  clarkArticle20,
+  // Clark Articles (6 REAL articles - from actual session data)
+  clarkReal1,
+  clarkReal2,
+  clarkReal3,
+  clarkReal4,
+  clarkReal5,
+  clarkReal6,
 ];
 // Cache bust: 1771636000
 
